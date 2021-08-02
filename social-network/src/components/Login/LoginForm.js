@@ -16,9 +16,9 @@ import Container from "@material-ui/core/Container";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
+      {"Bản quyền thuộc về © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        AnTam
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -28,7 +28,7 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(4),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -43,6 +43,20 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+
+    backgroundImage:
+      "linear-gradient(to right, #DA22FF 0%, #9733EE  51%, #DA22FF  100%)",
+    borderRadius: 3,
+    border: 0,
+    color: "white",
+    height: 48,
+    width: "100%",
+    padding: "0 30px",
+    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+  },
+
+  label: {
+    textTransform: "capitalize",
   },
 }));
 
@@ -53,11 +67,13 @@ const LoginForm = function LoginForm() {
     <Container component="main" maxWidth="xs" boxShadow={3}>
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <Avatar
+          alt="Remy Sharp"
+          src="/static/images/avatar/1.jpg"
+          className={classes.large}
+        />
         <Typography component="h1" variant="h5">
-          Sign in
+          Đăng nhập
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -66,7 +82,7 @@ const LoginForm = function LoginForm() {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Email"
             name="email"
             autoComplete="email"
             autoFocus
@@ -77,33 +93,29 @@ const LoginForm = function LoginForm() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Mật Khẩu"
             type="password"
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
+            classes={{
+              root: classes.submit, // class name, e.g. `classes-nesting-root-x`
+              label: classes.label, // class name, e.g. `classes-nesting-label-x`
+            }}
           >
-            Sign In
+            Đăng nhập
           </Button>
+
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
-                Forgot password?
+                Quên mật khẩu
               </Link>
             </Grid>
             <Grid item>
               <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+                {"Chưa có tài khoản đăng ký tại đây"}
               </Link>
             </Grid>
           </Grid>
