@@ -28,10 +28,18 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(11),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      margin: theme.spacing(8, 4),
+    },
+    [theme.breakpoints.up("md")]: {
+      margin: theme.spacing(8, 4),
+    },
+    [theme.breakpoints.up("lg")]: {
+      margin: theme.spacing(8, 12),
+    },
   },
   center: {
     display: "flex",
@@ -45,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(0),
+    height: "100%",
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -84,87 +92,85 @@ const LoginForm = function LoginForm() {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs" boxShadow={3}>
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Typography fontWeight="fontWeightBold" component="h1">
-          {" "}
-          <Box fontWeight="fontWeightBold" fontSize="h6.fontSize">
-            Đăng Nhập
-          </Box>
-        </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            className={classes.textField}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            className={classes.textField}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Mật Khẩu"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
+    <div className={classes.paper}>
+      <Typography fontWeight="fontWeightBold" component="h1">
+        {" "}
+        <Box fontWeight="fontWeightBold" fontSize="h6.fontSize" m={1}>
+          Đăng Nhập
+        </Box>
+      </Typography>
+      <form className={classes.form} noValidate>
+        <TextField
+          className={classes.textField}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Email"
+          name="email"
+          autoComplete="email"
+          autoFocus
+        />
+        <TextField
+          className={classes.textField}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="Mật Khẩu"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+        />
 
-          <Button
-            classes={{
-              root: classes.submit, // class name, e.g. `classes-nesting-root-x`
-              label: classes.label, // class name, e.g. `classes-nesting-label-x`
-            }}
-          >
-            Đăng nhập
-          </Button>
-          <Grid
-            container
-            direction="row"
-            justifyContent="space-between"
-            alignItems="baseline"
-          >
-            <Grid item className={classes.avatar}>
-              <Link href="#" variant="body2">
-                Quên mật khẩu?
-              </Link>
-            </Grid>
-            <Grid item className={classes.avatar}>
-              <Link href="#" variant="body2">
-                Chưa có tài khoản?
-              </Link>
-            </Grid>
+        <Button
+          classes={{
+            root: classes.submit, // class name, e.g. `classes-nesting-root-x`
+            label: classes.label, // class name, e.g. `classes-nesting-label-x`
+          }}
+        >
+          Đăng nhập
+        </Button>
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="baseline"
+        >
+          <Grid item className={classes.avatar}>
+            <Link href="#" variant="body2">
+              Quên mật khẩu?
+            </Link>
           </Grid>
-          <Grid container justifyContent="center">
-            <Grid item xs={12} className={classes.center}>
-              <Typography color="textSecondary">Hoặc tiếp tục bằng</Typography>
-            </Grid>
-            <Grid item className={classes.avatar}>
-              <Fab aria-label="add">
-                <GG></GG>
-              </Fab>
-            </Grid>
-            <Grid item className={classes.avatar}>
-              <Fab color="primary" aria-label="add">
-                <FacebookIcon />
-              </Fab>
-            </Grid>
+          <Grid item className={classes.avatar}>
+            <Link href="#" variant="body2">
+              Chưa có tài khoản?
+            </Link>
           </Grid>
-        </form>
-      </div>
+        </Grid>
+        <Grid container justifyContent="center">
+          <Grid item xs={12} className={classes.center}>
+            <Typography color="textSecondary">Hoặc tiếp tục bằng</Typography>
+          </Grid>
+          <Grid item className={classes.avatar}>
+            <Fab aria-label="add" color="primary">
+              <GG></GG>
+            </Fab>
+          </Grid>
+          <Grid item className={classes.avatar}>
+            <Fab color="primary" aria-label="add">
+              <FacebookIcon />
+            </Fab>
+          </Grid>
+        </Grid>
+      </form>
+
       <Box mt={9}>
         <Copyright />
       </Box>
-    </Container>
+    </div>
   );
 };
 export default LoginForm;

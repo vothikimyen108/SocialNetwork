@@ -1,10 +1,14 @@
-body {
-  margin: 0;
+body, html {
+  margin:0px;
   font-family: 'Bungee Inline', cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
-
+/* html, body {
+  margin:0px;
+  height:100%;
+} */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

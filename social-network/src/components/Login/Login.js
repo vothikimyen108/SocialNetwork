@@ -27,7 +27,7 @@ export default function SignInSide() {
           <img src={avatar} className={classes.img}></img>
         </div>
       </Grid>
-      <Grid item xs={12} sm={12} md={5} elevation={3} square component={Paper}>
+      <Grid item xs={12} sm={12} md={5} component={Paper} elevation={12} square>
         <LoginForm></LoginForm>
       </Grid>
     </Grid>
