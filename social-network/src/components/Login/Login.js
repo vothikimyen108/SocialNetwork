@@ -1,11 +1,11 @@
 import React from "react";
-import { Box, Grid, CssBaseline, Paper } from "@material-ui/core";
+import { Grid, CssBaseline, Paper } from "@material-ui/core";
 import Wave from "react-wavify";
-import LoginForm from "./LoginForm";
-import StylesLogin from "./StylesLogin";
+import FormLogin from "./FormLogin";
+import LoginStyles from "./LoginStyles";
 import avatar from "../../assets/Login/undraw_our_neighborhood_ya1h.svg";
 export default function SignInSide() {
-  const classes = StylesLogin();
+  const classes = LoginStyles();
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -27,8 +27,8 @@ export default function SignInSide() {
           <img src={avatar} className={classes.img}></img>
         </div>
       </Grid>
-      <Grid item xs={12} sm={12} md={5} elevation={3} square component={Paper}>
-        <LoginForm></LoginForm>
+      <Grid item xs={12} sm={12} md={5} component={Paper} elevation={12} square>
+        <FormLogin></FormLogin>
       </Grid>
     </Grid>
   );
