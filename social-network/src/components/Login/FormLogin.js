@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import Fab from "@material-ui/core/Fab";
+import {
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  Link,
+  Box,
+  Fab,
+} from "@material-ui/core";
+
 import FacebookIcon from "@material-ui/icons/Facebook";
 import { ReactComponent as GG } from "../../assets/Login/google.svg";
 import FormLoginStyles from "./FormLoginStyles";
@@ -123,7 +126,7 @@ const FormLogin = function FormLogin() {
           )}
 
           <Grid item className={classes.avatar}>
-            <Link href="#" variant="body2" onClick={HandlerChange}>
+            <Link variant="body2" onClick={HandlerChange}>
               {isSignIn ? "Chưa có tài khoản?" : "Đã có tài khoản?"}
             </Link>
           </Grid>
