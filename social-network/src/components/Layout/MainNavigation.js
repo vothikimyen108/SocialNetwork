@@ -6,26 +6,37 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
+
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
+
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import NotificationsIcon from "@material-ui/icons/Notifications";
+
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Avatar from "@material-ui/core/Avatar";
-
+import NotificationsButon from "./NotificationsButtont";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TranslateIcon from "@material-ui/icons/Translate";
+
+import SecondNavigation from "./SecondNavigation";
+import StarsIcon from "@material-ui/icons/Stars";
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
   menuButton: {
     marginRight: theme.spacing(2),
+  },
+  mainMenu: {
+    backgroundColor: "#673ab7",
+    color: "#fff",
+    [theme.breakpoints.up("md")]: {
+      backgroundColor: "#fff",
+      color: "#000",
+    },
   },
   title: {
     display: "none",
@@ -55,14 +66,17 @@ const useStyles = makeStyles((theme) => ({
     color: "#7200ca",
     height: "100%",
     position: "absolute",
-    left: "70%",
+    // left: "70%",
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   },
   inputRoot: {
-    color: "inherit",
+    color: "#000",
+    [theme.breakpoints.up("md")]: {
+      color: "#7200ca",
+    },
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -99,6 +113,12 @@ const useStyles = makeStyles((theme) => ({
   },
   subButton: {
     color: "#7200ca",
+  },
+  logo: {
+    color: "#fff",
+    [theme.breakpoints.up("md")]: {
+      color: "#7200ca",
+    },
   },
   sectionMobile: {
     display: "flex",
@@ -193,8 +213,10 @@ export default function PrimarySearchAppBar() {
   return (
     <div className={classes.grow}>
       <AppBar
+        classes={{
+          root: classes.mainMenu, // class name, e.g. `classes-nesting-root-x`
+        }}
         position="static"
-        style={{ backgroundColor: "#fff", color: "#000" }}
       >
         <Toolbar>
           <IconButton
@@ -203,7 +225,7 @@ export default function PrimarySearchAppBar() {
             color="inherit"
             aria-label="open drawer"
           >
-            <MenuIcon />
+            <StarsIcon className={classes.logo}></StarsIcon>
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             AnTam
@@ -230,14 +252,9 @@ export default function PrimarySearchAppBar() {
               <h3> Yến</h3>
             </div>
             <div className={classes.item}>
-              <IconButton
-                aria-label="show 11 new notifications"
+              <NotificationsButon
                 className={classes.button}
-              >
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
+              ></NotificationsButon>
             </div>
             <div className={classes.item}>
               <IconButton
@@ -263,6 +280,7 @@ export default function PrimarySearchAppBar() {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
+      <SecondNavigation mt={10}></SecondNavigation>
     </div>
   );
 }
