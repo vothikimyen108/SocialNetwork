@@ -31,7 +31,6 @@ function Copyright() {
 const FormLogin = function FormLogin() {
   const classes = FormLoginStyles();
   const [isSignIn, setisSignIn] = useState(true);
-  const [selectedDate, handleDateChange] = useState(new Date());
   //if is insSing bằng true => mở đăng nhập
   const HandlerChange = () => {
     setisSignIn(!isSignIn);

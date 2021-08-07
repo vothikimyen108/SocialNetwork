@@ -17,9 +17,12 @@ const MainNavigationStyles = makeStyles((theme) => ({
   },
   title: {
     display: "none",
-    color: "#7200ca",
+    color: "#fff",
     [theme.breakpoints.up("sm")]: {
       display: "block",
+    },
+    [theme.breakpoints.up("md")]: {
+      color: "#7200ca",
     },
   },
   search: {
@@ -102,6 +105,11 @@ const MainNavigationStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
+  },
+  noti: {
+    transform: "translateX(10px) translateY(50px)",
+    maxHeight: "60h",
+    width: "40ch",
   },
 }));
 export default MainNavigationStyles;
