@@ -1,9 +1,9 @@
 import "./App.css";
 // import Login from "./components/Login/Login";
-import MainNavigation from "./components/Layout/MainNavigation"
+import NewsItem from "./components/News/NewsItem";
 
 function App(props) {
-  return <MainNavigation></MainNavigation>;
+  return <NewsItem></NewsItem>;
 }
 
 export default App;
