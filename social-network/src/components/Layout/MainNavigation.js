@@ -25,25 +25,30 @@ import SecondNavigation from "./SecondNavigation";
 import StarsIcon from "@material-ui/icons/Stars";
 
 import MainNavigationStyles from "./MainNavigationStyles";
+import LayoutMenber from "./LayoutMenber";
+import { useState } from "react";
+import NotificationItem from "../Notifications/NotificationItem";
+import NotificationList from "../Notifications/NotificationList";
+
 export default function PrimarySearchAppBar() {
   const classes = MainNavigationStyles();
 
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  //set menu hide
+  const [menuHideMoreAnchorEl, setMenuHide] = useState(null);
 
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const isMenuHideOpen = Boolean(menuHideMoreAnchorEl);
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
+  const handleMenuHideClose = () => {
+    setMenuHide(null);
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
+  const handleMenuHideOpen = (event) => {
+    setMenuHide(event.currentTarget);
   };
-
   const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
+  const renderMenuHide = (
     <Menu
-      anchorEl={mobileMoreAnchorEl}
+      anchorEl={menuHideMoreAnchorEl}
       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       transformOrigin={{ vertical: "top", horizontal: "center" }}
       id={mobileMenuId}
@@ -52,8 +57,8 @@ export default function PrimarySearchAppBar() {
           transform: "translateX(10px) translateY(50px)",
         },
       }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
+      open={isMenuHideOpen}
+      onClose={handleMenuHideClose}
       keepMounted={false}
     >
       <MenuItem>
@@ -106,6 +111,48 @@ export default function PrimarySearchAppBar() {
       </MenuItem>
     </Menu>
   );
+  //set noti
+  const [notiMoreAnchorEl, setNoti] = useState(null);
+
+  const isNotiOpen = Boolean(notiMoreAnchorEl);
+
+  const handlerNotiMenuClose = () => {
+    setNoti(null);
+  };
+
+  const handleNotiMenuOpen = (event) => {
+    setNoti(event.currentTarget);
+  };
+
+  const renderNoti = (
+    <Menu
+      anchorEl={notiMoreAnchorEl}
+      id={mobileMenuId}
+      PaperProps={{
+        style: {
+          transform: "translateX(10px) translateY(50px)",
+          maxHeight: "60h",
+          width: "40ch",
+          "&::-webkit-scrollbar": {
+            width: "0.4em",
+          },
+          "&::-webkit-scrollbar-track": {
+            boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+            webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "rgba(0,0,0,.1)",
+            outline: "1px solid slategrey",
+          },
+        },
+      }}
+      open={isNotiOpen}
+      onClose={handlerNotiMenuClose}
+      keepMounted={false}
+    >
+      <NotificationList></NotificationList>
+    </Menu>
+  );
 
   return (
     <div className={classes.grow}>
@@ -151,13 +198,14 @@ export default function PrimarySearchAppBar() {
             <div className={classes.item}>
               <NotificationsButon
                 className={classes.button}
+                onClick={handleNotiMenuOpen}
               ></NotificationsButon>
             </div>
             <div className={classes.item}>
               <IconButton
                 aria-label="show 11 new notifications"
                 className={classes.button}
-                onClick={handleMobileMenuOpen}
+                onClick={handleMenuHideOpen}
               >
                 <ExpandMoreIcon fontSize="medium"></ExpandMoreIcon>
               </IconButton>
@@ -168,7 +216,7 @@ export default function PrimarySearchAppBar() {
               aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
+              onClick={handleMenuHideOpen}
               color="inherit"
             >
               <MoreIcon />
@@ -176,8 +224,10 @@ export default function PrimarySearchAppBar() {
           </div>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
+      {renderMenuHide}
+      {renderNoti}
       <SecondNavigation mt={10}></SecondNavigation>
+      <LayoutMenber></LayoutMenber>
     </div>
   );
 }

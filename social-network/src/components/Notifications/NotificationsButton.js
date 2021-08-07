@@ -6,6 +6,7 @@ const NotificationsButon = (props) => {
     <IconButton
       aria-label="show 11 new notifications"
       className={props.className}
+      onClick={props.onClick}
     >
       <Badge badgeContent={17} color="secondary">
         <NotificationsIcon />
