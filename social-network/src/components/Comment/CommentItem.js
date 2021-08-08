@@ -5,11 +5,13 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { ReactComponent as Anh } from "../../assets/ImgHome/avatar.svg";
+import IconButton from "@material-ui/core/IconButton";
+import MoreIcon from "@material-ui/icons/MoreVert";
 import { Autorenew } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    maxWidth: "36ch",
+
     backgroundColor: theme.palette.background.paper,
   },
   inline: {
@@ -19,8 +21,9 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid #f0f2f5",
     borderRadius: "30px",
     padding: "10px",
-    height: "100%",
-    width: "100%",
+    height: "auto",
+    float: "left",
+    width: "75%",
     marginTop: "10px",
     backgroundColor: "#f0f2f5",
   },
@@ -33,8 +36,13 @@ const useStyles = makeStyles((theme) => ({
   },
   btEdit: {
     margin: "auto",
-    padding: "30px",
-    width: "100%",
+    float: "left",
+    textAlign: "center",
+    width: "5%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   inputCMT: {
     maxheight: "auto",
@@ -59,34 +67,39 @@ export default function CommentItem() {
           <Anh></Anh>
         </Avatar>
       </Grid>
-      <Grid container wrap="wrap">
-        <Grid item xs={6}>
-          <div className={classes.contentComment}>
-            <Typography className={classes.authorComment}>
-              Kim Yến <span>12h</span>
-            </Typography>
-            <TextField
-              classes={{
-                root: classes.inputCMT,
-              }}
-              multiline
-              //   rows={Autorenew}
-              defaultValue="Truncation should be conditionally applicable on this long line oftext as this is a much longer line than what the container can 
+      <Grid item xs={12}>
+        <div className={classes.contentComment}>
+          <Typography className={classes.authorComment}>
+            Kim Yến <span>12h</span>
+          </Typography>
+          <TextField
+            classes={{
+              root: classes.inputCMT,
+            }}
+            multiline
+            //   rows={Autorenew}
+            defaultValue="Truncation should be conditionally applicable on this long line oftext as this is a much longer line than what the container can 
               
             "
-              inputProps={{
-                readOnly: true,
-                style: { textAlign: "justify", textJustify: "-moz-initial" },
-              }}
-              variant="outlined"
-            />
-          </div>
-        </Grid>
-        <Grid item xs={6} className={classes.btEdit}>
-          <Avatar>
-            <Anh></Anh>
-          </Avatar>
-        </Grid>
+            inputProps={{
+              readOnly: true,
+              style: { textAlign: "justify", textJustify: "inter-character" },
+            }}
+            variant="outlined"
+          />
+        </div>
+
+        <div className={classes.btEdit}>
+          <IconButton
+            aria-label="show more"
+            // aria-controls={mobileMenuId}
+            aria-haspopup="true"
+            // onClick={handleMenuHideOpen}
+            color="inherit"
+          >
+            <MoreIcon />
+          </IconButton>
+        </div>
       </Grid>
     </Grid>
   );
