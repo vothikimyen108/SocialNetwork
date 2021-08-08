@@ -22,6 +22,8 @@ import Anh1 from "../../assets/ImgPost/anh2.jpg";
 import Anh2 from "../../assets/ImgPost/anh3.jpg";
 import Anh3 from "../../assets/ImgPost/anh4.jpg";
 
+import CommentList from "../Comment/CommentList";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100%",
@@ -167,7 +169,9 @@ export default function NewsItem(props) {
         <span className={classes.sessionDeskTop}>10 lượt chia sẻ</span>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent></CardContent>
+        <CardContent>
+          <CommentList></CommentList>
+        </CardContent>
       </Collapse>
     </Card>
   );

@@ -1,5 +1,5 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState } from "react";
+
 import TextField from "@material-ui/core/TextField";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
@@ -7,59 +7,50 @@ import Grid from "@material-ui/core/Grid";
 import { ReactComponent as Anh } from "../../assets/ImgHome/avatar.svg";
 import IconButton from "@material-ui/core/IconButton";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import { Autorenew } from "@material-ui/icons";
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-
-    backgroundColor: theme.palette.background.paper,
-  },
-  inline: {
-    display: "inline",
-  },
-  contentComment: {
-    border: "1px solid #f0f2f5",
-    borderRadius: "30px",
-    padding: "10px",
-    height: "auto",
-    float: "left",
-    width: "75%",
-    marginTop: "10px",
-    backgroundColor: "#f0f2f5",
-  },
-  authorComment: {
-    fontWeight: "bold",
-    "& span": {
-      fontWeight: "normal",
-      color: "grey",
-    },
-  },
-  btEdit: {
-    margin: "auto",
-    float: "left",
-    textAlign: "center",
-    width: "5%",
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputCMT: {
-    maxheight: "auto",
-    width: "100%",
-    padding: 0,
-    [`& fieldset`]: {
-      border: 0,
-    },
-    "& .MuiOutlinedInput-multiline": {
-      padding: "5px 0px",
-    },
-  },
-}));
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+//css
+import CommentItemStyles from "./CommentItemStyles";
 
 export default function CommentItem() {
-  const classes = useStyles();
+  const classes = CommentItemStyles();
+  //set menu hide
+  const [menuHideMoreAnchorEl, setMenuHide] = useState(null);
 
+  const isMenuHideOpen = Boolean(menuHideMoreAnchorEl);
+
+  const handleMenuHideClose = () => {
+    setMenuHide(null);
+  };
+
+  const handleMenuHideOpen = (event) => {
+    setMenuHide(event.currentTarget);
+  };
+  const mobileMenuId = "primary-search-account-menu-mobile";
+  const renderMenuHide = (
+    <Menu
+      anchorEl={menuHideMoreAnchorEl}
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      transformOrigin={{ vertical: "top", horizontal: "center" }}
+      id={mobileMenuId}
+      PaperProps={{
+        style: {
+          transform: "translateX(10px) translateY(50px)",
+        },
+      }}
+      open={isMenuHideOpen}
+      onClose={handleMenuHideClose}
+      keepMounted={false}
+    >
+      <MenuItem>
+        <p>Chỉnh sửa</p>
+      </MenuItem>
+
+      <MenuItem>
+        <p>Báo cáo</p>
+      </MenuItem>
+    </Menu>
+  );
   return (
     <Grid container wrap="nowrap" spacing={2}>
       <Grid item>
@@ -92,14 +83,15 @@ export default function CommentItem() {
         <div className={classes.btEdit}>
           <IconButton
             aria-label="show more"
-            // aria-controls={mobileMenuId}
+            aria-controls={mobileMenuId}
             aria-haspopup="true"
-            // onClick={handleMenuHideOpen}
+            onClick={handleMenuHideOpen}
             color="inherit"
           >
             <MoreIcon />
           </IconButton>
         </div>
+        {renderMenuHide}
       </Grid>
     </Grid>
   );
