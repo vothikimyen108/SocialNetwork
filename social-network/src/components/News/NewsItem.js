@@ -25,6 +25,9 @@ import Anh3 from "../../assets/ImgPost/anh4.jpg";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100%",
+    "& span": {
+      backgroundColor: "#00",
+    },
   },
   media: {
     height: 0,
@@ -37,22 +40,34 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.shortest,
     }),
   },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
+
   avatar: {
     backgroundColor: red[500],
   },
-  // root: {
-  //   display: 'flex',
-  //   flexWrap: 'wrap',
-  //   justifyContent: 'space-around',
-  //   overflow: 'hidden',
-  //   backgroundColor: theme.palette.background.paper,
-  // },
   imageList: {
     width: "100%",
     height: "400px",
+  },
+  sessionMobie: {
+    display: "none",
+
+    [theme.breakpoints.down("sm")]: {
+      display: "block",
+      [`& span:last-child`]: {
+        marginRight: "10px",
+        float: "right",
+      },
+      [`& span:nth-child(2)`]: {
+        float: "right",
+      },
+    },
+  },
+  sessionDeskTop: {
+    display: "block",
+
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
 }));
 
@@ -105,8 +120,8 @@ export default function NewsItem(props) {
         subheader="September 14, 2016"
       />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          nay tui đấu giá mấy món ăn tui nấu nha mọi người
+        <Typography variant="h6" component="h3">
+          Nay tui đấu giá mấy món ăn tui nấu nha mọi người quẹo lựa
         </Typography>
       </CardContent>
       <ImageList rowHeight={180} className={classes.imageList}>
@@ -121,11 +136,17 @@ export default function NewsItem(props) {
           </ImageListItem>
         ))}
       </ImageList>
+      <CardActions disableSpacing className={classes.sessionMobie}>
+        {" "}
+        <span>10 Thích</span>
+        <span>10 lượt chia sẻ</span>
+        <span>10 bình luận</span>
+      </CardActions>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>{" "}
-        <span>10</span>
+        <span className={classes.sessionDeskTop}>10</span>
         <IconButton
           onClick={handleExpandClick}
           aria-expanded={expanded}
@@ -134,7 +155,7 @@ export default function NewsItem(props) {
           {/* <ShareIcon /> */}
           <ChatBubbleIcon></ChatBubbleIcon>
         </IconButton>
-        <span>10 bình luận</span>
+        <span className={classes.sessionDeskTop}>10 bình luận</span>
         <IconButton
           aria-label="share"
           className={clsx(classes.expand, {
@@ -143,7 +164,7 @@ export default function NewsItem(props) {
         >
           <ShareIcon />
         </IconButton>
-        <span>10 lượt chia sẻ</span>
+        <span className={classes.sessionDeskTop}>10 lượt chia sẻ</span>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent></CardContent>
