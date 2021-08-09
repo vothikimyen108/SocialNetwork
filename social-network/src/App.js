@@ -4,9 +4,24 @@ import "./App.css";
 // import CommentItem from "./components/Comment/CommentItem";
 // import CommentList from "./components/Comment/CommentList";
 
-import NewsItem from "./components/News/NewsItem";
+import React, { useState } from "react";
+import Photo from "./components/Photos/Photo";
 function App() {
-  return <NewsItem></NewsItem>;
+  const [openCart, setOpenCart] = useState(false);
+  const handerOnlick = () => {
+    setOpenCart(true);
+    console.log(openCart);
+  };
+  const handerClose = () => {
+    console.log(openCart);
+    setOpenCart(false);
+  };
+  return (
+    <div>
+      <button onClick={handerOnlick}>aaaaa</button>
+      {openCart && <Photo onClose={handerClose}></Photo>}
+    </div>
+  );
 }
 
 export default App;
