@@ -83,7 +83,7 @@ const Photo = (props) => {
           square
           className={classes.right}
         >
-          <NewsItem isOpenCMT={true} isExpanded={false}>
+          <NewsItem isOpenCMT={true} isExpanded={false} isShowImg={false}>
             {" "}
           </NewsItem>
         </Grid>

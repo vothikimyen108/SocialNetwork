@@ -27,7 +27,7 @@ import StarsIcon from "@material-ui/icons/Stars";
 import MainNavigationStyles from "./MainNavigationStyles";
 import LayoutMenber from "./LayoutMenber";
 import { useState } from "react";
-import NotificationItem from "../Notifications/NotificationItem";
+
 import NotificationList from "../Notifications/NotificationList";
 
 export default function PrimarySearchAppBar() {

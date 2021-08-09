@@ -23,7 +23,8 @@ const NewCommentStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: "10px",
+    marginLeft: "14px",
+    marginTop: "5px",
   },
   inputCMT: {
     maxheight: "auto",

@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -10,7 +10,6 @@ import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -24,58 +23,12 @@ import Anh3 from "../../assets/ImgPost/anh4.jpg";
 
 import CommentList from "../Comment/CommentList";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: "100%",
-    "& span": {
-      backgroundColor: "#00",
-    },
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-
-  avatar: {
-    backgroundColor: red[500],
-  },
-  imageList: {
-    width: "100%",
-    height: "400px",
-  },
-  sessionMobie: {
-    display: "none",
-
-    [theme.breakpoints.down("sm")]: {
-      display: "block",
-      [`& span:last-child`]: {
-        marginRight: "10px",
-        float: "right",
-      },
-      [`& span:nth-child(2)`]: {
-        float: "right",
-      },
-    },
-  },
-  sessionDeskTop: {
-    display: "block",
-
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
-  },
-}));
-
+//css
+import NewsItemStyles from "./NewsItemStyles";
 export default function NewsItem(props) {
-  const classes = useStyles();
+  const classes = NewsItemStyles();
   const isExpanded = props.isExpanded;
+  const isShowImg = props.isShowImg;
   const [expanded, setExpanded] = React.useState(props.isOpenCMT);
   const itemData = [
     {
@@ -151,18 +104,20 @@ export default function NewsItem(props) {
           Nay tui đấu giá mấy món ăn tui nấu nha mọi người quẹo lựa
         </Typography>
       </CardContent>
-      {/* <ImageList rowHeight={180} className={classes.imageList}>
-        <ImageListItem
-          key="Subheader"
-          cols={2}
-          style={{ height: "auto" }}
-        ></ImageListItem>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
-            <img src={item.img} alt={item.title} />
-          </ImageListItem>
-        ))}
-      </ImageList> */}
+      {isShowImg && (
+        <ImageList rowHeight={180} className={classes.imageList}>
+          <ImageListItem
+            key="Subheader"
+            cols={2}
+            style={{ height: "auto" }}
+          ></ImageListItem>
+          {itemData.map((item) => (
+            <ImageListItem key={item.img}>
+              <img src={item.img} alt={item.title} />
+            </ImageListItem>
+          ))}
+        </ImageList>
+      )}
       <CardActions disableSpacing className={classes.sessionMobie}>
         {" "}
         <span>10 Thích</span>
@@ -179,7 +134,6 @@ export default function NewsItem(props) {
           aria-expanded={expanded}
           aria-label="show more"
         >
-          {/* <ShareIcon /> */}
           <ChatBubbleIcon></ChatBubbleIcon>
         </IconButton>
         <span className={classes.sessionDeskTop}>10 bình luận</span>
