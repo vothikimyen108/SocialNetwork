@@ -75,8 +75,31 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NewsItem(props) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const isExpanded = props.isExpanded;
+  const [expanded, setExpanded] = React.useState(props.isOpenCMT);
   const itemData = [
+    {
+      img: `${Anh}`,
+      title: "Breakfast",
+      author: "jill111",
+      featured: true,
+    },
+    {
+      img: `${Anh1}`,
+      title: "Tasty burger",
+      author: "director90",
+    },
+    {
+      img: `${Anh2}`,
+      title: "Camera",
+      author: "Danson67",
+    },
+    {
+      img: `${Anh3}`,
+      title: "Morning",
+      author: "fancycrave1",
+      featured: true,
+    },
     {
       img: `${Anh}`,
       title: "Breakfast",
@@ -102,7 +125,9 @@ export default function NewsItem(props) {
   ];
 
   const handleExpandClick = () => {
-    setExpanded(!expanded);
+    if (isExpanded) {
+      setExpanded(!expanded);
+    }
   };
 
   return (
@@ -126,7 +151,7 @@ export default function NewsItem(props) {
           Nay tui đấu giá mấy món ăn tui nấu nha mọi người quẹo lựa
         </Typography>
       </CardContent>
-      <ImageList rowHeight={180} className={classes.imageList}>
+      {/* <ImageList rowHeight={180} className={classes.imageList}>
         <ImageListItem
           key="Subheader"
           cols={2}
@@ -137,7 +162,7 @@ export default function NewsItem(props) {
             <img src={item.img} alt={item.title} />
           </ImageListItem>
         ))}
-      </ImageList>
+      </ImageList> */}
       <CardActions disableSpacing className={classes.sessionMobie}>
         {" "}
         <span>10 Thích</span>

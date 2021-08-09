@@ -4,9 +4,9 @@ import "./App.css";
 // import CommentItem from "./components/Comment/CommentItem";
 // import CommentList from "./components/Comment/CommentList";
 
-import NewsItem from "./components/News/NewsItem";
+import Photo from "./components/Photos/Photo";
 function App() {
-  return <NewsItem></NewsItem>;
+  return <Photo></Photo>;
 }
 
 export default App;
