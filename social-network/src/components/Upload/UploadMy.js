@@ -153,18 +153,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 const UploadMy = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
-
+  //thêm
   const handleImageChange = (e) => {
-    // console.log(e.target.files[])
+    console.log(e.target.files);
     if (e.target.files) {
-      const filesArray = Array.from(e.target.files).map((file) =>
-        URL.createObjectURL(file),
-      );
+      let filesArray = [];
+      for (let i = 0; i < e.target.files.length; i++) {
+        filesArray.push(URL.createObjectURL(e.target.files[i]));
+      }
 
       setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+      Array.from(e.target.files).map(
+        (file) => URL.revokeObjectURL(file), // avoid memory leak
+      );
     }
   };
-
+  //xóa
   const handlerRemove = (photo) => {
     console.log(photo);
     setSelectedFiles((oldState) => oldState.filter((item) => item !== photo));
@@ -210,9 +214,9 @@ const UploadMy = (props) => {
         </div>
         <div className={classes.content}>
           <ImageList className={classes.imageList} cols={3} rowHeight={160}>
-            {selectedFiles.map((item) => (
-              <ImageListItem>
-                <img src={item} alt={item} key={item} />
+            {selectedFiles.map((item, id) => (
+              <ImageListItem key={id}>
+                <img src={item} alt={item} />
                 <ImageListItemBar
                   classes={{
                     root: classes.titleBar,
@@ -236,14 +240,15 @@ const UploadMy = (props) => {
             <p>Thêm vào bài viết</p>
           </MenuItem>
           <MenuItem>
-            <input
-              accept="image/*"
+            {/* <input
               className={classes.input}
-              id="icon-button-file"
               type="file"
+              id="files"
+              name="files[]"
+              multiple
               onChange={handleImageChange}
             />
-            <label htmlFor="icon-button-file">
+            <label htmlFor="files">
               <IconButton
                 aria-label="upload picture"
                 component="span"
@@ -252,7 +257,15 @@ const UploadMy = (props) => {
                 <PhotoLibraryIcon></PhotoLibraryIcon>
               </IconButton>
             </label>
-            <p>Ảnh</p>
+            <p>Ảnh</p> */}
+            <input
+              type="file"
+              id="files"
+              name="files[]"
+              multiple="multiple"
+              aria-describedby="inputGroupFileAddon01"
+              onChange={handleImageChange}
+            />
           </MenuItem>
           <MenuItem>
             <IconButton

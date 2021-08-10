@@ -7,7 +7,6 @@ import { ReactComponent as Anh } from "../../assets/ImgHome/avatar.svg";
 
 import MenuItem from "@material-ui/core/MenuItem";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
-import TranslateIcon from "@material-ui/icons/Translate";
 import IconButton from "@material-ui/core/IconButton";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 //css
@@ -23,7 +22,6 @@ export default function CreateNews() {
           <Avatar>
             <Anh></Anh>
           </Avatar>
-          <h3> Yến</h3>
         </Grid>
         <Grid item xs={12}>
           <div className={classes.contentComment}>
