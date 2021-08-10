@@ -23,6 +23,7 @@ export default function CreateNews() {
           <Avatar>
             <Anh></Anh>
           </Avatar>
+          <h3> Yến</h3>
         </Grid>
         <Grid item xs={12}>
           <div className={classes.contentComment}>
