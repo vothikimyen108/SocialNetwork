@@ -113,47 +113,49 @@ const NewsForm = (props) => {
               </Avatar>
               <h2> Yến</h2>
             </div>
-          </Grid>
-          <div className={classes.content}>
-            <TextField
-              classes={{
-                root: classes.inputCMT,
-              }}
-              multiline
-              placeholder="Bạn đang nghĩ gì vậy?"
-              inputProps={{
-                style: {
-                  textAlign: "justify",
-                  textJustify: "inter-character",
-                },
-              }}
-              variant="outlined"
-            />{" "}
+          </Grid>{" "}
+          <div className={classes.mainContent}>
+            <div className={classes.content}>
+              <TextField
+                classes={{
+                  root: classes.inputCMT,
+                }}
+                multiline
+                placeholder="Bạn đang nghĩ gì vậy?"
+                inputProps={{
+                  style: {
+                    textAlign: "justify",
+                    textJustify: "inter-character",
+                  },
+                }}
+                variant="outlined"
+              />{" "}
+            </div>
+            {isOpenAuction && handlerAuction()}
+            <div className={classes.content}>
+              <ImageList className={classes.imageList} cols={3} rowHeight={160}>
+                {images.map((item, id) => (
+                  <ImageListItem key={id}>
+                    <img src={item} alt={item} />
+                    <ImageListItemBar
+                      classes={{
+                        root: classes.titleBar,
+                        title: classes.title,
+                      }}
+                      actionIcon={
+                        <IconButton
+                          className={classes.title}
+                          onClick={handlerRemove.bind(null, item)}
+                        >
+                          <CloseIcon />
+                        </IconButton>
+                      }
+                    />
+                  </ImageListItem>
+                ))}
+              </ImageList>
+            </div>
           </div>
-          <div className={classes.content}>
-            <ImageList className={classes.imageList} cols={3} rowHeight={160}>
-              {images.map((item, id) => (
-                <ImageListItem key={id}>
-                  <img src={item} alt={item} />
-                  <ImageListItemBar
-                    classes={{
-                      root: classes.titleBar,
-                      title: classes.title,
-                    }}
-                    actionIcon={
-                      <IconButton
-                        className={classes.title}
-                        onClick={handlerRemove.bind(null, item)}
-                      >
-                        <CloseIcon />
-                      </IconButton>
-                    }
-                  />
-                </ImageListItem>
-              ))}
-            </ImageList>
-          </div>
-          {isOpenAuction && handlerAuction()}
           <Grid item xs={12} className={classes.navButton}>
             <MenuItem>
               <p>Thêm vào bài viết</p>

@@ -3,11 +3,10 @@ const NewsFormStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     width: "100%",
-    overflow: "auto",
     borderRadius: 20,
     height: "auto",
     [theme.breakpoints.down("sm")]: {
-      //   height: "auto",
+      height: "auto",
       width: "100%",
     },
   },
@@ -16,7 +15,7 @@ const NewsFormStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     justifyContent: "space-around",
     overflow: "auto",
-    width: "auto",
+    width: "100%",
     height: "22vh",
   },
   title: {
@@ -73,8 +72,8 @@ const NewsFormStyles = makeStyles((theme) => ({
   },
   content: {
     width: "100%",
-    paddingRight: "20px",
-    paddingLeft: "20px",
+    // paddingRight: "20px",
+    // paddingLeft: "20px",
     paddingBottom: "20px",
   },
   inputCMT: {
@@ -137,7 +136,15 @@ const NewsFormStyles = makeStyles((theme) => ({
     padding: 10,
     border: "1px solid #ccc",
     position: "relative",
+    marginBottom: 20,
     "& .MuiIconButton-root": {},
+  },
+  mainContent: {
+    overflowY: "auto",
+    // overflowX: "visible",
+    width: "100%",
+    height: "35vh",
+    padding: 20,
   },
 }));
 export default NewsFormStyles;
