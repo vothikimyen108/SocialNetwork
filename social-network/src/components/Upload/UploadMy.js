@@ -1,6 +1,6 @@
 // import { Button } from "bootstrap";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
@@ -152,30 +152,49 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const UploadMy = (props) => {
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  // const [selectedFiles, setSelectedFiles] = useState([]);
   //thêm
-  const handleImageChange = (e) => {
-    console.log(e.target.files);
+
+  // const handleImageChange = (e) => {
+  //   console.log(e);
+  //   if (e.target.files) {
+  //     let filesArray = [];
+  //     for (let i = 0; i < e.target.files.length; i++) {
+  //       filesArray.push(URL.createObjectURL(e.target.files[i]));
+  //     }
+
+  //     setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+  //     Array.from(e.target.files).map(
+  //       (file) => URL.revokeObjectURL(file), // avoid memory leak
+  //     );
+  //   }
+  //   // handleImageChange(e);
+  // };
+
+  const fileInputRef = useRef();
+  const [images, setImages] = useState([]);
+  const classes = useStyles();
+  const addImage = (e) => {
     if (e.target.files) {
       let filesArray = [];
       for (let i = 0; i < e.target.files.length; i++) {
         filesArray.push(URL.createObjectURL(e.target.files[i]));
       }
 
-      setSelectedFiles((prevImages) => prevImages.concat(filesArray));
-      Array.from(e.target.files).map(
-        (file) => URL.revokeObjectURL(file), // avoid memory leak
-      );
+      setImages((prevImages) => prevImages.concat(filesArray));
+      Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
     }
   };
-  //xóa
+
+  useEffect(() => {
+    if (fileInputRef) fileInputRef.current.value = null;
+    console.log(images);
+  }, [images]);
+  // //xóa
   const handlerRemove = (photo) => {
     console.log(photo);
-    setSelectedFiles((oldState) => oldState.filter((item) => item !== photo));
+    setImages((oldState) => oldState.filter((item) => item !== photo));
   };
-
-  const classes = useStyles();
-
   return (
     <div className={classes.root}>
       <Grid container>
@@ -214,7 +233,7 @@ const UploadMy = (props) => {
         </div>
         <div className={classes.content}>
           <ImageList className={classes.imageList} cols={3} rowHeight={160}>
-            {selectedFiles.map((item, id) => (
+            {images.map((item, id) => (
               <ImageListItem key={id}>
                 <img src={item} alt={item} />
                 <ImageListItemBar
@@ -240,15 +259,17 @@ const UploadMy = (props) => {
             <p>Thêm vào bài viết</p>
           </MenuItem>
           <MenuItem>
-            {/* <input
+            <input
+              accept="image/*"
               className={classes.input}
+              id="icon-button-file"
               type="file"
-              id="files"
-              name="files[]"
               multiple
-              onChange={handleImageChange}
+              // aria-describedby="inputGroupFileAddon01"
+              ref={fileInputRef}
+              onChange={addImage}
             />
-            <label htmlFor="files">
+            <label htmlFor="icon-button-file">
               <IconButton
                 aria-label="upload picture"
                 component="span"
@@ -257,15 +278,7 @@ const UploadMy = (props) => {
                 <PhotoLibraryIcon></PhotoLibraryIcon>
               </IconButton>
             </label>
-            <p>Ảnh</p> */}
-            <input
-              type="file"
-              id="files"
-              name="files[]"
-              multiple="multiple"
-              aria-describedby="inputGroupFileAddon01"
-              onChange={handleImageChange}
-            />
+            <p>Ảnh</p>
           </MenuItem>
           <MenuItem>
             <IconButton
@@ -294,4 +307,5 @@ const UploadMy = (props) => {
     </div>
   );
 };
+
 export default UploadMy;
