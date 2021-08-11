@@ -6,12 +6,13 @@
   height: 100vh;
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.75);
+  overflow: "auto";
 }
 
 .modal {
   position: fixed;
 
-  top: 10vh;  left: 25%;
+  top: 10vh;  left: 28%;
   width: 40%;
   background-color: white;
   padding: 1rem;  overflow: "auto";
