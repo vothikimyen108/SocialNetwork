@@ -22,6 +22,7 @@ const NewsForm = (props) => {
   const [images, setImages] = useState([]);
   const classes = NewsFormStyles();
   const [isOpenAuction, setIsOpenAuction] = useState(false);
+  const [isOpenImg, setIsOpenImg] = useState(false);
   const handlerAuction = () => {
     return (
       <Grid item xs={12} className={classes.auction}>
@@ -72,7 +73,43 @@ const NewsForm = (props) => {
     setIsOpenAuction(!isOpenAuction);
   };
 
+  const handlerImg = () => {
+    return (
+      <div className={classes.content}>
+        <IconButton
+          onClick={() => {
+            setIsOpenImg(false);
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <ImageList className={classes.imageList} cols={3} rowHeight={160}>
+          {images.map((item, id) => (
+            <ImageListItem key={id}>
+              <img src={item} alt={item} />
+              <ImageListItemBar
+                classes={{
+                  root: classes.titleBar,
+                  title: classes.title,
+                }}
+                actionIcon={
+                  <IconButton
+                    className={classes.title}
+                    onClick={handlerRemove.bind(null, item)}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                }
+              />
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </div>
+    );
+  };
+
   const addImage = (e) => {
+    setIsOpenImg(true);
     if (e.target.files) {
       let filesArray = [];
       for (let i = 0; i < e.target.files.length; i++) {
@@ -132,29 +169,7 @@ const NewsForm = (props) => {
               />{" "}
             </div>
             {isOpenAuction && handlerAuction()}
-            <div className={classes.content}>
-              <ImageList className={classes.imageList} cols={3} rowHeight={160}>
-                {images.map((item, id) => (
-                  <ImageListItem key={id}>
-                    <img src={item} alt={item} />
-                    <ImageListItemBar
-                      classes={{
-                        root: classes.titleBar,
-                        title: classes.title,
-                      }}
-                      actionIcon={
-                        <IconButton
-                          className={classes.title}
-                          onClick={handlerRemove.bind(null, item)}
-                        >
-                          <CloseIcon />
-                        </IconButton>
-                      }
-                    />
-                  </ImageListItem>
-                ))}
-              </ImageList>
-            </div>
+            {isOpenImg && handlerImg()}
           </div>
           <Grid item xs={12} className={classes.navButton}>
             <MenuItem>
