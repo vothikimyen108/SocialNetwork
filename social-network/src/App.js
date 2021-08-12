@@ -7,7 +7,8 @@
 // import Photo from "./components/Photos/Photo";
 // import NewsForm from "./components/News/NewsForm";
 // import Member from "./components/Members/Member";
-import MembersList from "./components/Members/MembersList";
+// import MembersList from "./components/Members/MembersList";
+import MainProfile from "./components/Profile/MainProfile";
 function App() {
   // const [openCart, setOpenCart] = useState(false);
   // const handerOnlick = () => {
@@ -19,7 +20,7 @@ function App() {
   //   setOpenCart(false);
   // };
   return (
-<MembersList></MembersList>
+<MainProfile></MainProfile>
   );
 }
 
