@@ -4,8 +4,8 @@ body, html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  
-  background-color:gray;
+/*   
+  background-color:gray; */
 }
 /* html, body {
   margin:0px;
