@@ -2,9 +2,10 @@ import { makeStyles } from "@material-ui/core/styles";
 const NewsFormStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: "100%",
     borderRadius: 20,
+    fontSize: 15,
     height: "auto",
+    width: "100%",
     [theme.breakpoints.down("sm")]: {
       height: "auto",
       width: "100%",
@@ -75,6 +76,10 @@ const NewsFormStyles = makeStyles((theme) => ({
     // paddingRight: "20px",
     // paddingLeft: "20px",
     paddingBottom: "20px",
+    border: "1px solid #ccc",
+    "&:first-child": {
+      border: 0,
+    },
   },
   inputCMT: {
     maxheight: "auto",
@@ -95,6 +100,7 @@ const NewsFormStyles = makeStyles((theme) => ({
     margin: 0,
     paddingLeft: 10,
     paddingRight: 10,
+
     "& .MuiMenuItem-root": {
       display: "flex",
       alignItems: "center",
@@ -103,8 +109,9 @@ const NewsFormStyles = makeStyles((theme) => ({
       float: "left",
       margin: 0,
       [theme.breakpoints.down("sm")]: {
-        width: "130px",
+        width: "108px",
         paddingLeft: 0,
+        fontSize: 13,
         paddingRight: 0,
       },
     },
