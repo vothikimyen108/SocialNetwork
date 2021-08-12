@@ -19,7 +19,7 @@ function App() {
   return (
     <div>
       <button onClick={handerOnlick}>aaaaa</button>
-      {openCart && <NewsForm onClose={handerClose}></NewsForm>}
+      {openCart && <Photo onClose={handerClose}></Photo>}
     </div>
   );
 }
