@@ -13,7 +13,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 
-import Modal from "../UI/Modal";
+import ModalFull from "../UI/ModalFull";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,7 +55,7 @@ const Photo = (props) => {
   const classes = useStyles();
   const slides = [{ img: `${Anh}` }, { img: `${Anh2}` }, { img: `${Anh3}` }];
   return (
-    <Modal>
+    <ModalFull>
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={12} sm={12} md={8} className={classes.left}>
@@ -88,7 +88,7 @@ const Photo = (props) => {
           </NewsItem>
         </Grid>
       </Grid>
-    </Modal>
+    </ModalFull>
   );
 };
 export default Photo;
