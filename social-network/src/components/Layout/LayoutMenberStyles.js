@@ -4,6 +4,10 @@ const LayoutMenberStyles = makeStyles((theme) => ({
   layout: {
     display: "none",
     background: "#fff",
+    position: "fixed",
+    top: "54%",
+    left: 0,
+    right: 0,
     [theme.breakpoints.up("md")]: {
       height: 300,
       marginTop: 30,

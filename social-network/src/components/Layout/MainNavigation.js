@@ -20,17 +20,13 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TranslateIcon from "@material-ui/icons/Translate";
-
-import SecondNavigation from "./SecondNavigation";
 import StarsIcon from "@material-ui/icons/Stars";
-
 import MainNavigationStyles from "./MainNavigationStyles";
-import LayoutMenber from "./LayoutMenber";
 import { useState } from "react";
 
 import NotificationList from "../Notifications/NotificationList";
 
-export default function PrimarySearchAppBar() {
+export default function MainNavigation() {
   const classes = MainNavigationStyles();
 
   //set menu hide
@@ -155,79 +151,79 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
-    <div className={classes.grow}>
-      <AppBar
-        classes={{
-          root: classes.mainMenu, // class name, e.g. `classes-nesting-root-x`
-        }}
-        position="static"
-      >
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <StarsIcon className={classes.logo}></StarsIcon>
-          </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            AnTam
-          </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+    <div className={classes.main}>
+      <div className={classes.grow}>
+        <AppBar
+          classes={{
+            root: classes.mainMenu, // class name, e.g. `classes-nesting-root-x`
+          }}
+          position="static"
+        >
+          <Toolbar>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="open drawer"
+            >
+              <StarsIcon className={classes.logo}></StarsIcon>
+            </IconButton>
+            <Typography className={classes.title} variant="h6" noWrap>
+              AnTam
+            </Typography>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Tìm kiếm..."
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ "aria-label": "search" }}
+              />
             </div>
-            <InputBase
-              placeholder="Tìm kiếm..."
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <div className={classes.item}>
-              <Avatar className={classes.green}>
-                <Anh></Anh>
-              </Avatar>
-              <h3> Yến</h3>
+            <div className={classes.grow} />
+            <div className={classes.sectionDesktop}>
+              <div className={classes.item}>
+                <Avatar className={classes.green}>
+                  <Anh></Anh>
+                </Avatar>
+                <h3> Yến</h3>
+              </div>
+              <div className={classes.item}>
+                <NotificationsButon
+                  className={classes.button}
+                  onClick={handleNotiMenuOpen}
+                ></NotificationsButon>
+              </div>
+              <div className={classes.item}>
+                <IconButton
+                  aria-label="show 11 new notifications"
+                  className={classes.button}
+                  onClick={handleMenuHideOpen}
+                >
+                  <ExpandMoreIcon fontSize="medium"></ExpandMoreIcon>
+                </IconButton>
+              </div>
             </div>
-            <div className={classes.item}>
-              <NotificationsButon
-                className={classes.button}
-                onClick={handleNotiMenuOpen}
-              ></NotificationsButon>
-            </div>
-            <div className={classes.item}>
+            <div className={classes.sectionMobile}>
               <IconButton
-                aria-label="show 11 new notifications"
-                className={classes.button}
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
                 onClick={handleMenuHideOpen}
+                color="inherit"
               >
-                <ExpandMoreIcon fontSize="medium"></ExpandMoreIcon>
+                <MoreIcon />
               </IconButton>
             </div>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMenuHideOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-      {renderMenuHide}
-      {renderNoti}
-      <SecondNavigation mt={10}></SecondNavigation>
-      <LayoutMenber></LayoutMenber>
+          </Toolbar>
+        </AppBar>
+        {renderMenuHide}
+        {renderNoti}
+      </div>
     </div>
   );
 }

@@ -10,6 +10,14 @@ const SecondNavigationStyles = makeStyles((theme) => ({
     alignItems: "center",
     height: "auto",
     borderRadius: 0,
+    position: "fixed",
+    top: 55,
+    left: 0,
+    right: 0,
+    zIndex: 100,
+    [theme.breakpoints.up("sm")]: {
+      top: 80,
+    },
     [theme.breakpoints.up("md")]: {
       height: 280,
       marginTop: 30,
