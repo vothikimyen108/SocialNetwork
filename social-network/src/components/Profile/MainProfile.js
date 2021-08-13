@@ -4,8 +4,8 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 //anh
-import teams from "../../assets/ImgProfile/cover2.svg";
-
+import yen from "../../assets/ImgProfile/avatar.jpg";
+import teams from "../../assets/ImgProfile/teams.svg";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
@@ -23,15 +23,11 @@ const useStyles = makeStyles((theme) => ({
     margin: 20,
     height: 300,
     boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-
-    background: `url(${teams}) `,
-    transition: "all .2s",
-    // "&:hover": {
-    //   boxShadow:
-    //     "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px",
-    //   transform:
-    //     "scale(1.01)" /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */,
-    // },
+    background: "linear-gradient(to right, #7f00ff, #e100ff)",
+    // backgroundImage: `url(${teams})`,
+    // backgroundSize: "1000px 300px",
+    // backgroundPosition: "right",
+    // backgroundRepeat: "no-repeat",
   },
   containerImg: {
     height: " 100%",
@@ -41,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   center: {
     flexWrap: "wrap",
     // flexDirection: "col",
-    padding: 20,
+    paddingTop: 20,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -50,13 +46,15 @@ const useStyles = makeStyles((theme) => ({
       width: 200,
       height: 200,
       position: "absolute",
-      top: 250,
+      top: 240,
+      border: "5px solid #fff",
       boxShadow:
         "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px",
     },
-    "& p": {
-      color: "grey",
-      margin: 0,
+    "& h1": {
+      marginTop: 90,
+      color: "#7B1FA2",
+      fontWeight: "bold",
     },
   },
   info: {
@@ -65,14 +63,32 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "row",
+  },
+  infoContent: {
+    padding: 15,
+    margin: "0px 32px",
+    borderRadius: 30,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     flexDirection: "column",
-    "& h1": {
-      marginTop: 60,
+    background: "#fff1ff",
+    color: "#000",
+    transition: "all .2s",
+    "&:hover": {
+      background: "#7B1FA2",
+      color: "#fff",
+      cursor: "pointer",
     },
-    "& p": {
-      color: "grey",
-      margin: 10,
-      fontSize: 20,
+    "& span": {
+      fontSize: 18,
+      padding: 5,
+
+      "&:first-child": {
+        fontSize: 25,
+        fontWeight: "bold",
+      },
     },
   },
 }));
@@ -80,20 +96,20 @@ const AntTab = withStyles((theme) => ({
   root: {
     textTransform: "none",
     minWidth: 72,
-    fontWeight: theme.typography.fontWeightRegular,
     marginRight: theme.spacing(4),
     fontSize: 20,
+    fontWeight: "bold",
 
     "&:hover": {
-      color: "#40a9ff",
+      color: "#7B1FA2",
       opacity: 1,
     },
     "&$selected": {
-      color: "#1890ff",
+      color: "#7B1FA2",
       fontWeight: theme.typography.fontWeightMedium,
     },
     "&:focus": {
-      color: "#40a9ff",
+      color: "#7B1FA2",
     },
   },
   selected: {},
@@ -113,18 +129,29 @@ export default function MainProfile() {
             }}
           ></Paper>
           <Grid item xs={12} className={classes.center}>
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+            <Avatar alt="Remy Sharp" src={yen} />
+            <h1>Võ Yến</h1>
           </Grid>
           <Grid item xs={12} className={classes.info}>
-            <h1>Võ Yến</h1>
-            <p>12 Bài viết 12 Sản phẩm đấu giá</p>
+            <div className={classes.infoContent}>
+              <span>12</span>
+              <span>Bài viết</span>
+            </div>
+            <div className={classes.infoContent}>
+              <span>3</span>
+              <span>Đấu giá</span>
+            </div>
+            <div className={classes.infoContent}>
+              <span>20</span>
+              <span>tham gia</span>
+            </div>
           </Grid>
           <Grid item xs={12}>
             <div className={classes.demo1}>
               <AntTab label="Thông tin" />
               <AntTab label="Ảnh" />
               <AntTab label="Đấu giá" />
-              <AntTab label="" />
+              <AntTab label="Chỉnh sửa" />
             </div>
           </Grid>
         </Grid>
