@@ -8,7 +8,7 @@ const LayoutMenberStyles = makeStyles((theme) => ({
     top: "54%",
     left: 0,
     right: 0,
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       height: 300,
       marginTop: 30,
       marginLeft: 30,
