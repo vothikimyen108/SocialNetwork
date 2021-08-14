@@ -17,7 +17,7 @@ const MainNavigationStyles = makeStyles((theme) => ({
   mainMenu: {
     backgroundColor: "#673ab7",
     color: "#fff",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       backgroundColor: "#fff",
       color: "#000",
     },
@@ -28,7 +28,7 @@ const MainNavigationStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       color: "#7200ca",
     },
   },
@@ -61,7 +61,7 @@ const MainNavigationStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: "#000",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       color: "#7200ca",
     },
   },
@@ -71,13 +71,13 @@ const MainNavigationStyles = makeStyles((theme) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
     width: "100%",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       width: "20ch",
     },
   },
   sectionDesktop: {
     display: "none",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       display: "flex",
     },
   },
@@ -103,13 +103,13 @@ const MainNavigationStyles = makeStyles((theme) => ({
   },
   logo: {
     color: "#fff",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       color: "#7200ca",
     },
   },
   sectionMobile: {
     display: "flex",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       display: "none",
     },
   },

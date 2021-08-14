@@ -15,13 +15,14 @@ const HeaderProfileStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     margin: 20,
     padding: 10,
-    borderBottom: "2px solid #bdb9b7",
+    borderTop: "2px solid #F6F4F4",
+    fontFamily: 0,
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
     margin: 20,
-    height: 250,
+    height: 180,
     boxShadow:
       "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
     backgroundImage: `url(${teams})`,
@@ -40,16 +41,16 @@ const HeaderProfileStyles = makeStyles((theme) => ({
     justifyContent: "center",
     flexDirection: "column",
     "& .MuiAvatar-root": {
-      width: 150,
-      height: 150,
+      width: 130,
+      height: 130,
       position: "absolute",
-      top: 320,
+      top: 260,
       border: "5px solid #fff",
       boxShadow:
         "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
     },
-    "& h1": {
-      marginTop: 60,
+    "& h2": {
+      marginTop: 40,
       color: "#7B1FA2",
       fontWeight: "bold",
     },
@@ -65,7 +66,7 @@ const HeaderProfileStyles = makeStyles((theme) => ({
 
   infoContent: {
     padding: 10,
-    margin: "0px 32px",
+    margin: "0px 20px",
     borderRadius: 20,
     display: "flex",
     alignItems: "center",
@@ -80,12 +81,22 @@ const HeaderProfileStyles = makeStyles((theme) => ({
       cursor: "pointer",
     },
     "& span": {
-      fontSize: 15,
+      fontSize: 10,
       padding: 2,
 
       "&:first-child": {
-        fontSize: 20,
+        fontSize: 15,
         fontWeight: "bold",
+      },
+    },
+    [theme.breakpoints.up("lg")]: {
+      margin: "0px 32px",
+      "& span": {
+        fontSize: 14,
+
+        "&:first-child": {
+          fontSize: 18,
+        },
       },
     },
   },
@@ -95,8 +106,8 @@ export default HeaderProfileStyles;
 export const AntTab = withStyles((theme) => ({
   root: {
     textTransform: "none",
-    minWidth: 72,
-    marginRight: theme.spacing(4),
+    minWidth: 60,
+    marginRight: theme.spacing(1),
     fontSize: 15,
     fontWeight: "bold",
     background: "#fff",
@@ -104,10 +115,7 @@ export const AntTab = withStyles((theme) => ({
     "&:hover": {
       color: "#7B1FA2",
     },
-    "&$selected": {
-      color: "#7B1FA2",
-      fontWeight: theme.typography.fontWeightMedium,
-    },
+    "&$selected": {},
     "&:focus": {
       color: "#7B1FA2",
     },

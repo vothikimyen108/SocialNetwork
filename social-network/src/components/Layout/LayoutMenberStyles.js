@@ -5,11 +5,11 @@ const LayoutMenberStyles = makeStyles((theme) => ({
     display: "none",
     background: "#fff",
     position: "fixed",
-    top: "54%",
+    top: "53%",
     left: 0,
     right: 0,
-    [theme.breakpoints.up("md")]: {
-      height: 300,
+    [theme.breakpoints.up("lg")]: {
+      height: 280,
       marginTop: 30,
       marginLeft: 30,
       width: 230,
