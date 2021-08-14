@@ -15,6 +15,8 @@ import MainNavigation from "./components/Layout/MainNavigation";
 import HeaderProfile from "./components/Profile/HeaderProfile";
 import SecondNavigation from "./components/Layout/SecondNavigation";
 import LayoutMenber from "./components/Layout/LayoutMenber";
+
+import ListPhoto from "./components/Profile/ListPhoto";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -48,10 +50,7 @@ function App() {
         </Grid>
         <Grid item xs={12} sm={12} lg={8}>
           <HeaderProfile></HeaderProfile>
-          <HeaderProfile></HeaderProfile>
-          <HeaderProfile></HeaderProfile>
-          <HeaderProfile></HeaderProfile>
-          <HeaderProfile></HeaderProfile>
+          <ListPhoto></ListPhoto>
         </Grid>
         {/* <Grid item xs={6} sm={3} lg={3}>
           <HeaderProfile></HeaderProfile>

@@ -13,9 +13,11 @@ import SendIcon from "@material-ui/icons/Send";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
-  root: {
+  info: {
+    margin: "0 20px",
     minWidth: 275,
-
+    boxShadow: "none",
+    borderRadius: 20,
     "& .MuiPaper-elevation1": { border: 0 },
   },
   subButton: {
@@ -30,7 +32,7 @@ export default function InfoProfile() {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.info}>
       <div>
         <CardContent>
           <Typography variant="h6" component="h2" className={classes.text}>

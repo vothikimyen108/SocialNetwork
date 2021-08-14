@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -6,13 +6,10 @@ import Avatar from "@material-ui/core/Avatar";
 //anh
 import yen from "../../assets/ImgProfile/avatar.jpg";
 
-import InfoProfile from "./InfoProfile";
 //css
 import HeaderProfileStyles, { AntTab } from "./HeaderProfileStyles";
-
 export default function HeaderProfile() {
   const classes = HeaderProfileStyles();
-
   return (
     <div className={classes.root}>
       <Grid container>
@@ -25,7 +22,7 @@ export default function HeaderProfile() {
           ></Paper>
           <Grid item xs={12} className={classes.center}>
             <Avatar alt="Remy Sharp" src={yen} />
-            <h1>Võ Yến</h1>
+            <h2>Võ Yến</h2>
           </Grid>
           <Grid item xs={12} className={classes.info}>
             <div className={classes.infoContent}>
@@ -50,16 +47,16 @@ export default function HeaderProfile() {
               <AntTab label="Chỉnh sửa" />
             </div>
           </Grid>
-          <Grid item xs={12} className={classes.menu}>
+          {/* <Grid item xs={12} className={classes.menu}>
             <Grid container>
               <Grid item lg={3}>
                 <InfoProfile></InfoProfile>
               </Grid>
               <Grid item lg={9}>
                 {/* <InfoProfile></InfoProfile> */}
-              </Grid>
+          {/* </Grid>
             </Grid>
-          </Grid>
+          </Grid> */}{" "}
         </Grid>
       </Grid>
     </div>
