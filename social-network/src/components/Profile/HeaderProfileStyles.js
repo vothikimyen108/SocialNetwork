@@ -16,6 +16,7 @@ const HeaderProfileStyles = makeStyles((theme) => ({
     margin: 20,
     padding: 10,
     borderBottom: "2px solid #bdb9b7",
+    fontFamily: 0,
   },
   paper: {
     padding: theme.spacing(2),
@@ -95,8 +96,8 @@ export default HeaderProfileStyles;
 export const AntTab = withStyles((theme) => ({
   root: {
     textTransform: "none",
-    minWidth: 72,
-    marginRight: theme.spacing(4),
+    minWidth: 60,
+    marginRight: theme.spacing(1),
     fontSize: 15,
     fontWeight: "bold",
     background: "#fff",
@@ -104,10 +105,7 @@ export const AntTab = withStyles((theme) => ({
     "&:hover": {
       color: "#7B1FA2",
     },
-    "&$selected": {
-      color: "#7B1FA2",
-      fontWeight: theme.typography.fontWeightMedium,
-    },
+    "&$selected": {},
     "&:focus": {
       color: "#7B1FA2",
     },

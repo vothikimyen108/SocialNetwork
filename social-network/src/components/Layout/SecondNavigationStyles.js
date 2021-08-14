@@ -19,10 +19,11 @@ const SecondNavigationStyles = makeStyles((theme) => ({
       flexWrap: "wrap",
       justifyContent: "center",
       alignItems: "center",
-      top: 60,
+      // top: 50,
     },
     [theme.breakpoints.up("lg")]: {
       height: 280,
+      top: 80,
       marginTop: 30,
       marginLeft: 30,
       width: 230,

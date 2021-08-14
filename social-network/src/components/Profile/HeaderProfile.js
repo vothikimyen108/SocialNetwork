@@ -6,9 +6,7 @@ import Avatar from "@material-ui/core/Avatar";
 //anh
 import yen from "../../assets/ImgProfile/avatar.jpg";
 
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
+import InfoProfile from "./InfoProfile";
 //css
 import HeaderProfileStyles, { AntTab } from "./HeaderProfileStyles";
 
@@ -45,11 +43,22 @@ export default function HeaderProfile() {
           </Grid>
           <Grid item xs={12} className={classes.menu}>
             <div className={classes.demo1}>
+              <AntTab label="Bài viết" />
               <AntTab label="Thông tin" />
               <AntTab label="Ảnh" />
               <AntTab label="Đấu giá" />
               <AntTab label="Chỉnh sửa" />
             </div>
+          </Grid>
+          <Grid item xs={12} className={classes.menu}>
+            <Grid container>
+              <Grid item lg={3}>
+                <InfoProfile></InfoProfile>
+              </Grid>
+              <Grid item lg={9}>
+                {/* <InfoProfile></InfoProfile> */}
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
