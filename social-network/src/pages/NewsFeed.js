@@ -17,6 +17,7 @@ import Grid from "@material-ui/core/Grid";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    marginTop: 110,
   },
   paper: {
     padding: theme.spacing(2),
@@ -27,6 +28,42 @@ const useStyles = makeStyles((theme) => ({
 const data = [
   {
     id: 1,
+    avatar: "Y",
+    name: "Võ yến",
+    content: "Nay tui nấu chè đấu giá",
+    totalLike: 30,
+    totalShare: 20,
+    totalComment: 10,
+  },
+  {
+    id: 2,
+    avatar: "Y",
+    name: "Võ yến",
+    content: "Nay tui nấu chè đấu giá",
+    totalLike: 30,
+    totalShare: 20,
+    totalComment: 10,
+  },
+  {
+    id: 3,
+    avatar: "Y",
+    name: "Võ yến",
+    content: "Nay tui nấu chè đấu giá",
+    totalLike: 30,
+    totalShare: 20,
+    totalComment: 10,
+  },
+  {
+    id: 4,
+    avatar: "Y",
+    name: "Võ yến",
+    content: "Nay tui nấu chè đấu giá",
+    totalLike: 30,
+    totalShare: 20,
+    totalComment: 10,
+  },
+  {
+    id: 5,
     avatar: "Y",
     name: "Võ yến",
     content: "Nay tui nấu chè đấu giá",

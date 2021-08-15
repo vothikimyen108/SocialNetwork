@@ -24,7 +24,9 @@ import Anh2 from "./assets/ImgPost/anh3.jpg";
 import Anh3 from "./assets/ImgPost/anh4.jpg";
 
 import NewsFeed from "./pages/NewsFeed";
+import MembersList from "./components/Members/MembersList";
 
+import { PeopleItem } from "./components/Members/PeopleItem";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -103,12 +105,14 @@ function App() {
           <LayoutMenber></LayoutMenber>
         </Grid> */}
         {/* <Grid item xs={12} sm={12} lg={3}>
-          {/* <HeaderProfile></HeaderProfile>
-          <ListPhoto></ListPhoto> */}
-
-        {/* </Grid> */}
+          <HeaderProfile></HeaderProfile>
+          <ListPhoto></ListPhoto>
+        </Grid> */}
         <Grid item xs={12} sm={12} md={6}>
           <NewsFeed></NewsFeed>
+        </Grid>
+        <Grid item xs={12} sm={12} md={3}>
+          <PeopleItem></PeopleItem>
         </Grid>
       </Grid>
     </>

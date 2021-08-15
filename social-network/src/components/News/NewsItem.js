@@ -100,7 +100,7 @@ export default function NewsItem(props) {
         subheader="September 14, 2016"
       />
       <CardContent>
-        <Typography variant="h6" component="h3">
+        <Typography variant="h7" component="h8">
           {props.content}
         </Typography>
       </CardContent>
@@ -137,8 +137,7 @@ export default function NewsItem(props) {
           <ChatBubbleIcon></ChatBubbleIcon>
         </IconButton>
         <span className={classes.sessionDeskTop}>
-          {props.totalShare}
-          {props.totalComment}bình luận
+          {props.totalComment} bình luận
         </span>
         <IconButton
           aria-label="share"
