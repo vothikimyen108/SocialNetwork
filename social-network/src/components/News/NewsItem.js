@@ -88,7 +88,7 @@ export default function NewsItem(props) {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            {props.avatar}
           </Avatar>
         }
         action={
@@ -96,12 +96,12 @@ export default function NewsItem(props) {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Võ Yến"
+        title={props.name}
         subheader="September 14, 2016"
       />
       <CardContent>
-        <Typography variant="h6" component="h3">
-          Nay tui đấu giá mấy món ăn tui nấu nha mọi người quẹo lựa
+        <Typography variant="h7" component="h8">
+          {props.content}
         </Typography>
       </CardContent>
       {isShowImg && (
@@ -120,15 +120,15 @@ export default function NewsItem(props) {
       )}
       <CardActions disableSpacing className={classes.sessionMobie}>
         {" "}
-        <span>10 Thích</span>
-        <span>10 lượt chia sẻ</span>
-        <span>10 bình luận</span>
+        <span>{props.totalLike} Thích</span>
+        <span>{props.totalShare}lượt chia sẻ</span>
+        <span>{props.totalComment} bình luận</span>
       </CardActions>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>{" "}
-        <span className={classes.sessionDeskTop}>10</span>
+        <span className={classes.sessionDeskTop}>{props.totalLike}</span>
         <IconButton
           onClick={handleExpandClick}
           aria-expanded={expanded}
@@ -136,7 +136,9 @@ export default function NewsItem(props) {
         >
           <ChatBubbleIcon></ChatBubbleIcon>
         </IconButton>
-        <span className={classes.sessionDeskTop}>10 bình luận</span>
+        <span className={classes.sessionDeskTop}>
+          {props.totalComment} bình luận
+        </span>
         <IconButton
           aria-label="share"
           className={clsx(classes.expand, {
@@ -145,7 +147,9 @@ export default function NewsItem(props) {
         >
           <ShareIcon />
         </IconButton>
-        <span className={classes.sessionDeskTop}>10 lượt chia sẻ</span>
+        <span className={classes.sessionDeskTop}>
+          {props.totalShare} lượt chia sẻ
+        </span>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>

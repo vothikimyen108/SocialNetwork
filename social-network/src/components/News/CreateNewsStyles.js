@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const CreateNewsStyles = makeStyles((theme) => ({
   contentComment: {
     border: "1px solid #f0f2f5",
-    borderRadius: "30px",
+    borderRadius: "20px",
     padding: "10px",
     height: "auto",
     float: "left",
