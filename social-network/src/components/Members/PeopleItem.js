@@ -7,9 +7,12 @@ import { Row, Item } from "@mui-treasury/components/flex";
 import { Info, InfoTitle, InfoSubtitle } from "@mui-treasury/components/info";
 import { useTutorInfoStyles } from "@mui-treasury/styles/info/tutor";
 import { useSizedIconButtonStyles } from "@mui-treasury/styles/iconButton/sized";
-import { useDynamicAvatarStyles } from "@mui-treasury/styles/avatar/dynamic";
+
 
 const useStyles = makeStyles(() => ({
+  root: {
+    marginBottom: 10,
+  },
   action: {
     backgroundColor: "#fff",
     boxShadow: "0 1px 4px 0 rgba(0,0,0,0.12)",
@@ -20,11 +23,18 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const PeopleItem = function TutorCard() {
+export const PeopleItem = function TutorCard(props) {
   const styles = useStyles();
   const iconBtnStyles = useSizedIconButtonStyles({ padding: 6 });
   return (
-    <Row p={1.5} gap={2} bgcolor={"#f5f5f5"} borderRadius={16}>
+    <Row
+      p={1.5}
+      gap={2}
+      bgcolor={"#f5f5f5"}
+      borderRadius={16}
+      key={props.key}
+      className={styles.root}
+    >
       <Item>
         <Avatar
           src={
@@ -33,8 +43,8 @@ export const PeopleItem = function TutorCard() {
         />
       </Item>
       <Info position={"middle"} useStyles={useTutorInfoStyles}>
-        <InfoTitle>Lê Phước</InfoTitle>
-        <InfoSubtitle>tham gia 1 ngày</InfoSubtitle>
+        <InfoTitle>{props.name}</InfoTitle>
+        <InfoSubtitle>{props.createJoin}</InfoSubtitle>
       </Info>
       <Item ml={1} position={"middle"}>
         <IconButton className={styles.action} classes={iconBtnStyles}>
