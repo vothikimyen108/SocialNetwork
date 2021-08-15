@@ -8,7 +8,7 @@ import Anh from "../../assets/ImgPost/anh1.jpg";
 import Anh2 from "../../assets/ImgPost/anh3.jpg";
 import Anh3 from "../../assets/ImgPost/anh4.jpg";
 import NewsItem from "../News/NewsItem";
-import "./styles.css";
+import "./Photostyles.css";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";

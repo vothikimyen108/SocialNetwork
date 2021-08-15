@@ -18,6 +18,9 @@ import Anh3 from "../../assets/ImgPost/anh4.jpg";
 import { Row, Column, Item } from "@mui-treasury/components/flex";
 import { useSizedIconButtonStyles } from "@mui-treasury/styles/iconButton/sized";
 
+
+import PhotoList from "../Photos/PhotoList";
+
 const StyledTooltip = withStyles({
   tooltip: {
     marginTop: "0.2rem",
@@ -27,10 +30,6 @@ const StyledTooltip = withStyles({
 })(Tooltip);
 
 const useBasicProfileStyles = makeStyles(({ palette }) => ({
-  imageList: {
-    width: "100%",
-    height: "300px",
-  },
   avatar: {
     borderRadius: 8,
     backgroundColor: "#495869",
@@ -196,21 +195,10 @@ export const ListPhoto = React.memo(function ShowcaseCard() {
           <CardHeader />
           <Item>
             <Box minHeight={100} bgcolor={"#F4F7FA"} borderRadius={8}>
-              <ImageList rowHeight={100} cols={3} className={styles.imageList}>
-                <ImageListItem
-                  key="Subheader"
-                  // cols={2}
-                  rows={3}
-                  style={{ height: "auto" }}
-                ></ImageListItem>
-                {itemData.map((item) => (
-                  <ImageListItem key={item.img}>
-                    <img src={item.img} alt={item.title} />
-                  </ImageListItem>
-                ))}
-              </ImageList>
+              <PhotoList itemData={itemData}></PhotoList>
             </Box>
           </Item>
+
           <BasicProfile />
         </Column>
       </Grid>
