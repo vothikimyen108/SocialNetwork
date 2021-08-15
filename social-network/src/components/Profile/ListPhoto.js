@@ -8,6 +8,12 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import CallMade from "@material-ui/icons/CallMade";
 import LaunchIcon from "@material-ui/icons/Launch";
+import ImageList from "@material-ui/core/ImageList";
+import ImageListItem from "@material-ui/core/ImageListItem";
+import Anh from "../../assets/ImgPost/anh1.jpg";
+import Anh1 from "../../assets/ImgPost/anh2.jpg";
+import Anh2 from "../../assets/ImgPost/anh3.jpg";
+import Anh3 from "../../assets/ImgPost/anh4.jpg";
 
 import { Row, Column, Item } from "@mui-treasury/components/flex";
 import { useSizedIconButtonStyles } from "@mui-treasury/styles/iconButton/sized";
@@ -21,6 +27,10 @@ const StyledTooltip = withStyles({
 })(Tooltip);
 
 const useBasicProfileStyles = makeStyles(({ palette }) => ({
+  imageList: {
+    width: "100%",
+    height: "300px",
+  },
   avatar: {
     borderRadius: 8,
     backgroundColor: "#495869",
@@ -48,6 +58,10 @@ const useBasicProfileStyles = makeStyles(({ palette }) => ({
     // display: "flex",
     // alignItems: "center",
     // justifyContent: "center",
+    "&:hover": {
+      background: "#8561c5",
+      color: "#fff",
+    },
   },
   label: {
     textTransform: "capitalize",
@@ -125,9 +139,55 @@ const useStyles = makeStyles(() => ({
 export const ListPhoto = React.memo(function ShowcaseCard() {
   const styles = useStyles();
   const gap = { xs: 1, sm: 1.5, lg: 2 };
+  const itemData = [
+    {
+      img: `${Anh}`,
+      title: "Breakfast",
+      author: "jill111",
+      featured: true,
+    },
+    {
+      img: `${Anh1}`,
+      title: "Tasty burger",
+      author: "director90",
+    },
+    {
+      img: `${Anh2}`,
+      title: "Camera",
+      author: "Danson67",
+    },
+    {
+      img: `${Anh3}`,
+      title: "Morning",
+      author: "fancycrave1",
+      featured: true,
+    },
+    {
+      img: `${Anh}`,
+      title: "Breakfast",
+      author: "jill111",
+      featured: true,
+    },
+    {
+      img: `${Anh1}`,
+      title: "Tasty burger",
+      author: "director90",
+    },
+    {
+      img: `${Anh2}`,
+      title: "Camera",
+      author: "Danson67",
+    },
+    {
+      img: `${Anh3}`,
+      title: "Morning",
+      author: "fancycrave1",
+      featured: true,
+    },
+  ];
   return (
     <Grid container spacing={4} justify={"center"}>
-      <Grid item xs={12} sm={4} md={3}>
+      <Grid item xs={12} sm={4} md={12}>
         <Column
           className={styles.card}
           p={{ xs: 0.5, sm: 0.75, lg: 1 }}
@@ -135,7 +195,21 @@ export const ListPhoto = React.memo(function ShowcaseCard() {
         >
           <CardHeader />
           <Item>
-            <Box minHeight={200} bgcolor={"#F4F7FA"} borderRadius={8} />
+            <Box minHeight={100} bgcolor={"#F4F7FA"} borderRadius={8}>
+              <ImageList rowHeight={100} cols={3} className={styles.imageList}>
+                <ImageListItem
+                  key="Subheader"
+                  // cols={2}
+                  rows={3}
+                  style={{ height: "auto" }}
+                ></ImageListItem>
+                {itemData.map((item) => (
+                  <ImageListItem key={item.img}>
+                    <img src={item.img} alt={item.title} />
+                  </ImageListItem>
+                ))}
+              </ImageList>
+            </Box>
           </Item>
           <BasicProfile />
         </Column>

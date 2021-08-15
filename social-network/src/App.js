@@ -48,7 +48,7 @@ function App() {
           <SecondNavigation mt={10}></SecondNavigation>
           <LayoutMenber></LayoutMenber>
         </Grid>
-        <Grid item xs={12} sm={12} lg={8}>
+        <Grid item xs={12} sm={12} lg={3}>
           <HeaderProfile></HeaderProfile>
           <ListPhoto></ListPhoto>
         </Grid>
