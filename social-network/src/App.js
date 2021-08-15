@@ -22,6 +22,9 @@ import Anh from "./assets/ImgPost/anh1.jpg";
 import Anh1 from "./assets/ImgPost/anh2.jpg";
 import Anh2 from "./assets/ImgPost/anh3.jpg";
 import Anh3 from "./assets/ImgPost/anh4.jpg";
+
+import NewsFeed from "./pages/NewsFeed";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -92,16 +95,20 @@ function App() {
   return (
     <>
       <Grid container>
-        <Grid item xs={12} md={12}>
+        {/* <Grid item xs={12} md={12}>
           <MainNavigation></MainNavigation>
         </Grid>
         <Grid item xs={12} sm={12} md={3}>
           <SecondNavigation mt={10}></SecondNavigation>
           <LayoutMenber></LayoutMenber>
-        </Grid>
-        <Grid item xs={12} sm={12} lg={3}>
-          <HeaderProfile></HeaderProfile>
-          <ListPhoto></ListPhoto>
+        </Grid> */}
+        {/* <Grid item xs={12} sm={12} lg={3}>
+          {/* <HeaderProfile></HeaderProfile>
+          <ListPhoto></ListPhoto> */}
+
+        {/* </Grid> */}
+        <Grid item xs={12} sm={12} md={6}>
+          <NewsFeed></NewsFeed>
         </Grid>
       </Grid>
     </>

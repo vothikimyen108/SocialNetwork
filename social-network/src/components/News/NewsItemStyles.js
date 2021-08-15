@@ -3,6 +3,9 @@ import { makeStyles } from "@material-ui/core/styles";
 const NewsItemStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100%",
+    border: "1px solid #f0f2f5",
+    borderRadius: "20px",
+    padding: 20,
     "& span": {
       backgroundColor: "#00",
     },
