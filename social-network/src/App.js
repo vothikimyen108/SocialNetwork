@@ -10,13 +10,6 @@ import NewsFeed from "./pages/NewsFeed";
 import SecondNavigation from "./components/Layout/SecondNavigation";
 import LayoutMenber from "./components/Layout/LayoutMenber";
 import LayoutListMember from "./components/Layout/LayoutListMember";
-const theme = createTheme();
-
-const useStyles = makeStyles((theme) => {
-  root: {
-    // some css that access to theme
-  }
-});
 
 const dataMember = [
   {
@@ -34,10 +27,20 @@ const dataMember = [
     name: "Lê Phước",
     createJoin: "12 ngày trước",
   },
+  {
+    id: 4,
+    name: "Lê Phước",
+    createJoin: "12 ngày trước",
+  },
+  {
+    id: 5,
+    name: "Lê Phước",
+    createJoin: "12 ngày trước",
+  },
 ];
 
 function App() {
-  const classes = useStyles(); // ❌ If you have this, consider moving <ThemeProvider> to HOC and wrap the App
+  // ❌ If you have this, consider moving <ThemeProvider> to HOC and wrap the App
   return (
     <Grid container>
       <Grid item xs={12} md={12}>
@@ -56,6 +59,10 @@ function App() {
       </Grid>
       <Grid item xs={12} sm={12} md={3}>
         <LayoutListMember data={dataMember}></LayoutListMember>
+      </Grid>
+
+      <Grid item xs={12} md={12}>
+        <MainNavigation></MainNavigation>
       </Grid>
     </Grid>
   );

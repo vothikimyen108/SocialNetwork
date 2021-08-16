@@ -8,7 +8,8 @@ import { Row, Item } from "@mui-treasury/components/flex";
 import { Info, InfoTitle, InfoSubtitle } from "@mui-treasury/components/info";
 import { useTutorInfoStyles } from "@mui-treasury/styles/info/tutor";
 import { useSizedIconButtonStyles } from "@mui-treasury/styles/iconButton/sized";
-
+import Productimg from "../../assets/product/product.svg";
+import Button from "../UI/Button";
 const useStyles = makeStyles(() => ({
   root: {
     marginBottom: 10,
@@ -30,7 +31,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const PeopleItem = function TutorCard(props) {
+export const Product = function TutorCard(props) {
   const styles = useStyles();
   const iconBtnStyles = useSizedIconButtonStyles({ padding: 6 });
   return (
@@ -43,20 +44,14 @@ export const PeopleItem = function TutorCard(props) {
       className={styles.root}
     >
       <Item>
-        <Avatar
-          src={
-            "https://www.biography.com/.image/t_share/MTU0ODUwMjQ0NjIwNzI0MDAx/chris-hemsworth-poses-during-a-photo-call-for-thor-ragnarok-on-october-15-2017-in-sydney-australia-photo-by-mark-metcalfe_getty-images-for-disney-square.jpg"
-          }
-        />
+        <Avatar src={Productimg} />
       </Item>
       <Info position={"middle"} useStyles={useTutorInfoStyles}>
-        <InfoTitle>{props.name}</InfoTitle>
-        <InfoSubtitle>{props.createJoin}</InfoSubtitle>
+        <InfoTitle>Chè khoai môn - khởi điểm: 10k</InfoTitle>
+        <InfoSubtitle>hạn chót: 2020-1-1</InfoSubtitle>
       </Info>
-      <Item ml={1} position={"middle"}>
-        <IconButton className={styles.action} classes={iconBtnStyles}>
-          <ArrowForwardIosIcon></ArrowForwardIosIcon>
-        </IconButton>
+      <Item ml={1} position={"right"}>
+        <Button></Button>
       </Item>
     </Row>
   );

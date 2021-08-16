@@ -17,7 +17,7 @@ import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
 // import Avatar from "@material-ui/core/Avatar";
-import AvatarGroup from "@material-ui/lab/AvatarGroup";
+import Button from "@material-ui/core/Button";
 import Anh from "../../assets/ImgPost/anh1.jpg";
 import Anh1 from "../../assets/ImgPost/anh2.jpg";
 import Anh2 from "../../assets/ImgPost/anh3.jpg";
@@ -25,6 +25,8 @@ import Anh3 from "../../assets/ImgPost/anh4.jpg";
 
 import CommentList from "../Comment/CommentList";
 import NewsItemStyles from "./NewsItemStyles";
+
+import { Product } from "../Products/Product";
 const itemData = [
   {
     id: 1,
@@ -39,32 +41,32 @@ const itemData = [
     title: "Tasty burger",
     author: "director90",
   },
-  // {
-  //   id: 3,
-  //   img: `${Anh2}`,
-  //   title: "Camera",
-  //   author: "Danson67",
-  // },
-  // {
-  //   id: 4,
-  //   img: `${Anh3}`,
-  //   title: "Morning",
-  //   author: "fancycrave1",
-  //   featured: true,
-  // },
-  // {
-  //   id: 5,
-  //   img: `${Anh}`,
-  //   title: "Breakfast",
-  //   author: "jill111",
-  //   featured: true,
-  // },
-  // {
-  //   id: 6,
-  //   img: `${Anh1}`,
-  //   title: "Tasty burger",
-  //   author: "director90",
-  // },
+  {
+    id: 3,
+    img: `${Anh2}`,
+    title: "Camera",
+    author: "Danson67",
+  },
+  {
+    id: 4,
+    img: `${Anh3}`,
+    title: "Morning",
+    author: "fancycrave1",
+    featured: true,
+  },
+  {
+    id: 5,
+    img: `${Anh}`,
+    title: "Breakfast",
+    author: "jill111",
+    featured: true,
+  },
+  {
+    id: 6,
+    img: `${Anh1}`,
+    title: "Tasty burger",
+    author: "director90",
+  },
 ];
 //css
 
@@ -121,7 +123,19 @@ export default function NewsItem(props) {
       </ImageList>
     );
   };
-
+  //show text
+  const showContent = (content) => {
+    let total = content.split(" ").length;
+    if (total < 100) {
+      return <span>{content}</span>;
+    } else {
+      return (
+        <span>
+          {content.substring(0, 100)} <a href="#">xem thêm</a>
+        </span>
+      );
+    }
+  };
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -139,9 +153,10 @@ export default function NewsItem(props) {
         subheader="September 14, 2016"
       />
       <CardContent>
-        <Typography variant="h6" component="h6">
-          {props.content}
-        </Typography>
+        {/* <span className={classes.content}>{props.content}</span> */}
+        <Product></Product>
+        {/* <span className={classes.content}>{props.content}</span> */}
+        {showContent(props.content)}
       </CardContent>
       {isShowImg && listTem()}
       <CardActions disableSpacing className={classes.sessionMobie}>
