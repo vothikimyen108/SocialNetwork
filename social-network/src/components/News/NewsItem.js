@@ -16,71 +16,110 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
+// import Avatar from "@material-ui/core/Avatar";
+import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import Anh from "../../assets/ImgPost/anh1.jpg";
 import Anh1 from "../../assets/ImgPost/anh2.jpg";
 import Anh2 from "../../assets/ImgPost/anh3.jpg";
 import Anh3 from "../../assets/ImgPost/anh4.jpg";
 
 import CommentList from "../Comment/CommentList";
-
-//css
 import NewsItemStyles from "./NewsItemStyles";
+const itemData = [
+  {
+    id: 1,
+    img: `${Anh}`,
+    title: "Breakfast",
+    author: "jill111",
+    featured: true,
+  },
+  {
+    id: 2,
+    img: `${Anh1}`,
+    title: "Tasty burger",
+    author: "director90",
+  },
+  // {
+  //   id: 3,
+  //   img: `${Anh2}`,
+  //   title: "Camera",
+  //   author: "Danson67",
+  // },
+  // {
+  //   id: 4,
+  //   img: `${Anh3}`,
+  //   title: "Morning",
+  //   author: "fancycrave1",
+  //   featured: true,
+  // },
+  // {
+  //   id: 5,
+  //   img: `${Anh}`,
+  //   title: "Breakfast",
+  //   author: "jill111",
+  //   featured: true,
+  // },
+  // {
+  //   id: 6,
+  //   img: `${Anh1}`,
+  //   title: "Tasty burger",
+  //   author: "director90",
+  // },
+];
+//css
+
 export default function NewsItem(props) {
   const classes = NewsItemStyles();
   const isExpanded = props.isExpanded;
   const isShowImg = props.isShowImg;
   const [expanded, setExpanded] = React.useState(props.isOpenCMT);
-  const itemData = [
-    {
-      img: `${Anh}`,
-      title: "Breakfast",
-      author: "jill111",
-      featured: true,
-    },
-    {
-      img: `${Anh1}`,
-      title: "Tasty burger",
-      author: "director90",
-    },
-    {
-      img: `${Anh2}`,
-      title: "Camera",
-      author: "Danson67",
-    },
-    {
-      img: `${Anh3}`,
-      title: "Morning",
-      author: "fancycrave1",
-      featured: true,
-    },
-    {
-      img: `${Anh}`,
-      title: "Breakfast",
-      author: "jill111",
-      featured: true,
-    },
-    {
-      img: `${Anh1}`,
-      title: "Tasty burger",
-      author: "director90",
-    },
-    {
-      img: `${Anh2}`,
-      title: "Camera",
-      author: "Danson67",
-    },
-    {
-      img: `${Anh3}`,
-      title: "Morning",
-      author: "fancycrave1",
-      featured: true,
-    },
-  ];
 
   const handleExpandClick = () => {
     if (isExpanded) {
       setExpanded(!expanded);
     }
+  };
+
+  const listTem = () => {
+    var rows = [];
+    let totalItemNotShow = itemData.length - 4;
+    let rowHeight = 400;
+    if (itemData.length > 4) {
+      rowHeight = 180;
+      for (var i = 0; i < 4; i++) {
+        if (i === 3) {
+          rows.push(
+            <ImageListItem key={itemData[i].id} className={classes.imgItem}>
+              <img src={itemData[i].img} alt={itemData[i].title} />
+              <div className={classes.middle}>
+                <div>{totalItemNotShow}+</div>
+              </div>
+            </ImageListItem>,
+          );
+        } else {
+          rows.push(
+            <ImageListItem key={itemData[i].id} className={classes.imgItem}>
+              <img src={itemData[i].img} alt={itemData[i].title} />
+            </ImageListItem>,
+          );
+        }
+      }
+    } else {
+      for (var j = 0; j < itemData.length; j++) {
+        rows.push(
+          <ImageListItem key={itemData[j].id}>
+            <img src={itemData[j].img} alt={itemData[j].title} />
+          </ImageListItem>,
+        );
+      }
+    }
+
+    //ketqua
+    return (
+      <ImageList rowHeight={rowHeight} className={classes.imageList}>
+        {rows}
+      </ImageList>
+    );
   };
 
   return (
@@ -100,24 +139,11 @@ export default function NewsItem(props) {
         subheader="September 14, 2016"
       />
       <CardContent>
-        <Typography variant="h7" component="h8">
+        <Typography variant="h6" component="h6">
           {props.content}
         </Typography>
       </CardContent>
-      {isShowImg && (
-        <ImageList rowHeight={180} className={classes.imageList}>
-          <ImageListItem
-            key="Subheader"
-            cols={2}
-            style={{ height: "auto" }}
-          ></ImageListItem>
-          {itemData.map((item) => (
-            <ImageListItem key={item.img}>
-              <img src={item.img} alt={item.title} />
-            </ImageListItem>
-          ))}
-        </ImageList>
-      )}
+      {isShowImg && listTem()}
       <CardActions disableSpacing className={classes.sessionMobie}>
         {" "}
         <span>{props.totalLike} Thích</span>
