@@ -1,18 +1,10 @@
 import NewsList from "../components/News/NewsList";
 import CreateNews from "../components/News/CreateNews";
-//data
-// key={item.id}
-// avatar={item.avatar}
-// name={item.name}
-// content={item.content}
-// totalLike={item.totalLike}
-// totalShare={item.totalShare}
-// totalComment={item.totalComment}
-
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
+import BasicPagination from "../components/Layout/BasicPagination";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -81,6 +73,9 @@ const NewsFeed = () => {
         </Grid>
         <Grid item xs={12}>
           <NewsList data={data}></NewsList>
+        </Grid>
+        <Grid item xs={12}>
+          <BasicPagination></BasicPagination>
         </Grid>
       </Grid>
     </div>

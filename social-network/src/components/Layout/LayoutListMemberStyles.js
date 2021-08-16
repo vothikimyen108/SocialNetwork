@@ -9,7 +9,7 @@ const LayoutListMemberStyles = makeStyles((theme) => ({
     right: 20,
     padding: 10,
     [theme.breakpoints.up("lg")]: {
-      height: 400,
+      height: 588,
       marginTop: 30,
       marginLeft: 30,
       //   width: "100%",

@@ -39,32 +39,32 @@ const itemData = [
     title: "Tasty burger",
     author: "director90",
   },
-  // {
-  //   id: 3,
-  //   img: `${Anh2}`,
-  //   title: "Camera",
-  //   author: "Danson67",
-  // },
-  // {
-  //   id: 4,
-  //   img: `${Anh3}`,
-  //   title: "Morning",
-  //   author: "fancycrave1",
-  //   featured: true,
-  // },
-  // {
-  //   id: 5,
-  //   img: `${Anh}`,
-  //   title: "Breakfast",
-  //   author: "jill111",
-  //   featured: true,
-  // },
-  // {
-  //   id: 6,
-  //   img: `${Anh1}`,
-  //   title: "Tasty burger",
-  //   author: "director90",
-  // },
+  {
+    id: 3,
+    img: `${Anh2}`,
+    title: "Camera",
+    author: "Danson67",
+  },
+  {
+    id: 4,
+    img: `${Anh3}`,
+    title: "Morning",
+    author: "fancycrave1",
+    featured: true,
+  },
+  {
+    id: 5,
+    img: `${Anh}`,
+    title: "Breakfast",
+    author: "jill111",
+    featured: true,
+  },
+  {
+    id: 6,
+    img: `${Anh1}`,
+    title: "Tasty burger",
+    author: "director90",
+  },
 ];
 //css
 
