@@ -17,7 +17,7 @@ import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
 // import Avatar from "@material-ui/core/Avatar";
-import AvatarGroup from "@material-ui/lab/AvatarGroup";
+import Button from "@material-ui/core/Button";
 import Anh from "../../assets/ImgPost/anh1.jpg";
 import Anh1 from "../../assets/ImgPost/anh2.jpg";
 import Anh2 from "../../assets/ImgPost/anh3.jpg";
@@ -25,6 +25,8 @@ import Anh3 from "../../assets/ImgPost/anh4.jpg";
 
 import CommentList from "../Comment/CommentList";
 import NewsItemStyles from "./NewsItemStyles";
+
+import { Product } from "../Products/Product";
 const itemData = [
   {
     id: 1,
@@ -151,6 +153,8 @@ export default function NewsItem(props) {
         subheader="September 14, 2016"
       />
       <CardContent>
+        {/* <span className={classes.content}>{props.content}</span> */}
+        <Product></Product>
         {/* <span className={classes.content}>{props.content}</span> */}
         {showContent(props.content)}
       </CardContent>

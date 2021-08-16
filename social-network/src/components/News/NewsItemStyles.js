@@ -82,5 +82,19 @@ const NewsItemStyles = makeStyles((theme) => ({
     textAlign: "justify",
     textJustify: "inter-word",
   },
+  submit: {
+    background: "linear-gradient(to right, #8e2de2, #4a00e0)",
+    borderRadius: 10,
+    border: 0,
+    color: "white",
+    height: 30,
+    width: "20%",
+    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+  },
+  logo: {},
+
+  label: {
+    textTransform: "capitalize",
+  },
 }));
 export default NewsItemStyles;

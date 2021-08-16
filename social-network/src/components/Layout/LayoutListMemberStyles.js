@@ -8,7 +8,7 @@ const LayoutListMemberStyles = makeStyles((theme) => ({
     top: "10%",
     right: 20,
     [theme.breakpoints.up("lg")]: {
-      height: 588,
+      height: 610,
       marginTop: 30,
       marginLeft: 30,
       width: 280,
@@ -22,12 +22,8 @@ const LayoutListMemberStyles = makeStyles((theme) => ({
       display: "flex",
       //  justifyContent: "center",
       alignItems: "center",
-      "& h1": {
-        fontSize: "60px",
-        margin: 0,
-        color: "#ab003c",
-      },
-      "& p": {
+      "& h4": {
+        fontSize: 20,
         color: "#482880",
       },
     },
