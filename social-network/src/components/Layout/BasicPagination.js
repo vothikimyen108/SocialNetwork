@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: 30,
     "& > *": {
       marginTop: theme.spacing(2),
     },
@@ -18,7 +19,7 @@ export default function BasicPagination() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Pagination count={5} color="primary" />
+      <Pagination count={5} color="primary" size="large" />
     </div>
   );
 }

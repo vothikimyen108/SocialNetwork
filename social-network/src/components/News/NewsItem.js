@@ -121,7 +121,19 @@ export default function NewsItem(props) {
       </ImageList>
     );
   };
-
+  //show text
+  const showContent = (content) => {
+    let total = content.split(" ").length;
+    if (total < 100) {
+      return <span>{content}</span>;
+    } else {
+      return (
+        <span>
+          {content.substring(0, 100)} <a href="#">xem thêm</a>
+        </span>
+      );
+    }
+  };
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -139,9 +151,8 @@ export default function NewsItem(props) {
         subheader="September 14, 2016"
       />
       <CardContent>
-        <Typography variant="h6" component="h6">
-          {props.content}
-        </Typography>
+        {/* <span className={classes.content}>{props.content}</span> */}
+        {showContent(props.content)}
       </CardContent>
       {isShowImg && listTem()}
       <CardActions disableSpacing className={classes.sessionMobie}>

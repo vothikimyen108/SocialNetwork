@@ -78,5 +78,9 @@ const NewsItemStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
+  content: {
+    textAlign: "justify",
+    textJustify: "inter-word",
+  },
 }));
 export default NewsItemStyles;

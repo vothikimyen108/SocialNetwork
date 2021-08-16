@@ -7,12 +7,11 @@ const LayoutListMemberStyles = makeStyles((theme) => ({
     position: "fixed",
     top: "10%",
     right: 20,
-    padding: 10,
     [theme.breakpoints.up("lg")]: {
       height: 588,
       marginTop: 30,
       marginLeft: 30,
-      //   width: "100%",
+      width: 280,
       borderRadius: 20,
       boxShadow: "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px",
       backgroundImage: `url(${teams})`,

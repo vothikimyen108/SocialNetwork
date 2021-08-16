@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "#fff",
     color: "#7200ca",
     width: 30,
-    hieght: 9,
+    hieght: 8,
     boxShadow: "0 1px 4px 0 rgba(0,0,0,0.12)",
     "&:hover": {
       backgroundColor: "#fff",
@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
     },
     "& svg": {
       width: 15,
-      hieght: 10,
+      hieght: 15,
     },
   },
 }));
