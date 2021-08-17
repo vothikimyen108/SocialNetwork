@@ -96,5 +96,11 @@ const NewsItemStyles = makeStyles((theme) => ({
   label: {
     textTransform: "capitalize",
   },
+  // like: {
+  //   color: "#000",
+  // },
+  // unLikelike: {
+  //   color: "#000",
+  // },
 }));
 export default NewsItemStyles;

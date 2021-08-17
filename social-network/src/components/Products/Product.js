@@ -10,9 +10,14 @@ import { useSizedIconButtonStyles } from "@mui-treasury/styles/iconButton/sized"
 import Productimg from "../../assets/product/product.svg";
 import Button from "../UI/Button";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: 10,
+    transition: "transform .2s",
+    "&:hover": {
+      transform: "scale(1.1)",
+    },
   },
   button: {
     display: "none",

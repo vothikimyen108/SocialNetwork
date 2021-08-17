@@ -75,11 +75,13 @@ export default function NewsItem(props) {
   const isExpanded = props.isExpanded;
   const isShowImg = props.isShowImg;
   const [expanded, setExpanded] = React.useState(props.isOpenCMT);
+  const [isLike, setIslike] = useState(false);
 
   const [menuHideMoreAnchorEl, setMenuHide] = useState(null);
 
   const isMenuHideOpen = Boolean(menuHideMoreAnchorEl);
 
+  //mở chỉnh sua báo cáo
   const handleMenuHideClose = () => {
     setMenuHide(null);
   };
@@ -176,8 +178,10 @@ export default function NewsItem(props) {
       );
     }
   };
-  //bao bao chinh sua bai
-
+  //hành động like
+  const handlerLike = () => {
+    setIslike(!isLike);
+  };
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -206,7 +210,11 @@ export default function NewsItem(props) {
         <span>{props.totalComment} bình luận</span>
       </CardActions>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton
+          aria-label="add to favorites"
+          style={{ color: isLike ? "red" : "grey" }}
+          onClick={handlerLike}
+        >
           <FavoriteIcon />
         </IconButton>{" "}
         <span className={classes.sessionDeskTop}>{props.totalLike}</span>

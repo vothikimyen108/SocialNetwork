@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     height: 40,
     width: "100%",
     padding: "0 30px",
+    textTransform: "capitalize",
   },
 }));
 
