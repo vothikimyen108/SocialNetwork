@@ -5,10 +5,10 @@ const LayoutListMemberStyles = makeStyles((theme) => ({
     display: "none",
     background: "#fff",
     position: "fixed",
-    top: "10%",
+    top: theme.spacing(10),
     right: 20,
     [theme.breakpoints.up("lg")]: {
-      height: 610,
+      height: 605,
       marginTop: 30,
       marginLeft: 30,
       width: 280,

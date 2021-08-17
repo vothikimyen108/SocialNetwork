@@ -7,6 +7,9 @@ const NewCommentStyles = makeStyles((theme) => ({
     height: "auto",
     float: "left",
     width: "80%",
+    [theme.breakpoints.up("lg")]: {
+      width: "90%",
+    },
     marginTop: "10px",
     backgroundColor: "#f0f2f5",
   },

@@ -12,6 +12,13 @@ import { useSizedIconButtonStyles } from "@mui-treasury/styles/iconButton/sized"
 const useStyles = makeStyles(() => ({
   root: {
     marginBottom: 10,
+    "&:hover": {
+      backgroundColor: "#fff",
+    },
+    transition: "transform .2s",
+    "&:hover": {
+      transform: "scale(1.1)",
+    },
   },
   action: {
     backgroundColor: "#fff",

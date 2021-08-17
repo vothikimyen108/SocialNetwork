@@ -14,9 +14,12 @@ const CommentItemStyles = makeStyles((theme) => ({
     padding: "10px",
     height: "auto",
     float: "left",
-    width: "85%",
+    width: "80%",
     marginTop: "10px",
     backgroundColor: "#f0f2f5",
+    [theme.breakpoints.up("lg")]: {
+      width: "90%",
+    },
   },
   authorComment: {
     fontWeight: "bold",

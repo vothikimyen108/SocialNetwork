@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { ReactComponent as Anh } from "../../assets/ImgHome/avatar.svg";
 import IconButton from "@material-ui/core/IconButton";
-import MoreIcon from "@material-ui/icons/MoreVert";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 //css
@@ -45,7 +45,9 @@ export default function CommentItem() {
       <MenuItem>
         <p>Chỉnh sửa</p>
       </MenuItem>
-
+      <MenuItem>
+        <p>Xóa bình luận</p>
+      </MenuItem>
       <MenuItem>
         <p>Báo cáo</p>
       </MenuItem>
@@ -88,7 +90,7 @@ export default function CommentItem() {
             onClick={handleMenuHideOpen}
             color="inherit"
           >
-            <MoreIcon />
+            <MoreHorizIcon />
           </IconButton>
         </div>
         {renderMenuHide}

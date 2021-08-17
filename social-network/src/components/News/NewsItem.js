@@ -9,24 +9,24 @@ import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
-// import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
 import Anh from "../../assets/ImgPost/anh1.jpg";
 import Anh1 from "../../assets/ImgPost/anh2.jpg";
 import Anh2 from "../../assets/ImgPost/anh3.jpg";
 import Anh3 from "../../assets/ImgPost/anh4.jpg";
-
+import Menu from "@material-ui/core/Menu";
 import CommentList from "../Comment/CommentList";
 import NewsItemStyles from "./NewsItemStyles";
-
+import MenuItem from "@material-ui/core/MenuItem";
 import { Product } from "../Products/Product";
+//react
+import { useState } from "react";
+
 const itemData = [
   {
     id: 1,
@@ -75,7 +75,49 @@ export default function NewsItem(props) {
   const isExpanded = props.isExpanded;
   const isShowImg = props.isShowImg;
   const [expanded, setExpanded] = React.useState(props.isOpenCMT);
+  const [isLike, setIslike] = useState(false);
 
+  const [menuHideMoreAnchorEl, setMenuHide] = useState(null);
+
+  const isMenuHideOpen = Boolean(menuHideMoreAnchorEl);
+
+  //mở chỉnh sua báo cáo
+  const handleMenuHideClose = () => {
+    setMenuHide(null);
+  };
+
+  const handleMenuHideOpen = (event) => {
+    setMenuHide(event.currentTarget);
+  };
+  const mobileMenuId = "primary-search-account-menu-mobile";
+  const renderMenuHide = (
+    <Menu
+      anchorEl={menuHideMoreAnchorEl}
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      transformOrigin={{ vertical: "top", horizontal: "center" }}
+      id={mobileMenuId}
+      PaperProps={{
+        style: {
+          transform: "translateX(10px) translateY(50px)",
+        },
+      }}
+      open={isMenuHideOpen}
+      onClose={handleMenuHideClose}
+      keepMounted={false}
+    >
+      <MenuItem>
+        <p>Chỉnh sửa</p>
+      </MenuItem>
+      <MenuItem>
+        <p>Xóa bài</p>
+      </MenuItem>
+      <MenuItem>
+        <p>Báo cáo</p>
+      </MenuItem>
+    </Menu>
+  );
+
+  //mo rong xem binh luan
   const handleExpandClick = () => {
     if (isExpanded) {
       setExpanded(!expanded);
@@ -136,6 +178,10 @@ export default function NewsItem(props) {
       );
     }
   };
+  //hành động like
+  const handlerLike = () => {
+    setIslike(!isLike);
+  };
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -145,17 +191,15 @@ export default function NewsItem(props) {
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
+          <IconButton aria-label="settings" onClick={handleMenuHideOpen}>
+            <MoreHorizIcon></MoreHorizIcon>
           </IconButton>
         }
         title={props.name}
         subheader="September 14, 2016"
       />
       <CardContent>
-        {/* <span className={classes.content}>{props.content}</span> */}
         <Product></Product>
-        {/* <span className={classes.content}>{props.content}</span> */}
         {showContent(props.content)}
       </CardContent>
       {isShowImg && listTem()}
@@ -166,7 +210,11 @@ export default function NewsItem(props) {
         <span>{props.totalComment} bình luận</span>
       </CardActions>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton
+          aria-label="add to favorites"
+          style={{ color: isLike ? "red" : "grey" }}
+          onClick={handlerLike}
+        >
           <FavoriteIcon />
         </IconButton>{" "}
         <span className={classes.sessionDeskTop}>{props.totalLike}</span>
@@ -197,6 +245,7 @@ export default function NewsItem(props) {
           <CommentList></CommentList>
         </CardContent>
       </Collapse>
+      {renderMenuHide}
     </Card>
   );
 }
