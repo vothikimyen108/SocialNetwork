@@ -9,7 +9,8 @@ import { useTutorInfoStyles } from "@mui-treasury/styles/info/tutor";
 import { useSizedIconButtonStyles } from "@mui-treasury/styles/iconButton/sized";
 import Productimg from "../../assets/product/product.svg";
 import Button from "../UI/Button";
-
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import { FlexProvider } from "@mui-treasury/components/flex/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,16 @@ const useStyles = makeStyles((theme) => ({
       display: "block",
     },
   },
+  go: {
+    margin: 5,
+    "&:last-of-type": {
+      marginLeft: "auto",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: "grey",
+    },
+  },
   action: {
     backgroundColor: "#fff",
     display: "block",
@@ -37,6 +48,12 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("lg")]: {
       display: "none",
     },
+  },
+  text: {
+    display: "inline",
+    margin: 0,
+    paddingRight: 10,
+    color: "grey",
   },
 }));
 
@@ -52,20 +69,21 @@ export const Product = function TutorCard(props) {
       key={props.key}
       className={styles.root}
     >
-      <Item>
+      <Item className={styles.go}>
         <Avatar src={Productimg} />
       </Item>
-      <Info position={"middle"} useStyles={useTutorInfoStyles}>
+      <Info
+        position={"middle"}
+        useStyles={useTutorInfoStyles}
+        className={styles.go}
+      >
         <InfoTitle>Chè khoai môn - khởi điểm: 10k</InfoTitle>
         <InfoSubtitle>hạn chót: 2020-1-1</InfoSubtitle>
       </Info>
-      <Item ml={1} position={"right"}>
-        <IconButton className={styles.action} classes={iconBtnStyles}>
-          <AttachMoneyIcon></AttachMoneyIcon>
-        </IconButton>
-        <div className={styles.button}>
-          <Button></Button>
-        </div>
+      <Item position={"middle"} className={styles.go}>
+        <p className={styles.text}>đi đấu giá</p>
+        <ArrowForwardIosIcon></ArrowForwardIosIcon>
+        <ArrowForwardIosIcon></ArrowForwardIosIcon>
       </Item>
     </Row>
   );
