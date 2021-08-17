@@ -3,8 +3,9 @@ import CreateNews from "../components/News/CreateNews";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-
+import { useState } from "react";
 import BasicPagination from "../components/Layout/BasicPagination";
+import NewsForm from "../components/News/NewsForm";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -64,13 +65,24 @@ const data = [
     totalComment: 10,
   },
 ];
+
 const NewsFeed = () => {
+  //mowr formNews -> tao moi bai viet
+  const [openNewsForm, setNewsForm] = useState(false);
+  //ham mow tao bai viet moi
+  const handlerOpenNewsForm = () => {
+    setNewsForm(true);
+  };
+  //dong formnews
+  const handerClose = () => {
+    setNewsForm(false);
+  };
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <CreateNews></CreateNews>
+          <CreateNews onOpen={handlerOpenNewsForm}></CreateNews>
         </Grid>
         <Grid item xs={12}>
           <NewsList data={data}></NewsList>
@@ -79,6 +91,7 @@ const NewsFeed = () => {
           <BasicPagination></BasicPagination>
         </Grid>
       </Grid>
+      {openNewsForm && <NewsForm onClose={handerClose}></NewsForm>}
     </div>
   );
 };

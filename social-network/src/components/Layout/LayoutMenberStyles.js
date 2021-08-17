@@ -5,7 +5,7 @@ const LayoutMenberStyles = makeStyles((theme) => ({
     display: "none",
     background: "#fff",
     position: "fixed",
-    top: "53%",
+    top: theme.spacing(50),
     left: 0,
     right: 0,
     [theme.breakpoints.up("lg")]: {

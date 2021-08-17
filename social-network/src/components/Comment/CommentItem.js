@@ -45,7 +45,9 @@ export default function CommentItem() {
       <MenuItem>
         <p>Chỉnh sửa</p>
       </MenuItem>
-
+      <MenuItem>
+        <p>Xóa bình luận</p>
+      </MenuItem>
       <MenuItem>
         <p>Báo cáo</p>
       </MenuItem>

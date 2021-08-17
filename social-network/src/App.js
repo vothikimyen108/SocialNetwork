@@ -1,12 +1,6 @@
-import {
-  ThemeProvider,
-  createTheme,
-  makeStyles,
-} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import MainNavigation from "./components/Layout/MainNavigation";
 import NewsFeed from "./pages/NewsFeed";
-
 import SecondNavigation from "./components/Layout/SecondNavigation";
 import LayoutMenber from "./components/Layout/LayoutMenber";
 import LayoutListMember from "./components/Layout/LayoutListMember";

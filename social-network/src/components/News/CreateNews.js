@@ -12,7 +12,7 @@ import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 //css
 import CreateNewsStyles from "./CreateNewsStyles";
 
-export default function CreateNews() {
+export default function CreateNews(props) {
   const classes = CreateNewsStyles();
 
   return (
@@ -29,6 +29,7 @@ export default function CreateNews() {
               classes={{
                 root: classes.inputCMT,
               }}
+              onClick={props.onOpen}
               multiline
               //   rows={Autorenew}
               placeholder="Bạn đang nghĩ gì vậy?"
@@ -50,7 +51,7 @@ export default function CreateNews() {
       </Grid>
 
       <Grid item xs={12} className={classes.navButton}>
-        <MenuItem>
+        <MenuItem onClick={props.onOpen}>
           <IconButton
             className={classes.subButton}
             aria-label="account of current user"
@@ -62,7 +63,7 @@ export default function CreateNews() {
           </IconButton>
           <p>Ảnh</p>
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={props.onOpen}>
           <IconButton
             className={classes.subButton}
             aria-label="account of current user"
