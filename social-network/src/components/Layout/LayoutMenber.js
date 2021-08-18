@@ -10,7 +10,7 @@ export default function LayoutMenber() {
     reverse: flip,
     from: { number: 0 },
     number: 30,
-    delay: 500,
+    delay: 300,
     onfig: config.molasses,
     onRest: () => set(!flip),
   });

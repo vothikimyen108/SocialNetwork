@@ -1,10 +1,9 @@
 import Grid from "@material-ui/core/Grid";
-import MainNavigation from "./components/Layout/MainNavigation";
 import NewsFeed from "./pages/NewsFeed";
-import SecondNavigation from "./components/Layout/SecondNavigation";
-import LayoutMenber from "./components/Layout/LayoutMenber";
+import React, { Suspense } from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
+import Layout from "./components/Layout/Layout";
 import LayoutListMember from "./components/Layout/LayoutListMember";
-
 const dataMember = [
   {
     id: 1,
@@ -32,33 +31,25 @@ const dataMember = [
     createJoin: "12 ngày trước",
   },
 ];
-
 function App() {
   // ❌ If you have this, consider moving <ThemeProvider> to HOC and wrap the App
   return (
-    <Grid container>
-      <Grid item xs={12} md={12}>
-        <MainNavigation></MainNavigation>
-      </Grid>
-      <Grid item xs={12} sm={12} md={3}>
-        <SecondNavigation mt={10}></SecondNavigation>
-        <LayoutMenber></LayoutMenber>
-      </Grid>
-      {/* <Grid item xs={12} sm={12} lg={3}>
-          <HeaderProfile></HeaderProfile>
-          <ListPhoto></ListPhoto>
-        </Grid> */}
-      <Grid item xs={12} sm={12} md={6}>
-        <NewsFeed></NewsFeed>
-      </Grid>
-      <Grid item xs={12} sm={12} md={3}>
-        <LayoutListMember data={dataMember}></LayoutListMember>
-      </Grid>
-
-      <Grid item xs={12} md={12}>
-        <MainNavigation></MainNavigation>
-      </Grid>
-    </Grid>
+    <Layout>
+      {" "}
+      <Switch>
+        <Route path="/" exact>
+          <Redirect to="/newsfeed" />
+        </Route>
+        <Route path="/newsfeed" exact>
+          <Grid item xs={12} sm={12} md={9}>
+            <NewsFeed></NewsFeed>
+          </Grid>
+          <Grid item xs={12} sm={12} md={3}>
+            <LayoutListMember data={dataMember}></LayoutListMember>
+          </Grid>
+        </Route>
+      </Switch>
+    </Layout>
   );
 }
 export default App;
