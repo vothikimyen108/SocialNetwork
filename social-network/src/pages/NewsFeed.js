@@ -64,6 +64,24 @@ const data = [
     totalShare: 20,
     totalComment: 10,
   },
+  {
+    id: 6,
+    avatar: "Y",
+    name: "Võ yến",
+    content: "Nay tui nấu chè đấu giá",
+    totalLike: 30,
+    totalShare: 20,
+    totalComment: 10,
+  },
+  {
+    id: 7,
+    avatar: "Y",
+    name: "Võ yến",
+    content: "Nay tui nấu chè đấu giá",
+    totalLike: 30,
+    totalShare: 20,
+    totalComment: 10,
+  },
 ];
 
 const NewsFeed = () => {
