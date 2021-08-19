@@ -17,7 +17,7 @@ import ModalFull from "../UI/ModalFull";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#000",
+    // backgroundColor: "#000",
     // height: "100vh",
     display: "flex",
     alignItems: "center",
@@ -58,7 +58,7 @@ const Photo = (props) => {
     <ModalFull>
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
-        <Grid item xs={12} sm={12} md={8} className={classes.left}>
+        <Grid item xs={12} sm={12} lg={8} className={classes.left}>
           <IconButton
             className={classes.button}
             component="span"
@@ -78,12 +78,23 @@ const Photo = (props) => {
           item
           xs={12}
           sm={12}
-          md={4}
+          lg={4}
           elevation={6}
           square
           className={classes.right}
         >
-          <NewsItem isOpenCMT={true} isExpanded={false} isShowImg={false}>
+          <NewsItem
+            isOpenCMT={true}
+            isExpanded={false}
+            isShowImg={false}
+            key={props.item.id}
+            avatar={props.item.avatar}
+            name={props.item.name}
+            content={props.item.content}
+            totalLike={props.item.totalLike}
+            totalShare={props.item.totalShare}
+            totalComment={props.item.totalComment}
+          >
             {" "}
           </NewsItem>
         </Grid>

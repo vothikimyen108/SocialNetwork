@@ -1,9 +1,20 @@
 import Grid from "@material-ui/core/Grid";
-import NewsFeed from "./pages/NewsFeed";
 import React, { Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import LayoutListMember from "./components/Layout/LayoutListMember";
+//cac pages
+import NewsDetail from "./pages/NewsDetail";
+import NewsFeed from "./pages/NewsFeed";
+import PhotoDetail from "./pages/PhotoDetail";
+//impor
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginTop: 110,
+  },
+}));
 const dataMember = [
   {
     id: 1,
@@ -31,22 +42,33 @@ const dataMember = [
     createJoin: "12 ngày trước",
   },
 ];
+//c
 function App() {
-  // ❌ If you have this, consider moving <ThemeProvider> to HOC and wrap the App
+  const classe = useStyles();
   return (
     <Layout>
-      {" "}
       <Switch>
         <Route path="/" exact>
           <Redirect to="/newsfeed" />
         </Route>
-        <Route path="/newsfeed" exact>
-          <Grid item xs={12} sm={12} md={9}>
+        <Route path="/newsfeed">
+          <Grid item xs={12} sm={12} md={9} className={classe.root}>
             <NewsFeed></NewsFeed>
           </Grid>
           <Grid item xs={12} sm={12} md={3}>
             <LayoutListMember data={dataMember}></LayoutListMember>
           </Grid>
+        </Route>
+        <Route path="/news/:newsId">
+          <Grid item xs={12} sm={12} md={9} className={classe.root}>
+            <NewsDetail></NewsDetail>
+          </Grid>
+          <Grid item xs={12} sm={12} md={3}>
+            <LayoutListMember data={dataMember}></LayoutListMember>
+          </Grid>
+        </Route>
+        <Route path="*">
+          <h1>kh tim tahy</h1>
         </Route>
       </Switch>
     </Layout>
