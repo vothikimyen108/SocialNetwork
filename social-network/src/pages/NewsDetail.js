@@ -1,5 +1,11 @@
 import { Fragment, useEffect } from "react";
-import { useParams, Route, Link, useRouteMatch } from "react-router-dom";
+import {
+  useParams,
+  Route,
+  Link,
+  useRouteMatch,
+  useHistory,
+} from "react-router-dom";
 import NewsItem from "../components/News/NewsItem";
 
 const item = {
@@ -16,7 +22,10 @@ const item = {
 const NewsDetail = () => {
   //lấy giá trị tham số của url
   const params = useParams();
-
+  let history = useHistory();
+  const handlerIsOpenPhoto = () => {
+    history.push("/");
+  };
   return (
     <Fragment>
       <NewsItem
@@ -29,6 +38,7 @@ const NewsDetail = () => {
         totalComment={item.totalComment}
         isExpanded={true}
         isShowImg={true}
+        open={handlerIsOpenPhoto}
       ></NewsItem>
     </Fragment>
   );

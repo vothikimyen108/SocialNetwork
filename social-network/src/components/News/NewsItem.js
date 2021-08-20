@@ -24,7 +24,7 @@ import CommentList from "../Comment/CommentList";
 import NewsItemStyles from "./NewsItemStyles";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Product } from "../Products/Product";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 //react
 import { useState } from "react";
 
@@ -135,16 +135,23 @@ export default function NewsItem(props) {
         if (i === 3) {
           rows.push(
             <ImageListItem key={itemData[i].id} className={classes.imgItem}>
-              <img src={itemData[i].img} alt={itemData[i].title} />
-              <div className={classes.middle}>
-                <div>{totalItemNotShow}+</div>
-              </div>
+              {" "}
+              <img src={itemData[i].img} alt={itemData[i].title} />{" "}
+              <NavLink to="/photo/1">
+                <div className={classes.middle}>
+                  <div>{totalItemNotShow}+</div>
+                </div>
+              </NavLink>
             </ImageListItem>,
           );
         } else {
           rows.push(
             <ImageListItem key={itemData[i].id} className={classes.imgItem}>
-              <img src={itemData[i].img} alt={itemData[i].title} />
+              {" "}
+              <img src={itemData[i].img} alt={itemData[i].title} />{" "}
+              <NavLink to="/photo/1">
+                <div className={classes.middle2}></div>
+              </NavLink>
             </ImageListItem>,
           );
         }
@@ -153,7 +160,10 @@ export default function NewsItem(props) {
       for (var j = 0; j < itemData.length; j++) {
         rows.push(
           <ImageListItem key={itemData[j].id}>
-            <img src={itemData[j].img} alt={itemData[j].title} />
+            <img src={itemData[j].img} alt={itemData[j].title} />{" "}
+            <NavLink to="/photo/1">
+              <div className={classes.middle2}></div>
+            </NavLink>
           </ImageListItem>,
         );
       }
@@ -174,7 +184,7 @@ export default function NewsItem(props) {
     } else {
       return (
         <span>
-          {content.substring(0, 100)} <button onClick={props.open}>aaaa</button>
+          {content.substring(0, 100)} <NavLink to="/news/:1">Xem thêm</NavLink>
         </span>
       );
     }

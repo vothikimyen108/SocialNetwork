@@ -15,11 +15,13 @@ const item = {
 
 const PhotoDetail = (props) => {
   const history = useHistory();
-  //lấy giá trị tham số của url
-  const params = useParams();
-  //ham dong trang this
-  const handlerOnClose = () => {};
-  return <Photo item={item} onClose={props.onClose}></Photo>;
+
+  //quay lai trag tuoc do
+  const handerCloseIsopenPhoto = () => {
+    history.goBack();
+  };
+
+  return <Photo item={item} onClose={handerCloseIsopenPhoto}></Photo>;
 };
 
 export default PhotoDetail;
