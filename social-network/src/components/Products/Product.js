@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import { Row, Item } from "@mui-treasury/components/flex";
 import { Info, InfoTitle, InfoSubtitle } from "@mui-treasury/components/info";
@@ -7,57 +6,10 @@ import { useTutorInfoStyles } from "@mui-treasury/styles/info/tutor";
 import Productimg from "../../assets/product/product.svg";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { useSpring, animated } from "react-spring";
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginBottom: 10,
-    transition: "transform .2s",
-    "&:hover": {
-      transform: "scale(1.1)",
-    },
-  },
-  button: {
-    display: "none",
-    [theme.breakpoints.up("lg")]: {
-      display: "inline",
-    },
-  },
-  go: {
-    margin: 5,
-    "&:last-of-type": {
-      marginLeft: "auto",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      color: "grey",
-    },
-  },
-  action: {
-    backgroundColor: "#fff",
-    display: "block",
-    color: "#7200ca",
-    boxShadow: "0 1px 4px 0 rgba(0,0,0,0.12)",
-    "&:hover": {
-      backgroundColor: "#fff",
-      color: "#000",
-    },
-    [theme.breakpoints.up("lg")]: {
-      display: "none",
-    },
-  },
-  text: {
-    // display: "inline",
-    margin: 0,
-    paddingRight: 10,
-    color: "grey",
-    display: "none",
-    [theme.breakpoints.up("lg")]: {
-      display: "inline",
-    },
-  },
-}));
-
+///css
+import ProductSlyles from "./ProductSlyles";
 export const Product = function TutorCard(props) {
-  const styles = useStyles();
+  const styles = ProductSlyles();
   //animate
   const stylesSpring = useSpring({
     loop: { reverse: true },

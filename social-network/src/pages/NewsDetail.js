@@ -38,6 +38,7 @@ const NewsDetail = () => {
         totalComment={item.totalComment}
         isExpanded={true}
         isShowImg={true}
+        isPageDetail={true}
         open={handlerIsOpenPhoto}
       ></NewsItem>
     </Fragment>

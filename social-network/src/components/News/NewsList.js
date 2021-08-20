@@ -23,6 +23,7 @@ const NewsList = (props) => {
             isExpanded={true}
             isShowImg={true}
             open={props.open}
+            isPageDetail={false}
           ></NewsItem>
         </div>
       ))}

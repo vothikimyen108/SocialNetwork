@@ -77,7 +77,7 @@ export default function NewsItem(props) {
   const isShowImg = props.isShowImg;
   const [expanded, setExpanded] = React.useState(props.isOpenCMT);
   const [isLike, setIslike] = useState(false);
-
+  const isPageDetail = props.isPageDetail;
   const [menuHideMoreAnchorEl, setMenuHide] = useState(null);
 
   const isMenuHideOpen = Boolean(menuHideMoreAnchorEl);
@@ -179,14 +179,19 @@ export default function NewsItem(props) {
   //show text
   const showContent = (content) => {
     let total = content.split(" ").length;
-    if (total < 100) {
+    if (isPageDetail === true) {
       return <span>{content}</span>;
     } else {
-      return (
-        <span>
-          {content.substring(0, 100)} <NavLink to="/news/:1">Xem thêm</NavLink>
-        </span>
-      );
+      if (total < 100) {
+        return <span>{content}</span>;
+      } else {
+        return (
+          <span>
+            {content.substring(0, 100)}{" "}
+            <NavLink to="/news/:1">Xem thêm</NavLink>
+          </span>
+        );
+      }
     }
   };
   //hành động like
