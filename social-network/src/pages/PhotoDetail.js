@@ -1,7 +1,7 @@
 import { Fragment, useEffect } from "react";
-import { useParams, Route, Link, useRouteMatch } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import NewsItem from "../components/News/NewsItem";
-
+import Photo from "../components/Photos/Photo";
 const item = {
   id: 1,
   avatar: "Y",
@@ -13,25 +13,13 @@ const item = {
   totalComment: 10,
 };
 
-const NewsDetail = () => {
+const PhotoDetail = (props) => {
+  const history = useHistory();
   //lấy giá trị tham số của url
   const params = useParams();
-
-  return (
-    <Fragment>
-      <NewsItem
-        key={item.id}
-        avatar={item.avatar}
-        name={item.name}
-        content={item.content}
-        totalLike={item.totalLike}
-        totalShare={item.totalShare}
-        totalComment={item.totalComment}
-        isExpanded={true}
-        isShowImg={true}
-      ></NewsItem>
-    </Fragment>
-  );
+  //ham dong trang this
+  const handlerOnClose = () => {};
+  return <Photo item={item} onClose={props.onClose}></Photo>;
 };
 
-export default NewsDetail;
+export default PhotoDetail;

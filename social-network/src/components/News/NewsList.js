@@ -22,6 +22,7 @@ const NewsList = (props) => {
             totalComment={item.totalComment}
             isExpanded={true}
             isShowImg={true}
+            open={props.open}
           ></NewsItem>
         </div>
       ))}

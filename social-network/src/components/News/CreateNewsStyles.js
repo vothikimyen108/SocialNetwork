@@ -49,7 +49,7 @@ const CreateNewsStyles = makeStyles((theme) => ({
   },
   root: {
     background: "#fff",
-    paddingTop: "20px",
+    // paddingTop: "20px",
     paddingLeft: "20px",
     paddingRight: "20px",
     borderRadius: 20,

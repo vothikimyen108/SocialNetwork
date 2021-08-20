@@ -24,6 +24,7 @@ import CommentList from "../Comment/CommentList";
 import NewsItemStyles from "./NewsItemStyles";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Product } from "../Products/Product";
+import { Link } from "react-router-dom";
 //react
 import { useState } from "react";
 
@@ -173,7 +174,7 @@ export default function NewsItem(props) {
     } else {
       return (
         <span>
-          {content.substring(0, 100)} <a href="#">xem thêm</a>
+          {content.substring(0, 100)} <button onClick={props.open}>aaaa</button>
         </span>
       );
     }
