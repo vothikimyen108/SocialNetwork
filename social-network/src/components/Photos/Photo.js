@@ -16,12 +16,7 @@ import ModalFull from "../UI/ModalFull";
 import ParallaxCarousel from "../UI/ParallaxCarousel";
 const useStyles = makeStyles((theme) => ({
   root: {
-    // backgroundColor: "#000",
-    // height: "100vh",
-    // display: "flex",
-    // alignItems: "center",
-    // justifyContent: "center",
-    // position: "relative",
+    height: "100vh",
   },
 
   img: {
@@ -29,12 +24,26 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
   },
   left: {
-    position: "relative",
+    height: "50%",
+    [theme.breakpoints.down("sm")]: {
+      height: "50%",
+    },
+
+    [theme.breakpoints.up("lg")]: {
+      height: "100vh",
+    },
   },
   right: {
-    overflow: "scroll",
+    overflow: "auto",
     width: "auto",
-    height: "100vh",
+    height: "50%",
+    [theme.breakpoints.down("sm")]: {
+      height: "50%",
+    },
+
+    [theme.breakpoints.up("lg")]: {
+      height: "100vh",
+    },
   },
   button: {
     width: "40px",
@@ -69,15 +78,7 @@ const Photo = (props) => {
           </IconButton>
           <ParallaxCarousel></ParallaxCarousel>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          lg={4}
-          elevation={6}
-          square
-          className={classes.right}
-        >
+        <Grid item xs={12} sm={12} lg={4} className={classes.right}>
           <NewsItem
             isOpenCMT={true}
             isExpanded={false}
