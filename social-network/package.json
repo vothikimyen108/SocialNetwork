@@ -23,6 +23,7 @@
     "react-slick": "^0.28.1",
     "react-spring": "^9.2.4",
     "react-starfield-animation": "^1.0.1",
+    "react-swipeable-views": "^0.14.0",
     "react-wavify": "^1.5.3",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.0",

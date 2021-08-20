@@ -174,14 +174,7 @@ export default function NewsItem(props) {
     } else {
       return (
         <span>
-          {content.substring(0, 100)}{" "}
-          {/* <Link className="btn" to={`/newsfeed`}>
-            View Fullscreen
-          </Link>
-          <Link className="btn" to={`/photo/1`}>
-            View Fullscreen2
-          </Link> */}
-          <button onClick={props.open}>aaaa</button>
+          {content.substring(0, 100)} <button onClick={props.open}>aaaa</button>
         </span>
       );
     }

@@ -117,18 +117,20 @@ const NewsFeed = () => {
   };
   return (
     <div>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <CreateNews onOpen={handlerOpenNewsForm}></CreateNews>
+      <Route path={`${match.path}`}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <CreateNews onOpen={handlerOpenNewsForm}></CreateNews>
+          </Grid>
+          <Grid item xs={12}>
+            <NewsList data={data} open={handlerIsOpenPhoto}></NewsList>
+          </Grid>
+          <Grid item xs={12}>
+            <BasicPagination></BasicPagination>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <NewsList data={data} open={handlerIsOpenPhoto}></NewsList>
-        </Grid>
-        <Grid item xs={12}>
-          <BasicPagination></BasicPagination>
-        </Grid>
-      </Grid>
-      {openNewsForm && <NewsForm onClose={handerClose}></NewsForm>}
+        {openNewsForm && <NewsForm onClose={handerClose}></NewsForm>}
+      </Route>
       <Route path={`${match.path}/photo`}>
         <PhotoDetail onClose={handerCloseIsopenPhoto}></PhotoDetail>
       </Route>

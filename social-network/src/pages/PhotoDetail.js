@@ -19,11 +19,7 @@ const PhotoDetail = (props) => {
   const params = useParams();
   //ham dong trang this
   const handlerOnClose = () => {};
-  return (
-    <Fragment>
-      <Photo item={item} onClose={props.onClose}></Photo>
-    </Fragment>
-  );
+  return <Photo item={item} onClose={props.onClose}></Photo>;
 };
 
 export default PhotoDetail;
