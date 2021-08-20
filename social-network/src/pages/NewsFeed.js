@@ -112,9 +112,7 @@ const NewsFeed = () => {
     history.push(`${match.path}/photo`);
   };
   //dong formnews
-  const handerCloseIsopenPhoto = () => {
-    history.push(`${match.path}`);
-  };
+
   return (
     <div>
       <Route path={`${match.path}`}>
@@ -130,9 +128,6 @@ const NewsFeed = () => {
           </Grid>
         </Grid>
         {openNewsForm && <NewsForm onClose={handerClose}></NewsForm>}
-      </Route>
-      <Route path={`${match.path}/photo`}>
-        <PhotoDetail onClose={handerCloseIsopenPhoto}></PhotoDetail>
       </Route>
     </div>
   );

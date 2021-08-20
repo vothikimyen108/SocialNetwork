@@ -39,6 +39,9 @@ const NewsItemStyles = makeStyles((theme) => ({
   imgItem: {
     position: "relative",
     height: "100%",
+    "& a": {
+      backgroundColor: red,
+    },
   },
   middle: {
     transition: ".5s ease",
@@ -55,6 +58,23 @@ const NewsItemStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     background: "rgba(0, 0, 0, 0.4)",
+    fontSize: 20,
+  },
+  middle2: {
+    transition: ".5s ease",
+    opacity: "1",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    msTransform: "translate(-50%, -50%)",
+    color: "#fff",
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    // background: "rgba(0, 0, 0, 0.4)",
     fontSize: 20,
   },
   sessionMobie: {

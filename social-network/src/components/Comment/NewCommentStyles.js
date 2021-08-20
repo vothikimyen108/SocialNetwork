@@ -26,8 +26,13 @@ const NewCommentStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: "14px",
-    marginTop: "0px",
+    marginLeft: "15px",
+    marginTop: "5px",
+    [theme.breakpoints.up("lg")]: {
+      marginLeft: "19px",
+      marginTop: "5px",
+      width: "2%",
+    },
     boxShadow: "none",
   },
   inputCMT: {

@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     marginTop: 110,
+    [theme.breakpoints.down("md")]: {
+      marginTop: 160,
+    },
   },
 }));
 const dataMember = [
@@ -67,8 +70,10 @@ function App() {
             <LayoutListMember data={dataMember}></LayoutListMember>
           </Grid>
         </Route>
-        <Route path="*">
-          <h1>kh tim tahy</h1>
+        <Route path="/photo/:photoId">
+          <Grid item xs={12} sm={12} md={9} className={classe.root}>
+            <PhotoDetail></PhotoDetail>
+          </Grid>
         </Route>
       </Switch>
     </Layout>

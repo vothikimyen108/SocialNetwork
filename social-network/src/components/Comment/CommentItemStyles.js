@@ -14,9 +14,9 @@ const CommentItemStyles = makeStyles((theme) => ({
     padding: "10px",
     height: "auto",
     float: "left",
-    width: "80%",
     marginTop: "10px",
     backgroundColor: "#f0f2f5",
+    width: "80%",
     [theme.breakpoints.up("lg")]: {
       width: "90%",
     },
@@ -37,6 +37,13 @@ const CommentItemStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    marginLeft: "15px",
+    marginTop: "5px",
+    [theme.breakpoints.up("lg")]: {
+      marginLeft: "19px",
+      marginTop: "5px",
+      width: "2%",
+    },
   },
   inputCMT: {
     maxheight: "auto",
