@@ -34,6 +34,7 @@ const ParallaxCarouselStyles = makeStyles(
       height: "100%",
       objectFit: "cover",
       marginLeft: "0%",
+      marginTop: "5%",
       [breakpoints.up("sm")]: {
         marginLeft: "4%",
       },
