@@ -14,10 +14,10 @@ const PhotoStyles = makeStyles((theme) => ({
     height: "100%",
   },
   left: {
-    height: "50%",
+    height: "40%",
 
     [theme.breakpoints.down("sm")]: {
-      height: "50%",
+      height: "40%",
     },
 
     [theme.breakpoints.up("lg")]: {
@@ -27,9 +27,9 @@ const PhotoStyles = makeStyles((theme) => ({
   right: {
     overflow: "auto",
     width: "auto",
-    height: "50%",
+    height: "60%",
     [theme.breakpoints.down("sm")]: {
-      height: "50%",
+      height: "60%",
     },
 
     [theme.breakpoints.up("lg")]: {
