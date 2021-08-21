@@ -15,7 +15,7 @@ class User(AbstractUser):
 
 # class Role(models.Model):
 #     role = models.CharField(max_length=20, null=False)
-
+# ghi gi bay gio
 
 class Tag(models.Model):
     content = models.CharField(max_length=50, null=False, unique=True)
