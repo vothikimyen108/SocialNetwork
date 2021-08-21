@@ -51,8 +51,6 @@ export const Product = function TutorCard(props) {
           <ArrowForwardIosIcon></ArrowForwardIosIcon>
           <ArrowForwardIosIcon></ArrowForwardIosIcon>
         </animated.div>
-
-        {/* </div> */}
       </Item>
     </Row>
   );
