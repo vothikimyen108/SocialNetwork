@@ -62,6 +62,18 @@ const useStyles = makeStyles((theme) => ({
 export default function Auction() {
   const classes = useStyles();
   const price = 3000;
+  const [isError, setIsError] = useState(false);
+  //open
+  const [open, setOpen] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   //cờ xem hiện thông báo
   const [isSuccess, setIsSuccess] = useState("");
   // thông báo
@@ -78,7 +90,8 @@ export default function Auction() {
     if (isSuccess === "success") {
       return (
         <CustomizedSnackbars
-          alert={true}
+          open={open}
+          handleClose={handleClose}
           nameAlert={alert.nameAlert[1]}
           message={alert.message[1]}
         ></CustomizedSnackbars>
@@ -87,7 +100,8 @@ export default function Auction() {
     if (isSuccess === "warning") {
       return (
         <CustomizedSnackbars
-          alert={true}
+          open={open}
+          handleClose={handleClose}
           nameAlert={alert.nameAlert[0]}
           message={alert.message[0]}
         ></CustomizedSnackbars>
@@ -99,65 +113,97 @@ export default function Auction() {
   //hàm tăng
   const handlerAdd = () => {
     refPrice.current.value++;
-    console.log(refPrice.current.value);
+    if (refPrice.current.value >= price) {
+      setIsError(false);
+      console.log(isError);
+    }
   };
   //hàm giảm
   const handlerRemove = () => {
     console.log(refPrice.current.value);
-    if (refPrice.current.value >= price) {
+    if (refPrice.current.value <= price) {
       refPrice.current.value = price;
       setIsSuccess("warning");
-      console.log(isSuccess === "warning");
+      setOpen(true);
     } else {
       refPrice.current.value--;
+      setIsError(false);
     }
+  };
+  //kiểm tra gia tri dau gia
+  const handlerPrice = () => {
+    if (refPrice.current.value < price) {
+      setIsError(true);
+      setIsSuccess("warning");
+      setOpen(true);
+    }
+    if (refPrice.current.value >= price) {
+      setIsError(false);
+      console.log(isError);
+      setOpen(false);
+    }
+  };
+  //kiem tra
+  const handerSubmit = (event) => {
+    //để k chuyển trang
+    event.preventDefault();
+    //code
+
+    //thông báo
+    setIsSuccess("success");
+    setOpen(true);
   };
 
   return (
     <div className={classes.root}>
-      <Grid container>
-        <Grid item xs={12}>
-          <IconButton
-            aria-label="delete"
-            className={classes.btIcon}
-            onClick={handlerAdd}
-          >
-            <AddIcon></AddIcon>
-          </IconButton>
-          <TextField
-            id="outlined-basic"
-            variant="outlined"
-            defaultValue={price}
-            type="number"
-            className={classes.textField}
-            inputRef={refPrice}
-            inputProps={{
-              style: {
-                textAlign: "center",
-                textJustify: "inter-character",
-                color: "#000",
-              },
-            }}
-          />
-          <IconButton
-            aria-label="delete"
-            className={classes.btIcon}
-            onClick={handlerRemove}
-          >
-            <RemoveIcon></RemoveIcon>
-          </IconButton>
+      <form onSubmit={handerSubmit}>
+        <Grid container>
+          <Grid item xs={12}>
+            <IconButton
+              aria-label="delete"
+              className={classes.btIcon}
+              onClick={handlerAdd}
+            >
+              <AddIcon></AddIcon>
+            </IconButton>
+            <TextField
+              id="outlined-basic"
+              error={isError}
+              variant="outlined"
+              defaultValue={price}
+              type="number"
+              className={classes.textField}
+              inputRef={refPrice}
+              onChange={handlerPrice}
+              inputProps={{
+                style: {
+                  textAlign: "center",
+                  textJustify: "inter-character",
+                  color: "#000",
+                },
+              }}
+            />
+            <IconButton
+              aria-label="delete"
+              className={classes.btIcon}
+              onClick={handlerRemove}
+            >
+              <RemoveIcon></RemoveIcon>
+            </IconButton>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              type="submit"
+              classes={{
+                root: classes.submit, // class name, e.g. `classes-nesting-root-x`
+                label: classes.label, // class name, e.g. `classes-nesting-label-x`
+              }}
+            >
+              Đặt giá thầu
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Button
-            classes={{
-              root: classes.submit, // class name, e.g. `classes-nesting-root-x`
-              label: classes.label, // class name, e.g. `classes-nesting-label-x`
-            }}
-          >
-            Đặt giá thầu
-          </Button>
-        </Grid>
-      </Grid>
+      </form>
       {renderAlert()}
     </div>
   );
