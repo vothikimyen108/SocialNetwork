@@ -183,7 +183,11 @@ export default function NewsItem(props) {
       return <span>{content}</span>;
     } else {
       if (total < 100) {
-        return <span>{content}</span>;
+        return (
+          <span>
+            {content} <NavLink to="/news/:1">Xem thêm</NavLink>
+          </span>
+        );
       } else {
         return (
           <span>
@@ -215,7 +219,7 @@ export default function NewsItem(props) {
         subheader="September 14, 2016"
       />
       <CardContent>
-        <Product></Product>
+        <Product isAution={props.isAution} isGo={props.isGo}></Product>
         {showContent(props.content)}
       </CardContent>
       {isShowImg && listTem()}

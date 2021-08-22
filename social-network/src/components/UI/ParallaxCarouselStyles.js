@@ -11,18 +11,19 @@ const ParallaxCarouselStyles = makeStyles(
       perspective: 1000, // create perspective
       overflow: "hidden",
       width: "80%",
-      height: "80%",
+      height: "92%",
       marginLeft: "10%",
-      marginTop: "5%",
+      marginTop: "2%",
       // relative is a must if you want to create overlapping layers in children
       position: "relative",
       margin: 0,
-      paddingTop: spacing(1),
-      [breakpoints.up("sm")]: {
-        paddingTop: spacing(10),
-      },
+      paddingTop: spacing(5),
+      // paddingTop: spacing(1),
       [breakpoints.up("md")]: {
-        paddingTop: spacing(1),
+        paddingTop: spacing(0),
+      },
+      [breakpoints.up("lg")]: {
+        paddingTop: spacing(0),
       },
     },
     imageContainer: {

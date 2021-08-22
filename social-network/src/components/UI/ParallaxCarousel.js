@@ -3,7 +3,6 @@ import cx from "clsx";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import ParallaxSlide from "@mui-treasury/components/slide/parallax";
-import DotIndicator from "@mui-treasury/components/indicator/dot";
 import IconButton from "@material-ui/core/IconButton";
 //css
 import ParallaxCarouselStyles from "./ParallaxCarouselStyles";

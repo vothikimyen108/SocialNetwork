@@ -4,7 +4,7 @@ import Wave from "react-wavify";
 import FormLogin from "./FormLogin";
 import LoginStyles from "./LoginStyles";
 import avatar from "../../assets/Login/undraw_our_neighborhood_ya1h.svg";
-export default function SignInSide() {
+export default function Login() {
   const classes = LoginStyles();
 
   return (

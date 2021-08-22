@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -7,56 +6,13 @@ import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import CustomizedSnackbars from "../UI/CustomizedSnackbars";
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    margin: theme.spacing(3, 0, 3),
-    flexDirection: "row-reverse",
-
-    "& input::-webkit-clear-button, & input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
-      {
-        display: "none",
-        margin: 80,
-      },
-  },
-  paper: {
-    margin: theme.spacing(1, 0, 0),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  },
-  textField: {
-    width: "60%",
-    [`& fieldset`]: {
-      borderRadius: 25,
-      border: "2px solid #4a00e0",
-      height: 58,
-    },
-  },
-  btIcon: {
-    background: "linear-gradient(to right, #8e2de2, #4a00e0)",
-    border: 0,
-    color: "white",
-    height: 48,
-    // borderRadius: 20,
-    width: 48,
-  },
-  submit: {
-    background: "linear-gradient(to right, #8e2de2, #4a00e0)",
-    borderRadius: 25,
-    border: 0,
-    color: "white",
-    height: 48,
-    width: "100%",
-    padding: "0 30px",
-    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-  },
-  label: {
-    textTransform: "capitalize",
-  },
-}));
+import Alert from "@material-ui/lab/Alert";
+//css
+import AutionStyles from "./AutionStyles";
+import AlertNoti from "../UI/AlertNoti";
 
 export default function Auction() {
-  const classes = useStyles();
+  const classes = AutionStyles();
   const price = 3000;
   const [isError, setIsError] = useState(false);
   //open
@@ -149,12 +105,20 @@ export default function Auction() {
     setIsSuccess("success");
     setOpen(true);
   };
-
+  //ham mow tao bai viet moi
+  const handlerOpenNewsForm = () => {
+    setNewsForm(true);
+  };
+  //dong formnews
+  const handerClose = () => {
+    setNewsForm(false);
+  };
+  const [openNewsForm, setNewsForm] = useState(false);
   return (
     <div className={classes.root}>
       <form onSubmit={handerSubmit}>
         <Grid container>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={8} className={classes.paper}>
             <IconButton
               aria-label="delete"
               className={classes.btIcon}
@@ -174,7 +138,8 @@ export default function Auction() {
               inputProps={{
                 style: {
                   textAlign: "center",
-                  textJustify: "inter-character",
+                  padding: 13,
+                  textJustify: "center",
                   color: "#000",
                 },
               }}
@@ -194,6 +159,7 @@ export default function Auction() {
                 root: classes.submit, // class name, e.g. `classes-nesting-root-x`
                 label: classes.label, // class name, e.g. `classes-nesting-label-x`
               }}
+              onClick={handlerOpenNewsForm}
             >
               Đặt giá thầu
             </Button>
@@ -201,6 +167,7 @@ export default function Auction() {
         </Grid>
       </form>
       {renderAlert()}
+      {openNewsForm && <AlertNoti onClose={handerClose}></AlertNoti>}
     </div>
   );
 }
