@@ -10,7 +10,8 @@ import CustomizedSnackbars from "../UI/CustomizedSnackbars";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    margin: theme.spacing(3, 0, 0),
+    margin: theme.spacing(3, 0, 3),
+    flexDirection: "row-reverse",
 
     "& input::-webkit-clear-button, & input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
       {
@@ -24,27 +25,22 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
   textField: {
-    width: "70%",
-    height: 48,
+    width: "60%",
     [`& fieldset`]: {
       borderRadius: 25,
-      padding: "5px 0",
       border: "2px solid #4a00e0",
-
-      height: 48,
+      height: 58,
     },
   },
   btIcon: {
     background: "linear-gradient(to right, #8e2de2, #4a00e0)",
     border: 0,
     color: "white",
-    height: 58,
-    borderRadius: "50%",
-    width: "15%",
+    height: 48,
+    // borderRadius: 20,
+    width: 48,
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
-
     background: "linear-gradient(to right, #8e2de2, #4a00e0)",
     borderRadius: 25,
     border: 0,
@@ -158,7 +154,7 @@ export default function Auction() {
     <div className={classes.root}>
       <form onSubmit={handerSubmit}>
         <Grid container>
-          <Grid item xs={12}>
+          <Grid item xs={12} md={8}>
             <IconButton
               aria-label="delete"
               className={classes.btIcon}
@@ -191,7 +187,7 @@ export default function Auction() {
               <RemoveIcon></RemoveIcon>
             </IconButton>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} md={4}>
             <Button
               type="submit"
               classes={{

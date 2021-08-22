@@ -6,6 +6,7 @@ import { useTutorInfoStyles } from "@mui-treasury/styles/info/tutor";
 import Productimg from "../../assets/product/product.svg";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { useSpring, animated } from "react-spring";
+import Auction from "./Auction";
 ///css
 import ProductSlyles from "./ProductSlyles";
 export const Product = function TutorCard(props) {
@@ -18,40 +19,39 @@ export const Product = function TutorCard(props) {
   });
 
   return (
-    <Row
-      p={1.5}
-      gap={2}
-      bgcolor={"#f5f5f5"}
-      borderRadius={10}
-      key={props.key}
-      className={styles.root}
-    >
-      <Item className={styles.go}>
-        <Avatar src={Productimg} />
-      </Item>
-      <Info
-        position={"middle"}
-        useStyles={useTutorInfoStyles}
-        className={styles.go}
+    <div>
+      <Row
+        p={1.5}
+        gap={2}
+        bgcolor={"#f5f5f5"}
+        borderRadius={10}
+        key={props.key}
+        className={styles.root}
       >
-        <InfoTitle>Chè khoai môn - khởi điểm: 10k</InfoTitle>
-        <InfoSubtitle>hạn chót: 2020-1-1</InfoSubtitle>
-      </Info>
-      <Item position={"middle"} className={styles.go}>
-        {/* <IconButton className={styles.action} classes={iconBtnStyles}>
-          <AttachMoneyIcon></AttachMoneyIcon>
-        </IconButton> */}
-        {/* <div className={styles.button}> */}
-        <p className={styles.text}>đi đấu giá</p>
-        <animated.div
-          style={{
-            ...stylesSpring,
-          }}
+        <Item className={styles.go}>
+          <Avatar src={Productimg} />
+        </Item>
+        <Info
+          position={"middle"}
+          useStyles={useTutorInfoStyles}
+          className={styles.go}
         >
-          <ArrowForwardIosIcon></ArrowForwardIosIcon>
-          <ArrowForwardIosIcon></ArrowForwardIosIcon>
-        </animated.div>
-      </Item>
-    </Row>
+          <InfoTitle>Chè khoai môn - khởi điểm: 10k</InfoTitle>
+          <InfoSubtitle>hạn chót: 2020-1-1</InfoSubtitle>
+        </Info>
+        <Item position={"middle"} className={styles.go}>
+          <p className={styles.text}>đi đấu giá</p>
+          <animated.div
+            style={{
+              ...stylesSpring,
+            }}
+          >
+            <ArrowForwardIosIcon></ArrowForwardIosIcon>
+            <ArrowForwardIosIcon></ArrowForwardIosIcon>
+          </animated.div>
+        </Item>
+      </Row>
+      <Auction></Auction>
+    </div>
   );
 };
