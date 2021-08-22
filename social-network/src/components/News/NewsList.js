@@ -14,10 +14,10 @@ const NewsList = (props) => {
   return (
     <div>
       {props.data.map((item) => (
-        <div data-aos="fade-right" className={classes.root}>
+        <div data-aos="fade-right" className={classes.root} key={item.id}>
           <NewsItem
+            isGo={true}
             className={classes.border}
-            key={item.id}
             avatar={item.avatar}
             name={item.name}
             content={item.content}

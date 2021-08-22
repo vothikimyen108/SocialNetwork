@@ -33,10 +33,11 @@ const Photo = (props) => {
         </Grid>
         <Grid item xs={12} sm={12} lg={4} className={classes.right}>
           <NewsItem
+            isAution={true}
+            isGo={false}
             isOpenCMT={true}
             isExpanded={false}
             isShowImg={false}
-            key={props.item.id}
             avatar={props.item.avatar}
             name={props.item.name}
             content={props.item.content}

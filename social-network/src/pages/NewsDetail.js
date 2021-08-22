@@ -30,6 +30,7 @@ const NewsDetail = () => {
     <Fragment>
       <NewsItem
         key={item.id}
+        isGo={true}
         avatar={item.avatar}
         name={item.name}
         content={item.content}
