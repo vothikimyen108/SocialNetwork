@@ -10,34 +10,37 @@ const ParallaxCarouselStyles = makeStyles(
     slide: {
       perspective: 1000, // create perspective
       overflow: "hidden",
+      width: "80%",
+      height: "80%",
+      marginLeft: "10%",
+      marginTop: "5%",
       // relative is a must if you want to create overlapping layers in children
       position: "relative",
-      paddingTop: spacing(8),
+      margin: 0,
+      paddingTop: spacing(1),
       [breakpoints.up("sm")]: {
         paddingTop: spacing(10),
       },
       [breakpoints.up("md")]: {
-        paddingTop: spacing(14),
+        paddingTop: spacing(1),
       },
     },
     imageContainer: {
       display: "block",
       position: "relative",
       zIndex: 2,
-      paddingBottom: "56.25%",
+      paddingBottom: "100%",
     },
     image: {
-      display: "block",
+      // display: "block",
       position: "absolute",
       zIndex: 10,
       width: "100%",
       height: "100%",
       objectFit: "cover",
-      marginLeft: "0%",
-      marginTop: "5%",
-      [breakpoints.up("sm")]: {
-        marginLeft: "4%",
-      },
+      // [breakpoints.up("sm")]: {
+      //   marginLeft: "10%",
+      // },
     },
     arrow: {
       position: "absolute",

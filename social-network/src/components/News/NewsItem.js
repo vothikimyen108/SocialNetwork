@@ -199,7 +199,7 @@ export default function NewsItem(props) {
     setIslike(!isLike);
   };
   return (
-    <Card className={classes.root}>
+    <Card className={`${props.className} ${classes.root}`}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>

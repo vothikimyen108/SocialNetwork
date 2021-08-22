@@ -23,6 +23,9 @@ const ProductSlyles = makeStyles((theme) => ({
       color: "grey",
     },
   },
+  auction: {
+    width: "100%",
+  },
   action: {
     backgroundColor: "#fff",
     display: "block",
@@ -36,6 +39,7 @@ const ProductSlyles = makeStyles((theme) => ({
       display: "none",
     },
   },
+
   text: {
     // display: "inline",
     margin: 0,
