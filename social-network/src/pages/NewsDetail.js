@@ -7,7 +7,9 @@ import {
   useHistory,
 } from "react-router-dom";
 import NewsItem from "../components/News/NewsItem";
-
+import Grid from "@material-ui/core/Grid";
+import LayoutListMember from "../components/Layout/LayoutListMember";
+import { makeStyles } from "@material-ui/core/styles";
 const item = {
   id: 1,
   avatar: "Y",
@@ -18,6 +20,15 @@ const item = {
   totalShare: 20,
   totalComment: 10,
 };
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginTop: 110,
+    [theme.breakpoints.down("md")]: {
+      marginTop: 160,
+    },
+  },
+}));
 
 const NewsDetail = () => {
   //lấy giá trị tham số của url
@@ -26,22 +37,28 @@ const NewsDetail = () => {
   const handlerIsOpenPhoto = () => {
     history.push("/");
   };
+  const classe = useStyles();
   return (
     <Fragment>
-      <NewsItem
-        key={item.id}
-        isGo={true}
-        avatar={item.avatar}
-        name={item.name}
-        content={item.content}
-        totalLike={item.totalLike}
-        totalShare={item.totalShare}
-        totalComment={item.totalComment}
-        isExpanded={true}
-        isShowImg={true}
-        isPageDetail={true}
-        open={handlerIsOpenPhoto}
-      ></NewsItem>
+      <Grid item xs={12} sm={12} md={9} className={classe.root}>
+        <NewsItem
+          key={item.id}
+          isGo={true}
+          avatar={item.avatar}
+          name={item.name}
+          content={item.content}
+          totalLike={item.totalLike}
+          totalShare={item.totalShare}
+          totalComment={item.totalComment}
+          isExpanded={true}
+          isShowImg={true}
+          isPageDetail={true}
+          open={handlerIsOpenPhoto}
+        ></NewsItem>
+      </Grid>
+      <Grid item xs={12} sm={12} md={3}>
+        <LayoutListMember></LayoutListMember>
+      </Grid>
     </Fragment>
   );
 };

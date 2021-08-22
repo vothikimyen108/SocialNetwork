@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import { useState } from "react";
 import BasicPagination from "../components/Layout/BasicPagination";
 import NewsForm from "../components/News/NewsForm";
+import LayoutListMember from "../components/Layout/LayoutListMember";
 import {
   useParams,
   Route,
@@ -15,6 +16,16 @@ import {
 } from "react-router-dom";
 //importpage
 import PhotoDetail from "./PhotoDetail";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginTop: 110,
+    [theme.breakpoints.down("md")]: {
+      marginTop: 160,
+    },
+  },
+}));
 const data = [
   {
     id: 1,
@@ -112,10 +123,10 @@ const NewsFeed = () => {
     history.push(`${match.path}/photo`);
   };
   //dong formnews
-
+  const classe = useStyles();
   return (
     <div>
-      <Route path={`${match.path}`}>
+      <Grid item xs={12} sm={12} md={9} className={classe.root}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <CreateNews onOpen={handlerOpenNewsForm}></CreateNews>
@@ -127,8 +138,11 @@ const NewsFeed = () => {
             <BasicPagination></BasicPagination>
           </Grid>
         </Grid>
-        {openNewsForm && <NewsForm onClose={handerClose}></NewsForm>}
-      </Route>
+      </Grid>
+      <Grid item xs={12} sm={12} md={3}>
+        <LayoutListMember></LayoutListMember>
+      </Grid>
+      {openNewsForm && <NewsForm onClose={handerClose}></NewsForm>}
     </div>
   );
 };

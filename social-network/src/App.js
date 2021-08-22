@@ -4,7 +4,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Layout from "./components/Layout/DashboardLayoutRoute";
 import LayoutListMember from "./components/Layout/LayoutListMember";
 import Auction from "./components/Products/Auction";
-import LoginLayoutRoute from "./components/UI/LoginLayoutRoute";
+import LoginLayoutRoute from "./components/Layout/LoginLayoutRoute";
 import Login from "./components/Login/Login";
 //cac pages
 import NewsDetail from "./pages/NewsDetail";
@@ -55,45 +55,21 @@ function App() {
   const classe = useStyles();
   return (
     <>
-      {/* <Switch>
-        <Layout>
-          {" "}
-          <Route path="/" exact>
-            <Redirect to="/newsfeed" />
-          </Route>
-          <Route path="/newsfeed">
-            <Grid item xs={12} sm={12} md={9} className={classe.root}>
-              <NewsFeed></NewsFeed>
-            </Grid>
-            <Grid item xs={12} sm={12} md={3}>
-              <LayoutListMember data={dataMember}></LayoutListMember>
-            </Grid>
-          </Route>
-          <Route path="/news/:newsId">
-            <Grid item xs={12} sm={12} md={9} className={classe.root}>
-              <NewsDetail></NewsDetail>
-            </Grid>
-            <Grid item xs={12} sm={12} md={3}>
-              <LayoutListMember data={dataMember}></LayoutListMember>
-            </Grid>
-          </Route>{" "}
-        </Layout>
-      </Switch> */}
       <Router>
         <Switch>
-          <DashboardLayoutRoute path="/" component={NewsFeed} exact>
-            {/* <Grid item xs={12} sm={12} md={9} className={classe.root}>
-              <NewsFeed></NewsFeed>
-            </Grid>
-            <Grid item xs={12} sm={12} md={3}>
-              <LayoutListMember data={dataMember}></LayoutListMember>
-            </Grid> */}
-          </DashboardLayoutRoute>
-          {/* <Route path="/photo/:photoId" exact>
-          <Grid item xs={12} sm={12} md={9} className={classe.root}>
+          <DashboardLayoutRoute
+            path="/"
+            exact
+            component={NewsFeed}
+          ></DashboardLayoutRoute>
+          <DashboardLayoutRoute
+            path="/news/:newsId"
+            exact
+            component={NewsDetail}
+          ></DashboardLayoutRoute>
+          <Route path="/photo/:photoId" exact>
             <PhotoDetail></PhotoDetail>
-          </Grid>
-        </Route> */}
+          </Route>
           <LoginLayoutRoute path="/login" component={Login} />
         </Switch>
       </Router>
