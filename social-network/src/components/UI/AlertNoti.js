@@ -1,31 +1,45 @@
-import React, { useState, useRef, useEffect } from "react";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import Grid from "@material-ui/core/Grid";
-//overlay
-import Modal from "./Modal";
-//import New
-import NewsFormStyles from "../News/NewsFormStyles";
-const AlertNoti = (props) => {
-  const classes = NewsFormStyles();
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    border: "1px solid #f0f2f5",
+    borderRadius: "30px",
+  },
+}));
+
+export default function TransitionsModal(props) {
+  const classes = useStyles();
+
   return (
-    <Modal>
-      <div className={classes.root}>
-        <Grid container>
-          <Grid item xs={12}>
-            <div className={classes.center}>
-              <h2>Thông báo</h2>
-
-              <IconButton className={classes.close} onClick={props.onClose}>
-                <CloseIcon />
-              </IconButton>
-            </div>
-          </Grid>
-          <div className={classes.mainContent}>content</div>
-        </Grid>
-      </div>
-    </Modal>
+    <div>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={props.open}
+        onClose={props.onClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={props.open}>
+          <div className={classes.paper}>{props.children}</div>
+        </Fade>
+      </Modal>
+    </div>
   );
-};
-
-export default AlertNoti;
+}

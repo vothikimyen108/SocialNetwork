@@ -73,8 +73,6 @@ const NewsFormStyles = makeStyles((theme) => ({
   },
   content: {
     width: "100%",
-    // paddingRight: "20px",
-    // paddingLeft: "20px",
     paddingBottom: "20px",
     border: "1px solid #ccc",
     "&:first-child": {
