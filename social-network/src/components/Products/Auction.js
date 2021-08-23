@@ -6,10 +6,11 @@ import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import CustomizedSnackbars from "../UI/CustomizedSnackbars";
-import Alert from "@material-ui/lab/Alert";
+import CloseIcon from "@material-ui/icons/Close";
 //css
 import AutionStyles from "./AutionStyles";
 import AlertNoti from "../UI/AlertNoti";
+import NewsForm from "../News/NewsForm";
 
 export default function Auction() {
   const classes = AutionStyles();
@@ -63,15 +64,14 @@ export default function Auction() {
   //khai bao cac bien
   const refPrice = useRef(price);
   //hàm tăng
-  const handlerAdd = () => {
+  const handleAdd = () => {
     refPrice.current.value++;
     if (refPrice.current.value >= price) {
       setIsError(false);
-      console.log(isError);
     }
   };
   //hàm giảm
-  const handlerRemove = () => {
+  const handleRemove = () => {
     console.log(refPrice.current.value);
     if (refPrice.current.value <= price) {
       refPrice.current.value = price;
@@ -83,7 +83,7 @@ export default function Auction() {
     }
   };
   //kiểm tra gia tri dau gia
-  const handlerPrice = () => {
+  const handlePrice = () => {
     if (refPrice.current.value < price) {
       setIsError(true);
       setIsSuccess("warning");
@@ -100,74 +100,113 @@ export default function Auction() {
     //để k chuyển trang
     event.preventDefault();
     //code
-
+    handerClose();
     //thông báo
     setIsSuccess("success");
     setOpen(true);
+    console.log("oke");
   };
-  //ham mow tao bai viet moi
-  const handlerOpenNewsForm = () => {
-    setNewsForm(true);
-  };
-  //dong formnews
+
   const handerClose = () => {
     setNewsForm(false);
   };
-  const [openNewsForm, setNewsForm] = useState(false);
-  return (
-    <div className={classes.root}>
+
+  //render
+  const renderConfirm = () => {
+    return (
       <form onSubmit={handerSubmit}>
         <Grid container>
-          <Grid item xs={12} md={8} className={classes.paper}>
-            <IconButton
-              aria-label="delete"
-              className={classes.btIcon}
-              onClick={handlerAdd}
-            >
-              <AddIcon></AddIcon>
-            </IconButton>
-            <TextField
-              id="outlined-basic"
-              error={isError}
-              variant="outlined"
-              defaultValue={price}
-              type="number"
-              className={classes.textField}
-              inputRef={refPrice}
-              onChange={handlerPrice}
-              inputProps={{
-                style: {
-                  textAlign: "center",
-                  padding: 13,
-                  textJustify: "center",
-                  color: "#000",
-                },
-              }}
-            />
-            <IconButton
-              aria-label="delete"
-              className={classes.btIcon}
-              onClick={handlerRemove}
-            >
-              <RemoveIcon></RemoveIcon>
-            </IconButton>
+          <Grid item xs={12}>
+            <div className={classes.center}>
+              <h3>Xác nhận đấu giá</h3>
+
+              <IconButton className={classes.close} onClick={handerClose}>
+                <CloseIcon />
+              </IconButton>
+            </div>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12}>
+            <div className={classes.center}>
+              <p>
+                Bạn có đồng ý đấu giá sản phẩm này với{" "}
+                <span style={{ color: "red" }}>{refPrice.current.value} </span>
+                không ?
+              </p>
+            </div>
+          </Grid>
+          <Grid item xs={12}>
             <Button
               type="submit"
               classes={{
-                root: classes.submit, // class name, e.g. `classes-nesting-root-x`
+                root: classes.button, // class name, e.g. `classes-nesting-root-x`
                 label: classes.label, // class name, e.g. `classes-nesting-label-x`
               }}
-              onClick={handlerOpenNewsForm}
             >
-              Đặt giá thầu
+              Xác nhận
             </Button>
           </Grid>
         </Grid>
       </form>
+    );
+  };
+  const [openNewsForm, setNewsForm] = useState(false);
+  return (
+    <div className={classes.root}>
+      <Grid container>
+        <Grid item xs={12} md={8} className={classes.paper}>
+          <IconButton
+            aria-label="delete"
+            className={classes.btIcon}
+            onClick={handleAdd}
+          >
+            <AddIcon></AddIcon>
+          </IconButton>
+          <TextField
+            id="outlined-basic"
+            error={isError}
+            variant="outlined"
+            defaultValue={price}
+            type="number"
+            className={classes.textField}
+            inputRef={refPrice}
+            onChange={handlePrice}
+            inputProps={{
+              style: {
+                textAlign: "center",
+                padding: 13,
+                textJustify: "center",
+                color: "#000",
+              },
+            }}
+          />
+          <IconButton
+            aria-label="delete"
+            className={classes.btIcon}
+            onClick={handleRemove}
+          >
+            <RemoveIcon></RemoveIcon>
+          </IconButton>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Button
+            classes={{
+              root: classes.submit, // class name, e.g. `classes-nesting-root-x`
+              label: classes.label, // class name, e.g. `classes-nesting-label-x`
+            }}
+            onClick={() => {
+              setNewsForm(true);
+            }}
+          >
+            Đặt giá thầu
+          </Button>
+        </Grid>
+      </Grid>
       {renderAlert()}
-      {openNewsForm && <AlertNoti onClose={handerClose}></AlertNoti>}
+      {openNewsForm && (
+        <AlertNoti onClose={handerClose} open={NewsForm}>
+          {renderConfirm()}
+        </AlertNoti>
+      )}{" "}
     </div>
   );
 }
