@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const LoginStyles = makeStyles((theme) => ({
   root: {
-    height: "100vh",
+    height: "10vh", //100vh
   },
   left: {
     position: "relative",

@@ -24,7 +24,7 @@ export default function Login() {
           </defs>
         </Wave>
         <div className={classes.img}>
-          <img src={avatar} className={classes.img}></img>
+          <img src={avatar} className={classes.img} alt={avatar}></img>
         </div>
       </Grid>
       <Grid item xs={12} sm={12} md={5} component={Paper} elevation={12} square>
