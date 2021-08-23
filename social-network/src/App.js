@@ -50,35 +50,35 @@ const dataMember = [
 function App() {
   const classe = useStyles();
   return (
-    // <Layout>
-    //   <Switch>
-    //     <Route path="/" exact>
-    //       <Redirect to="/newsfeed" />
-    //     </Route>
-    //     <Route path="/newsfeed">
-    //       <Grid item xs={12} sm={12} md={9} className={classe.root}>
-    //         <NewsFeed></NewsFeed>
-    //       </Grid>
-    //       <Grid item xs={12} sm={12} md={3}>
-    //         <LayoutListMember data={dataMember}></LayoutListMember>
-    //       </Grid>
-    //     </Route>
-    //     <Route path="/news/:newsId">
-    //       <Grid item xs={12} sm={12} md={9} className={classe.root}>
-    //         <NewsDetail></NewsDetail>
-    //       </Grid>
-    //       <Grid item xs={12} sm={12} md={3}>
-    //         <LayoutListMember data={dataMember}></LayoutListMember>
-    //       </Grid>
-    //     </Route>
-    //     <Route path="/photo/:photoId">
-    //       <Grid item xs={12} sm={12} md={9} className={classe.root}>
-    //         <PhotoDetail></PhotoDetail>
-    //       </Grid>
-    //     </Route>
-    //   </Switch>
-    // </Layout>
-    <Auction></Auction>
+    <Layout>
+      <Switch>
+        <Route path="/" exact>
+          <Redirect to="/newsfeed" />
+        </Route>
+        <Route path="/newsfeed">
+          <Grid item xs={12} sm={12} md={9} className={classe.root}>
+            <NewsFeed></NewsFeed>
+          </Grid>
+          <Grid item xs={12} sm={12} md={3}>
+            <LayoutListMember data={dataMember}></LayoutListMember>
+          </Grid>
+        </Route>
+        <Route path="/news/:newsId">
+          <Grid item xs={12} sm={12} md={9} className={classe.root}>
+            <NewsDetail></NewsDetail>
+          </Grid>
+          <Grid item xs={12} sm={12} md={3}>
+            <LayoutListMember data={dataMember}></LayoutListMember>
+          </Grid>
+        </Route>
+        <Route path="/photo/:photoId">
+          <Grid item xs={12} sm={12} md={9} className={classe.root}>
+            <PhotoDetail></PhotoDetail>
+          </Grid>
+        </Route>
+      </Switch>
+    </Layout>
+    // <Auction></Auction>
   );
 }
 export default App;
