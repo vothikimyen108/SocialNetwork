@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, InputAdornment, IconButton } from "@material-ui/core";
+import { InputAdornment, IconButton } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { Button, Grid, Typography, Link, Box, Fab } from "@material-ui/core";
@@ -37,28 +37,30 @@ const FormLogin = function FormLogin() {
     return (
       <Grid container spacing={2} className={classes.signupForm}>
         <Grid item xs={12} sm={6}>
-          <TextField
+          <TextValidator
             autoComplete="fname"
             name="firstName"
             variant="outlined"
-            required
             fullWidth
             id="firstName"
-            label="First Name"
+            label="Họ *"
             className={classes.textField}
+            validators={["required"]}
+            errorMessages={["không để trống dòng này"]}
             autoFocus
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
+          <TextValidator
             variant="outlined"
-            required
             fullWidth
             id="lastName"
-            label="Last Name"
+            label="Tên *"
             name="lastName"
             autoComplete="lname"
             className={classes.textField}
+            validators={["required"]}
+            errorMessages={["không để trống dòng này"]}
           />
         </Grid>
       </Grid>
@@ -82,6 +84,15 @@ const FormLogin = function FormLogin() {
   const handleSubmit = () => {
     // your submit logic
   };
+  //
+  const vali = ["required"];
+  const errorShow = ["không để trống dòng này"];
+  if (!isSignIn) {
+    vali.push("matchRegexp:^[A-Za-z0-9\\s]+$");
+    vali.push("minStringLength:6");
+    errorShow.push("Vui lòng nhập mật khẩu không có ký tự đặc biệt");
+    errorShow.push("Tốt thiểu 6 ký tư");
+  }
   return (
     <div className={classes.paper}>
       <Typography fontWeight="fontWeightBold" component="h1">
@@ -103,34 +114,29 @@ const FormLogin = function FormLogin() {
           margin="normal"
           fullWidth
           id="email"
-          label="Email"
+          label="Email *"
           name="email"
           autoComplete="email"
           autoFocus
           onChange={handleChange}
           value={info.formData.email}
           validators={["required", "isEmail"]}
-          errorMessages={["không để trống dòng này", "không phải là email"]}
+          errorMessages={[
+            "không để trống dòng này",
+            "vui lòng nhập đúng email",
+          ]}
         />
         <TextValidator
           onChange={handleChange}
           value={info.formData.password}
-          validators={[
-            "required",
-            "matchRegexp:^[A-Za-z0-9\\s]+$",
-            "minStringLength:6",
-          ]}
-          errorMessages={[
-            "không để trống dòng này",
-            "không được dùng ký tự đặc biệt",
-            "tối thiểu 6 ký tự",
-          ]}
+          validators={vali}
+          errorMessages={errorShow}
           className={classes.textField}
           variant="outlined"
           margin="normal"
           fullWidth
           name="password"
-          label="Mật Khẩu"
+          label="Mật Khẩu *"
           id="password"
           autoComplete="current-password"
           type={showPassword ? "text" : "password"} // <-- This is where the magic happens

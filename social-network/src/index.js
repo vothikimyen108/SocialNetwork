@@ -4,10 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
+import DateFnsUtils from "@date-io/date-fns";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import "date-fns";
+//import Moment from "react-moment";
 ReactDOM.render(
   <BrowserRouter>
-    <App />,
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <App></App>
+    </MuiPickersUtilsProvider>
   </BrowserRouter>,
+
   document.getElementById("root"),
 );
 

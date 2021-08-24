@@ -10,30 +10,33 @@ import PhotoDetail from "./pages/PhotoDetail";
 import DashboardLayoutRoute from "./components/Layout/DashboardLayoutRoute";
 //impor
 import { BrowserRouter as Router } from "react-router-dom";
-
+import SignUpForm from "./components/Login/SignUpForm";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 //c
 function App() {
   return (
-    <>
-      <Router>
-        <Switch>
-          <DashboardLayoutRoute
-            path="/"
-            exact
-            component={NewsFeed}
-          ></DashboardLayoutRoute>
-          <DashboardLayoutRoute
-            path="/news/:newsId"
-            exact
-            component={NewsDetail}
-          ></DashboardLayoutRoute>
-          <Route path="/photo/:photoId" exact>
-            <PhotoDetail></PhotoDetail>
-          </Route>
-          <LoginLayoutRoute path="/login" component={Login} />
-        </Switch>
-      </Router>
-    </>
+    // <>
+    //   <Router>
+    //     <Switch>
+    //       <DashboardLayoutRoute
+    //         path="/"
+    //         exact
+    //         component={NewsFeed}
+    //       ></DashboardLayoutRoute>
+    //       <DashboardLayoutRoute
+    //         path="/news/:newsId"
+    //         exact
+    //         component={NewsDetail}
+    //       ></DashboardLayoutRoute>
+    //       <Route path="/photo/:photoId" exact>
+    //         <PhotoDetail></PhotoDetail>
+    //       </Route>
+    //       <LoginLayoutRoute path="/loginsignup" component={Login} />
+    //     </Switch>
+    //   </Router>
+    // </>
+    <SignUpForm></SignUpForm>
   );
 }
 export default App;
