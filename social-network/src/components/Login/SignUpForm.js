@@ -22,6 +22,7 @@ import {
 } from "@material-ui/pickers";
 import UploadAvatar from "./UploadAvatar";
 import Abc from "./abc";
+import PhoneNumber from "./PhoneNumber";
 const useStyles = makeStyles((theme) => ({
   paper: {
     height: 600,
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ["chọn ảnh", "hoàn tất", "kết thúc"];
+const steps = ["chọn ảnh", "địa chỉ", "hoàn tất"];
 
 export default function SignUpForm() {
   const classes = useStyles();
@@ -68,10 +69,6 @@ export default function SignUpForm() {
   };
   const style = {
     textAlign: "center",
-    // padding: "200px 0",
-    // fontSize: "30px",
-    // width: "100%",
-    // height: "100%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -97,9 +94,9 @@ export default function SignUpForm() {
           <UploadAvatar values={img} handleChange={handleChange}></UploadAvatar>
         );
       case 1:
-        return <h1>hh</h1>;
-      case 2:
         return <Abc></Abc>;
+      case 2:
+        return <PhoneNumber></PhoneNumber>;
       default:
         throw new Error("Unknown step");
     }
