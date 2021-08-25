@@ -52,6 +52,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
+  right: {
+    boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+  },
+  content: {
+    width: "100%",
+    height: 300,
+  },
 }));
 
 const steps = ["chọn ảnh", "địa chỉ", "hoàn tất"];
@@ -91,12 +98,25 @@ export default function SignUpForm() {
     switch (step) {
       case 0:
         return (
-          <UploadAvatar values={img} handleChange={handleChange}></UploadAvatar>
+          <div className={classes.content}>
+            <UploadAvatar
+              values={img}
+              handleChange={handleChange}
+            ></UploadAvatar>
+          </div>
         );
       case 1:
-        return <Abc></Abc>;
+        return (
+          <div className={classes.content}>
+            <Abc></Abc>
+          </div>
+        );
       case 2:
-        return <PhoneNumber></PhoneNumber>;
+        return (
+          <div className={classes.content}>
+            <PhoneNumber></PhoneNumber>
+          </div>
+        );
       default:
         throw new Error("Unknown step");
     }
@@ -144,7 +164,7 @@ export default function SignUpForm() {
           </main>
         </Grid>{" "}
         <CssBaseline />
-        <Grid item xs={12} sm={6} md={6}>
+        <Grid item xs={12} sm={6} md={6} className={classes.right}>
           <CssBaseline></CssBaseline>
           <main className={classes.layout}>
             <Paper className={classes.paper}>

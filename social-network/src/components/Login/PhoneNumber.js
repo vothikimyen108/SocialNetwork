@@ -53,10 +53,48 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: 25,
     },
   },
+  input: {
+    color: "#616161",
+
+    [`& fieldset`]: {
+      color: "#6a1b9a",
+      minWidth: "200px",
+      background: "white",
+      border: "1px solid #c5cae9",
+      borderRadius: 30,
+    },
+  },
 }));
 const PhoneNumber = () => {
   const classes = useStyles();
   const [selectedDate, handleDateChange] = useState(new Date());
+  const minimalSelectClasses = useMinimalSelectStyles();
+
+  const iconComponent = (props) => {
+    return (
+      <ExpandMoreIcon
+        className={props.className + " " + minimalSelectClasses.icon}
+      />
+    );
+  };
+
+  // moves the menu below the select input
+  const menuProps = {
+    classes: {
+      paper: minimalSelectClasses.paper,
+      list: minimalSelectClasses.list,
+    },
+    anchorOrigin: {
+      vertical: "bottom",
+      horizontal: "left",
+      color: "#000",
+    },
+    transformOrigin: {
+      vertical: "top",
+      horizontal: "left",
+    },
+    getContentAnchorEl: null,
+  };
   return (
     <ValidatorForm
       className={classes.form}
@@ -100,23 +138,20 @@ const PhoneNumber = () => {
             />
           </nav>
           <nav>
-            <InputLabel id="demo-controlled-open-select-label">Age</InputLabel>
-            <Select
-              labelId="demo-controlled-open-select-label"
-              id="demo-controlled-open-select"
-              //   open={open}
-              //   onClose={handleClose}
-              //   onOpen={handleOpen}
-              //   value={age}
+            <TextValidator
+              id="standard-select-currency"
+              select
+              label="Giới tính"
+              className={classes.textField}
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              //   value={currency}
               //   onChange={handleChange}
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
+              <MenuItem value={0}>Nam</MenuItem>
+              <MenuItem value={1}>Nữ</MenuItem>
+            </TextValidator>
           </nav>
         </Grid>
       </Grid>

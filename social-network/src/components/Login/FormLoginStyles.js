@@ -54,7 +54,6 @@ const FormLoginStyles = makeStyles((theme) => ({
     width: "100%",
     padding: "0 30px",
   },
-  logo: {},
 
   textField: {
     [`& fieldset`]: {

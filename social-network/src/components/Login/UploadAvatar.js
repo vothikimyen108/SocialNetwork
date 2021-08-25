@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 30,
     "& > *": {
       margin: theme.spacing(1),
     },
@@ -27,48 +28,25 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
     color: "#7200ca",
   },
+  subButton: {
+    color: "#7200ca",
+  },
 }));
 const UploadAvatar = (props) => {
-  //   const [images, setImages] = useState(props.value);
   const classes = useStyles();
-
-  //   const fileInputRef = useRef();
 
   const handlerImg = () => {
     return (
       <div className={classes.root}>
-        {/* <ImageList className={classes.imageList} cols={3} rowHeight={160}> */}
         {values === "" ? (
           <Avatar alt="Remy Sharp" src={Upload} className={classes.large} />
         ) : (
           <Avatar alt="Remy Sharp" src={values} className={classes.large} />
         )}
-        {/* </ImageList> */}
       </div>
     );
   };
 
-  //   const addImage = (e) => {
-  //     if (e.target.files) {
-  //       let filesArray = "";
-  //       for (let i = 0; i < e.target.files.length; i++) {
-  //         filesArray = URL.createObjectURL(e.target.files[i]);
-  //       }
-
-  //       setImages((prevImages) => (prevImages = filesArray));
-  //       Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
-  //     }
-  //   };
-
-  //   useEffect(() => {
-  //     if (fileInputRef) fileInputRef.current.value = null;
-  //     console.log(images);
-  //   }, [images]);
-  //   // //xóa
-  //   const handlerRemove = (photo) => {
-  //     console.log(photo);
-  //     setImages((oldState) => oldState.filter((item) => item !== photo));
-  //   };
   const { values, handleChange } = props;
   return (
     <div>
