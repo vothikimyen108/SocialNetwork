@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
@@ -20,29 +20,25 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
+import UploadAvatar from "./UploadAvatar";
+import Abc from "./abc";
 const useStyles = makeStyles((theme) => ({
   paper: {
-    // marginTop: theme.spacing(3),
-    // marginBottom: theme.spacing(3),
+    height: 600,
+    boxShadow: "none",
     padding: theme.spacing(2),
+    margin: "auto",
+    textAlign: "center",
+    // borderRight: "1px solid #000",
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
+      // marginTop: theme.spacing(6),
+      // marginBottom: theme.spacing(6),
       padding: theme.spacing(3),
     },
+  },
+  layout: {
+    margin: "auto",
+    textAlign: "center",
   },
   stepper: {
     padding: theme.spacing(3, 0, 5),
@@ -57,20 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ["Shipping address", "Payment details", "Review your order"];
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <h1>heloo</h1>;
-    case 1:
-      return <h1>heloo</h1>;
-    case 2:
-      return <h3>Heloo</h3>;
-    default:
-      throw new Error("Unknown step");
-  }
-}
+const steps = ["chọn ảnh", "hoàn tất", "kết thúc"];
 
 export default function SignUpForm() {
   const classes = useStyles();
@@ -93,6 +76,34 @@ export default function SignUpForm() {
     flexDirection: "column",
     alignItems: "center",
   };
+  //img
+  const [img, setImg] = useState("");
+  const handleChange = (e) => {
+    if (e.target.files) {
+      let filesArray = "";
+      for (let i = 0; i < e.target.files.length; i++) {
+        filesArray = URL.createObjectURL(e.target.files[i]);
+      }
+
+      setImg((prevImages) => (prevImages = filesArray));
+      Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
+    }
+    console.log(e);
+  };
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return (
+          <UploadAvatar values={img} handleChange={handleChange}></UploadAvatar>
+        );
+      case 1:
+        return <h1>hh</h1>;
+      case 2:
+        return <Abc></Abc>;
+      default:
+        throw new Error("Unknown step");
+    }
+  }
   return (
     <React.Fragment>
       <Grid container>
@@ -100,7 +111,7 @@ export default function SignUpForm() {
           <main className={classes.layout}>
             {" "}
             <Paper className={classes.paper}>
-              <div className="slide-container">
+              <div className={classes.layout}>
                 <Slide
                   autoplay="on"
                   arrows={false}
@@ -110,24 +121,24 @@ export default function SignUpForm() {
                   <div style={{ ...style }}>
                     <div className="top">
                       {" "}
-                      <div class="circle">
+                      <div className="circle">
                         <img src={Cat} alt={Cat} className="img"></img>
                       </div>{" "}
                     </div>{" "}
                     <div className="bottom">
                       <h3>Chào mừng bạn</h3>
-                      <p>Hoang tat dang ky nhe</p>
+                      <p>Hoan tat dang ky nhe</p>
                     </div>
                   </div>
                   <div style={{ ...style }}>
                     <div className="top">
-                      <div class="circle">
+                      <div className="circle">
                         <img src={Upload} alt={Cat} className="img"></img>
                       </div>
                     </div>
                     <div className="bottom">
                       <h3>Chọn một tấm ảnh xinh xắn của bạn</h3>
-                      <p>Hoang tat dang ky nhe</p>
+                      <p>Hoan tat dang ky nhe</p>
                     </div>
                   </div>
                 </Slide>
@@ -137,11 +148,10 @@ export default function SignUpForm() {
         </Grid>{" "}
         <CssBaseline />
         <Grid item xs={12} sm={6} md={6}>
+          <CssBaseline></CssBaseline>
           <main className={classes.layout}>
             <Paper className={classes.paper}>
-              <Typography component="h1" variant="h4" align="center">
-                Checkout
-              </Typography>
+              <h2>Hoàn tất đăng ký</h2>
               <Stepper activeStep={activeStep} className={classes.stepper}>
                 {steps.map((label) => (
                   <Step key={label}>
@@ -153,12 +163,10 @@ export default function SignUpForm() {
                 {activeStep === steps.length ? (
                   <React.Fragment>
                     <Typography variant="h5" gutterBottom>
-                      Thank you for your order.
+                      Cảm ơn bạn đã tham gia
                     </Typography>
                     <Typography variant="subtitle1">
-                      Your order number is #2001539. We have emailed your order
-                      confirmation, and will send you an update when your order
-                      has shipped.
+                      Chúc bạn có những trải nghiệm vui nhất
                     </Typography>
                   </React.Fragment>
                 ) : (
@@ -185,7 +193,6 @@ export default function SignUpForm() {
                 )}
               </React.Fragment>
             </Paper>
-            <Copyright />
           </main>
         </Grid>
       </Grid>
