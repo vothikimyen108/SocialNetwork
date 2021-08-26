@@ -5,7 +5,7 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { Button, Grid, Typography, Link, Box, Fab } from "@material-ui/core";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import FacebookIcon from "@material-ui/icons/Facebook";
-import { ReactComponent as GG } from "../../assets/Login/google.svg";
+import { ReactComponent as GG } from "../../../assets/Login/google.svg";
 import FormLoginStyles from "./FormLoginStyles";
 
 //lấy năm hiện tại

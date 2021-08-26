@@ -3,7 +3,7 @@ import { Grid, CssBaseline, Paper } from "@material-ui/core";
 import Wave from "react-wavify";
 import FormLogin from "./FormLogin";
 import LoginStyles from "./LoginStyles";
-import avatar from "../../assets/Login/undraw_our_neighborhood_ya1h.svg";
+import avatar from "../../../assets/Login/undraw_our_neighborhood_ya1h.svg";
 export default function Login() {
   const classes = LoginStyles();
 

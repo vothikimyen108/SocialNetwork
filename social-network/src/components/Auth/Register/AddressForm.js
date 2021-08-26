@@ -2,65 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useMinimalSelectStyles } from "@mui-treasury/styles/select/minimal";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
-// Original design here: https://github.com/siriwatknp/mui-treasury/issues/540
-import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import Input from "@material-ui/core/Input";
-import { useBorderSelectStyles } from "@mui-treasury/styles/select/border";
-import { makeStyles } from "@material-ui/core/styles";
-import ProvincesApi from "../../api/ProvincesApi";
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-    "& > *": {
-      margin: theme.spacing(1),
-    },
-  },
-  small: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
-  },
-  large: {
-    width: theme.spacing(20),
-    height: theme.spacing(20),
-  },
-  input: {
-    color: "#616161",
-
-    "& .MuiSelect-selectMenu": {
-      color: "#6a1b9a",
-      minWidth: "240px",
-      padding: 10,
-      background: "white",
-      border: "1px solid #c5cae9",
-      borderRadius: 30,
-    },
-  },
-  labelId: {
-    fontWeight: "bold",
-    fontSize: 15,
-    display: "inline",
-    margin: 0,
-    marginRight: 30,
-    width: "20%",
-  },
-  box: {
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-  },
-}));
-const MinimalSelect = () => {
+//call api
+import ProvincesApi from "../../../api/ProvincesApi";
+//css
+import FormStyles from "./FormStyles";
+const AddressForm = () => {
   const [valProvinces, setvalProvinces] = useState(1);
-  const classes = useStyles();
+  const classes = FormStyles();
   const handleChange = (event) => {
     setvalProvinces(event.target.value);
     setValWards(null);
@@ -191,62 +142,103 @@ const MinimalSelect = () => {
     >
       <Grid container spacing={2} className={classes.root}>
         <Grid item className={classes.box}>
-          <p className={classes.labelId}>Tỉnh/Thành:</p>
-          <Select
-            disableUnderline
-            className={classes.input}
-            labelId="inputLabel"
-            IconComponent={iconComponent}
-            MenuProps={menuProps}
-            value={valProvinces || ""}
-            onChange={handleChange}
-          >
-            {provinces.map((item, id) => (
-              <MenuItem value={item.code} key={id}>
-                {item.name}
-              </MenuItem>
-            ))}
-          </Select>
+          <nav>
+            {" "}
+            <p className={classes.labelId}>Tỉnh/Thành:</p>
+          </nav>
+          <nav>
+            <Select
+              disableUnderline
+              className={classes.input}
+              labelId="inputLabel"
+              IconComponent={iconComponent}
+              MenuProps={menuProps}
+              value={valProvinces || ""}
+              onChange={handleChange}
+            >
+              {provinces.map((item, id) => (
+                <MenuItem value={item.code} key={id}>
+                  {item.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </nav>
         </Grid>
         <Grid item className={classes.box}>
-          <p className={classes.labelId}>Quận/huyện:</p>
-          <Select
-            disableUnderline
-            className={classes.input}
-            labelId="inputLabel"
-            IconComponent={iconComponent}
-            MenuProps={menuProps}
-            value={valdistricts || ""}
-            onChange={handleChangeDistricts}
-          >
-            {districts.map((item, id) => (
-              <MenuItem value={item.code} key={id}>
-                {item.name}
-              </MenuItem>
-            ))}
-          </Select>
+          <nav>
+            {" "}
+            <p className={classes.labelId}>Quận/huyện:</p>{" "}
+          </nav>
+          <nav>
+            <Select
+              disableUnderline
+              className={classes.input}
+              labelId="inputLabel"
+              IconComponent={iconComponent}
+              MenuProps={menuProps}
+              value={valdistricts || ""}
+              onChange={handleChangeDistricts}
+            >
+              {districts.map((item, id) => (
+                <MenuItem value={item.code} key={id}>
+                  {item.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </nav>
         </Grid>
         <Grid item xs={12} className={classes.box}>
-          <p className={classes.labelId}>Phường xã:</p>
-          <Select
-            disableUnderline
-            className={classes.input}
-            labelId="inputLabel"
-            IconComponent={iconComponent}
-            MenuProps={menuProps}
-            value={valwards || ""}
-            onChange={handleChangewards}
-          >
-            {wards.map((item, id) => (
-              <MenuItem value={item.code} key={id}>
-                {item.name}
-              </MenuItem>
-            ))}
-          </Select>
+          <nav>
+            {" "}
+            <p className={classes.labelId}>Quận/huyện:</p>{" "}
+          </nav>
+          <nav>
+            <Select
+              disableUnderline
+              className={classes.input}
+              labelId="inputLabel"
+              IconComponent={iconComponent}
+              MenuProps={menuProps}
+              value={valwards || ""}
+              onChange={handleChangewards}
+            >
+              {wards.map((item, id) => (
+                <MenuItem value={item.code} key={id}>
+                  {item.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </nav>
+        </Grid>
+        <Grid item xs={12} className={classes.box}>
+          <nav>
+            {" "}
+            <p className={classes.labelId}>Đại chỉ:</p>{" "}
+          </nav>
+          <nav>
+            <TextValidator
+              className={classes.textField}
+              variant="outlined"
+              margin="normal"
+              // fullWidth
+              id="email"
+              // name="email"
+              // autoComplete="email"
+              // autoFocus
+              size="small"
+              // onChange={handleChange}
+              // value={info.formData.email}
+              validators={["required", "isEmail"]}
+              errorMessages={[
+                "không để trống dòng này",
+                "vui lòng nhập đúng email",
+              ]}
+            ></TextValidator>
+          </nav>
         </Grid>
       </Grid>
     </ValidatorForm>
   );
 };
 
-export default MinimalSelect;
+export default AddressForm;
