@@ -114,7 +114,7 @@ export default function Auction() {
   //render
   const renderConfirm = () => {
     return (
-      <form onSubmit={handerSubmit}>
+      <form onSubmit={handerSubmit} className={classes.form}>
         <Grid container>
           <Grid item xs={12}>
             <div className={classes.center}>

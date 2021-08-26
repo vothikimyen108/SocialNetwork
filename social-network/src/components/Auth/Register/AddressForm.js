@@ -9,13 +9,18 @@ import Grid from "@material-ui/core/Grid";
 import ProvincesApi from "../../../api/ProvincesApi";
 //css
 import FormStyles from "./FormStyles";
-const AddressForm = () => {
-  const [valProvinces, setvalProvinces] = useState(1);
+import { set } from "date-fns";
+const AddressForm = (props) => {
   const classes = FormStyles();
-  const handleChange = (event) => {
-    setvalProvinces(event.target.value);
-    setValWards(null);
-  };
+  const { values, handleChange } = props;
+  // const [valProvinces, setvalProvinces] = useState(values.province);
+
+  // const handleChange1 = (event) => {
+  //   setvalProvinces(event.target.value);
+
+  //   // console.log(valProvinces);
+  //   setValWards(null);
+  // };
 
   const minimalSelectClasses = useMinimalSelectStyles();
 
@@ -61,29 +66,20 @@ const AddressForm = () => {
           });
         }
         setProvinces((prevImages) => prevImages.concat(provincesData));
-        console.log(response);
-        const response1 = await ProvincesApi.getDistricts(valProvinces);
-        const districtsData = [];
-        for (let i = 0; i < response1.districts.length; i++) {
-          districtsData.push({
-            name: response1.districts[i].name,
-            code: response1.districts[i].code,
-          });
-        }
-        setDistricts(districtsData);
+        setWards([]);
       } catch (error) {
         console.log(error);
       }
     };
     fetchProvinces();
-  }, []);
+  }, [values.province]);
   //lấy quận theo tỉnh
   const [districts, setDistricts] = useState([]);
   useEffect(() => {
     const fetchProvinces = async () => {
       try {
         //gọi từ axios
-        const response1 = await ProvincesApi.getDistricts(valProvinces);
+        const response1 = await ProvincesApi.getDistricts(values.province);
         const districtsData = [];
         for (let i = 0; i < response1.districts.length; i++) {
           districtsData.push({
@@ -97,41 +93,40 @@ const AddressForm = () => {
       }
     };
     fetchProvinces();
-  }, [valProvinces]);
+  }, [values.province]);
   //code xa huyện
-  const [valdistricts, setValdistricts] = useState(null);
-  const handleChangeDistricts = (event) => {
-    setValdistricts(event.target.value);
-    console.log("Ok" + valdistricts);
-  };
-  const handleChangewards = (event) => {
-    setValWards(event.target.value);
-    console.log("Ok" + valdistricts);
-  };
+  // const [valdistricts, setValdistricts] = useState(null);
+  // const handleChangeDistricts = (event) => {
+  //   setValdistricts(event.target.value);
+  // };
+  // const handleChangewards = (event) => {
+  //   setValWards(event.target.value);
+  // };
   const [wards, setWards] = useState([]);
-  const [valwards, setValWards] = useState(null);
+
+  // useEffect(() => {
+  //   setValWards(true);
+  // }, [values.province]);
   useEffect(() => {
     const fetchProvinces = async () => {
       try {
         //gọi từ axios
-        if (valdistricts !== null) {
-          const response = await ProvincesApi.getwards(valdistricts);
-          const wardsData = [];
-          for (let i = 0; i < response.wards.length; i++) {
-            wardsData.push({
-              name: response.wards[i].name,
-              code: response.wards[i].code,
-            });
-          }
-          setWards(wardsData);
-          console.log(response.wards);
+        // if (valwards) {
+        const response = await ProvincesApi.getwards(values.district);
+        const wardsData = [];
+        for (let i = 0; i < response.wards.length; i++) {
+          wardsData.push({
+            name: response.wards[i].name,
+            code: response.wards[i].code,
+          });
         }
+        setWards(wardsData);
       } catch (error) {
         console.log(error);
       }
     };
     fetchProvinces();
-  }, [valdistricts]);
+  }, [values.district]);
 
   return (
     <ValidatorForm
@@ -153,8 +148,8 @@ const AddressForm = () => {
               labelId="inputLabel"
               IconComponent={iconComponent}
               MenuProps={menuProps}
-              value={valProvinces || ""}
-              onChange={handleChange}
+              value={values.province ? values.province : ""}
+              onChange={handleChange("province")}
             >
               {provinces.map((item, id) => (
                 <MenuItem value={item.code} key={id}>
@@ -176,8 +171,8 @@ const AddressForm = () => {
               labelId="inputLabel"
               IconComponent={iconComponent}
               MenuProps={menuProps}
-              value={valdistricts || ""}
-              onChange={handleChangeDistricts}
+              value={values.district ? values.district : ""}
+              onChange={handleChange("district")}
             >
               {districts.map((item, id) => (
                 <MenuItem value={item.code} key={id}>
@@ -190,7 +185,7 @@ const AddressForm = () => {
         <Grid item xs={12} className={classes.box}>
           <nav>
             {" "}
-            <p className={classes.labelId}>Quận/huyện:</p>{" "}
+            <p className={classes.labelId}>Xã/phường:</p>{" "}
           </nav>
           <nav>
             <Select
@@ -199,11 +194,11 @@ const AddressForm = () => {
               labelId="inputLabel"
               IconComponent={iconComponent}
               MenuProps={menuProps}
-              value={valwards || ""}
-              onChange={handleChangewards}
+              value={values.ward ? values.ward : ""}
+              onChange={handleChange("ward")}
             >
               {wards.map((item, id) => (
-                <MenuItem value={item.code} key={id}>
+                <MenuItem value={item.name} key={id}>
                   {item.name}
                 </MenuItem>
               ))}

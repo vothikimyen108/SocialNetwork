@@ -13,6 +13,7 @@ import PhoneNumber from "./PhoneNumber";
 import SlideShow from "../../UI/SlideShow";
 //css
 import SignUpFormStyles from "./SignUpFormStyles";
+import ModalFull from "../../UI/ModalFull";
 const steps = ["chọn ảnh", "địa chỉ", "hoàn tất"];
 export default function SignUpForm() {
   const classes = SignUpFormStyles();
@@ -24,12 +25,6 @@ export default function SignUpForm() {
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
-  };
-  const style = {
-    textAlign: "center",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
   };
   //img
   const [img, setImg] = useState("");
@@ -45,6 +40,29 @@ export default function SignUpForm() {
     }
     console.log(e);
   };
+
+  //code
+  const [state, setState] = useState({
+    province: "",
+    district: "",
+    ward: "",
+    address: "",
+    gender: "",
+    birthday: "",
+    phone: "",
+  });
+  //khai báo các trường cần thiết
+  const { province, district, ward, address, gender, birthday, phone } = state;
+  const values = { province, district, ward, address, gender, birthday, phone };
+  //hàm xử lí onchange
+  const handleChangeAll = (input) => (e) => {
+    if (input === "birthday") {
+      setState({ ...state, [input]: e });
+    } else {
+      setState({ ...state, [input]: e.target.value });
+    }
+    console.log(e, "oke");
+  };
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -52,92 +70,94 @@ export default function SignUpForm() {
           <div className={classes.content}>
             <UploadAvatar
               values={img}
-              handleChange={handleChange}
+              handleChange={handleChangeAll}
             ></UploadAvatar>
           </div>
         );
       case 1:
         return (
           <div className={classes.content}>
-            <Abc></Abc>
+            <Abc handleChange={handleChangeAll} values={values}></Abc>
           </div>
         );
       case 2:
         return (
           <div className={classes.content}>
-            <PhoneNumber></PhoneNumber>
+            <PhoneNumber
+              handleChange={handleChangeAll}
+              values={values}
+            ></PhoneNumber>
           </div>
         );
       default:
         throw new Error("Unknown step");
     }
   }
+
   return (
-    <React.Fragment>
-      <Grid container>
-        <Grid item xs={12} sm={6} md={6}>
+    <Grid container className={classes.test}>
+      <Grid item xs={12} sm={12} md={6}>
+        <Paper className={classes.paper}>
+          <SlideShow></SlideShow>
+        </Paper>
+      </Grid>
+      <Grid item xs={12} sm={12} md={6} className={classes.right}>
+        <CssBaseline></CssBaseline>
+        <main className={classes.layout}>
           <Paper className={classes.paper}>
-            <SlideShow></SlideShow>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6} className={classes.right}>
-          <CssBaseline></CssBaseline>
-          <main className={classes.layout}>
-            <Paper className={classes.paper}>
-              <h2>Hoàn tất đăng ký</h2>
-              <Stepper activeStep={activeStep} className={classes.stepper}>
-                {steps.map((label) => (
-                  <Step key={label}>
-                    <StepLabel>{label}</StepLabel>
-                  </Step>
-                ))}
-              </Stepper>
-              <React.Fragment>
-                {activeStep === steps.length ? (
-                  <React.Fragment>
-                    <Typography variant="h5" gutterBottom>
-                      Cảm ơn bạn đã tham gia
-                    </Typography>
-                    <Typography variant="subtitle1">
-                      Chúc bạn có những trải nghiệm vui nhất
-                    </Typography>
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    {getStepContent(activeStep)}
-                    <div className={classes.buttons}>
-                      {activeStep !== 0 && (
-                        <Button
-                          onClick={handleBack}
-                          classes={{
-                            root: classes.submitBack, // class name, e.g. `classes-nesting-root-x`
-                            label: classes.label, // class name, e.g. `classes-nesting-label-x`
-                          }}
-                        >
-                          quay lại
-                        </Button>
-                      )}
+            <h2>Hoàn tất đăng ký</h2>
+            <Stepper activeStep={activeStep} className={classes.stepper}>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            <React.Fragment>
+              {activeStep === steps.length ? (
+                <React.Fragment>
+                  <Typography variant="h5" gutterBottom>
+                    Cảm ơn bạn đã tham gia
+                  </Typography>
+                  <Typography variant="subtitle1">
+                    Chúc bạn có những trải nghiệm vui nhất
+                  </Typography>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {getStepContent(activeStep)}
+                  <div className={classes.buttons}>
+                    {activeStep !== 0 && (
                       <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
+                        onClick={handleBack}
                         classes={{
-                          root: classes.submit, // class name, e.g. `classes-nesting-root-x`
+                          root: classes.submitBack, // class name, e.g. `classes-nesting-root-x`
                           label: classes.label, // class name, e.g. `classes-nesting-label-x`
                         }}
                       >
-                        {activeStep === steps.length - 1
-                          ? "xác nhận"
-                          : "tiếp tục"}
+                        quay lại
                       </Button>
-                    </div>
-                  </React.Fragment>
-                )}
-              </React.Fragment>
-            </Paper>
-          </main>
-        </Grid>
+                    )}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      classes={{
+                        root: classes.submit, // class name, e.g. `classes-nesting-root-x`
+                        label: classes.label, // class name, e.g. `classes-nesting-label-x`
+                      }}
+                    >
+                      {activeStep === steps.length - 1
+                        ? "xác nhận"
+                        : "tiếp tục"}
+                    </Button>
+                  </div>
+                </React.Fragment>
+              )}
+            </React.Fragment>
+          </Paper>
+        </main>
       </Grid>
-    </React.Fragment>
+    </Grid>
   );
 }

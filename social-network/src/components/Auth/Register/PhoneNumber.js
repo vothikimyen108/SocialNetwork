@@ -9,9 +9,12 @@ import { KeyboardDatePicker } from "@material-ui/pickers";
 
 //css
 import FormStyles from "./FormStyles";
-const PhoneNumber = () => {
+const PhoneNumber = (props) => {
   const classes = FormStyles();
-  const [selectedDate, handleDateChange] = useState(new Date());
+  //khai báo
+  const { values, handleChange } = props;
+
+  const selectedDate = new Date();
   const minimalSelectClasses = useMinimalSelectStyles();
 
   const iconComponent = (props) => {
@@ -59,11 +62,11 @@ const PhoneNumber = () => {
               labelId="inputLabel"
               IconComponent={iconComponent}
               MenuProps={menuProps}
-              //   value={valwards || ""}
-              //   onChange={handleChangewards}
+              onChange={handleChange("gender")}
+              value={values.gender ? values.gender : " "}
             >
-              <MenuItem value={0}>Nam</MenuItem>
-              <MenuItem value={1}>Nữ</MenuItem>
+              <MenuItem value={"Nam"}>Nam</MenuItem>
+              <MenuItem value={"Nữ"}>Nữ</MenuItem>
             </Select>
           </nav>
         </Grid>
@@ -79,11 +82,11 @@ const PhoneNumber = () => {
               className={classes.textFieldDate}
               inputVariant="outlined"
               format="MM/dd/yyyy"
-              value={selectedDate}
+              value={values.birthday ? values.birthday : selectedDate}
               size="small"
               style={{ width: "231px" }}
               InputAdornmentProps={{ position: "start" }}
-              onChange={(date) => handleDateChange(date)}
+              onChange={handleChange("birthday")}
             />
           </nav>
         </Grid>
@@ -97,14 +100,9 @@ const PhoneNumber = () => {
               className={classes.textField}
               variant="outlined"
               margin="normal"
-              // fullWidth
-              id="email"
-              // name="email"
-              // autoComplete="email"
-              // autoFocus
               size="small"
-              // onChange={handleChange}
-              // value={info.formData.email}
+              onChange={handleChange("phone")}
+              value={values.phone ? values.phone : " "}
               validators={["required"]}
               errorMessages={["không để trống dòng này"]}
             ></TextValidator>
