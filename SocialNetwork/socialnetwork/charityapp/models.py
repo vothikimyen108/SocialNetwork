@@ -5,7 +5,7 @@ from django.db import models
 # Create your models here.
 
 class User(AbstractUser):
-    avatar = models.CharField(max_length=500, null=False)
+    avatar = models.ImageField(upload_to='avatar_user/%Y/%m', blank=False)
     address = models.CharField(max_length=255, null=True)
     phone_number = models.CharField(max_length=10, null=True)
     ADMIN = 1
@@ -25,12 +25,14 @@ class Tag(models.Model):
         return self.content
 
 
-class Image(models.Model):
-    image_url = models.CharField(max_length=500, null=False)
+class ImagePost(models.Model):
+    image_url = models.ImageField(upload_to='Post/%Y/%m', blank=False)
     post = models.ForeignKey("Post", on_delete=models.CASCADE, null=True)
 
-    def __str__(self):
-        return self.image_url
+
+class ImageAuctionPost(models.Model):
+    image_url = models.ImageField(upload_to='Auction_Post/%Y/%m', blank=False)
+    auction_post = models.ForeignKey("AuctionPost", on_delete=models.CASCADE, null=True)
 
 
 class PostBase(models.Model):
@@ -38,6 +40,7 @@ class PostBase(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(Tag, null=True)
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     active = models.BooleanField(default=True)
 
     class Meta:
@@ -49,11 +52,17 @@ class Post(PostBase):
     class Meta:
         ordering = ['id']
 
+    def __str__(self):
+        return str(self.id)
+
 
 class Like(models.Model):
     is_like = models.BooleanField(default=True)
     post = models.OneToOneField(Post, null=True, blank=False, on_delete=models.SET_NULL)
     user = models.OneToOneField(User, null=True, blank=False, on_delete=models.SET_NULL)
+
+    class Meta:
+        unique_together = ['post', 'user']
 
 
 class Comment(models.Model):
@@ -62,7 +71,7 @@ class Comment(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    images = models.ForeignKey(Image, on_delete=models.CASCADE)
+    images = models.ImageField(upload_to='Comment/%Y/%m', blank=False)
 
 
 class Notification(models.Model):
@@ -81,23 +90,33 @@ class TypeNotification(models.Model):
     class Meta:
         ordering = ['id']
 
+    def __str__(self):
+        return self.type
+
 
 class Auction(models.Model):
-    auctionpost = models.OneToOneField("AuctionPost", on_delete=models.SET_NULL, null=True)
+    auction_post = models.OneToOneField("AuctionPost", on_delete=models.SET_NULL, null=True)
+    start_date = models.DateTimeField(auto_now_add=True)
+    finish_date = models.DateTimeField(auto_now=True)
     user_join = models.ManyToManyField(User, null=False)
     user_win = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
 
 
 class AuctionPost(PostBase):
-    status = models.BooleanField(default=True)
     product = models.OneToOneField("Product", on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.product.name
 
 
 class Product(models.Model):
     name = models.CharField(max_length=100, null=False)
     price_begin = models.DecimalField(max_digits=17, decimal_places=2)
     price_end = models.DecimalField(max_digits=17, decimal_places=2)
+
+    def __str__(self):
+        return self.name
 
 
 class Pay(models.Model):
@@ -109,6 +128,9 @@ class Pay(models.Model):
 
 class TypeReport(models.Model):
     type = models.CharField(max_length=20, null=False, unique=True)
+
+    def __str__(self):
+        return self.type
 
 
 class Report(models.Model):
