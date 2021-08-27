@@ -42,7 +42,7 @@ class AuctionPostAdmin(admin.ModelAdmin):
     inlines = [ImageAuctionPostInlineAdmin, TagAuctionPostInlineAdmin]
 
 
-#Tag admin
+# Tag admin
 class TagAdmin(admin.ModelAdmin):
     list_display = ['id', 'content']
     inlines = [TagPostInlineAdmin, TagAuctionPostInlineAdmin]
@@ -52,8 +52,6 @@ class TagAdmin(admin.ModelAdmin):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'price_begin', 'price_end']
-
-
 
 
 # AUCTION ADMIN
@@ -96,8 +94,8 @@ class TypeNotificationAdmin(admin.ModelAdmin):
 class CharityAppAdminSite(admin.AdminSite):
     site_header = 'CHARITY SOCIAL NETWORK'
 
-admin_site = CharityAppAdminSite('Bài tập lớn đề 6')
 
+admin_site = CharityAppAdminSite('Bài tập lớn đề 6')
 
 # Phần register site admin page
 admin_site.register(User, UserAdmin)
