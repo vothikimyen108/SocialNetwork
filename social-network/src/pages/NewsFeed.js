@@ -16,7 +16,9 @@ import {
 } from "react-router-dom";
 //importpage
 import PhotoDetail from "./PhotoDetail";
+import SignUpForm from "../components/Auth/Register/SignUpForm";
 import { makeStyles } from "@material-ui/core/styles";
+import AlertNoti from "../components/UI/AlertNoti";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -143,6 +145,9 @@ const NewsFeed = () => {
         <LayoutListMember></LayoutListMember>
       </Grid>
       {openNewsForm && <NewsForm onClose={handerClose}></NewsForm>}
+      <AlertNoti onClose={handerClose} open={true}>
+        <SignUpForm></SignUpForm>
+      </AlertNoti>
     </div>
   );
 };

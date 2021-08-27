@@ -13,23 +13,25 @@ import PhoneNumber from "./PhoneNumber";
 import SlideShow from "../../UI/SlideShow";
 //css
 import SignUpFormStyles from "./SignUpFormStyles";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 const steps = ["chọn ảnh", "địa chỉ", "hoàn tất"];
 export default function SignUpForm() {
   const classes = SignUpFormStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    //nếu xảy ra lỗi thì k đi tới các bước khác
+    form.isFormValid(false).then((isValid) => {
+      if (isValid) {
+        // if (activeStep < 2) {
+        setActiveStep(activeStep + 1);
+        // }
+      }
+    });
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
-  };
-  const style = {
-    textAlign: "center",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
   };
   //img
   const [img, setImg] = useState("");
@@ -45,6 +47,35 @@ export default function SignUpForm() {
     }
     console.log(e);
   };
+
+  //code
+  const [state, setState] = useState({
+    province: "",
+    district: "",
+    ward: "",
+    address: "",
+    gender: "",
+    birthday: "",
+    phone: "",
+  });
+  //khai báo các trường cần thiết
+  const { province, district, ward, address, gender, birthday, phone } = state;
+  const values = { province, district, ward, address, gender, birthday, phone };
+  //hàm xử lý onchange
+  const handleChangeAll = (input) => (e) => {
+    if (input === "birthday") {
+      setState({ ...state, [input]: e });
+    } else {
+      setState({ ...state, [input]: e.target.value });
+    }
+    console.log(e, "oke");
+  };
+  //xử lý submit
+  const handleSubmit = () => {
+    // e.preventDefault();
+    // console.log(e);
+    // e.target.reset();
+  };
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -59,28 +90,43 @@ export default function SignUpForm() {
       case 1:
         return (
           <div className={classes.content}>
-            <Abc></Abc>
+            <Abc
+              handleChange={handleChangeAll}
+              values={values}
+              // handleSubmit={handleSubmit}
+            ></Abc>
           </div>
         );
       case 2:
         return (
           <div className={classes.content}>
-            <PhoneNumber></PhoneNumber>
+            <PhoneNumber
+              handleChange={handleChangeAll}
+              values={values}
+            ></PhoneNumber>
           </div>
         );
       default:
         throw new Error("Unknown step");
     }
   }
+  let form = null;
   return (
-    <React.Fragment>
-      <Grid container>
-        <Grid item xs={12} sm={6} md={6}>
+    <ValidatorForm
+      className={classes.form}
+      ref={(r) => {
+        form = r;
+      }}
+      onSubmit={handleSubmit}
+      instantValidate
+    >
+      <Grid container className={classes.test}>
+        <Grid item xs={12} sm={12} md={6}>
           <Paper className={classes.paper}>
             <SlideShow></SlideShow>
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={6} md={6} className={classes.right}>
+        <Grid item xs={12} sm={12} md={6} className={classes.right}>
           <CssBaseline></CssBaseline>
           <main className={classes.layout}>
             <Paper className={classes.paper}>
@@ -120,6 +166,7 @@ export default function SignUpForm() {
                       <Button
                         variant="contained"
                         color="primary"
+                        type="submit"
                         onClick={handleNext}
                         classes={{
                           root: classes.submit, // class name, e.g. `classes-nesting-root-x`
@@ -137,7 +184,7 @@ export default function SignUpForm() {
             </Paper>
           </main>
         </Grid>
-      </Grid>
-    </React.Fragment>
+      </Grid>{" "}
+    </ValidatorForm>
   );
 }

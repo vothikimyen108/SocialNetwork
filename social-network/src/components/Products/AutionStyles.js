@@ -73,7 +73,9 @@ const AutionStyles = makeStyles((theme) => ({
     },
   },
   button: {
+    float: "right",
     backgroundColor: "#7B1FA2",
+    marginTop: 10,
     "&:hover": {
       background: "#7B1FA2",
       color: "#fff",
@@ -84,7 +86,14 @@ const AutionStyles = makeStyles((theme) => ({
     height: 40,
     padding: "0 30px",
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+    width: "150px",
+  },
+  form: {
     width: "100%",
+    border: 0,
+    [theme.breakpoints.up("lg")]: {
+      width: 500,
+    },
   },
 }));
 export default AutionStyles;

@@ -14,10 +14,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 30,
-    "& > *": {
-      margin: theme.spacing(1),
-    },
+    marginBottom: 20,
   },
 
   large: {
@@ -30,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
   },
   subButton: {
     color: "#7200ca",
+  },
+  name: {
+    width: "100%",
+    height: "100%",
   },
 }));
 const UploadAvatar = (props) => {
@@ -49,7 +50,7 @@ const UploadAvatar = (props) => {
 
   const { values, handleChange } = props;
   return (
-    <div>
+    <div className={classes.name}>
       {" "}
       {handlerImg()}
       <input

@@ -10,6 +10,8 @@ const useStyles = makeStyles((theme) => ({
   layout: {
     margin: "auto",
     textAlign: "center",
+    width: "100%",
+    height: "100%",
   },
 }));
 

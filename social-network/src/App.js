@@ -16,27 +16,26 @@ import DateFnsUtils from "@date-io/date-fns";
 //c
 function App() {
   return (
-    // <>
-    //   <Router>
-    //     <Switch>
-    //       <DashboardLayoutRoute
-    //         path="/"
-    //         exact
-    //         component={NewsFeed}
-    //       ></DashboardLayoutRoute>
-    //       <DashboardLayoutRoute
-    //         path="/news/:newsId"
-    //         exact
-    //         component={NewsDetail}
-    //       ></DashboardLayoutRoute>
-    //       <Route path="/photo/:photoId" exact>
-    //         <PhotoDetail></PhotoDetail>
-    //       </Route>
-    //       <LoginLayoutRoute path="/loginsignup" component={Login} />
-    //     </Switch>
-    //   </Router>
-    // </>
-    <SignUpForm></SignUpForm>
+    <>
+      <Router>
+        <Switch>
+          <DashboardLayoutRoute
+            path="/"
+            exact
+            component={NewsFeed}
+          ></DashboardLayoutRoute>
+          <DashboardLayoutRoute
+            path="/news/:newsId"
+            exact
+            component={NewsDetail}
+          ></DashboardLayoutRoute>
+          <Route path="/photo/:photoId" exact>
+            <PhotoDetail></PhotoDetail>
+          </Route>
+          <LoginLayoutRoute path="/loginsignup" component={Login} />
+        </Switch>
+      </Router>
+    </>
   );
 }
 export default App;
