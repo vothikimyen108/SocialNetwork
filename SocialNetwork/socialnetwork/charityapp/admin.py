@@ -77,7 +77,7 @@ class PayAdmin(admin.ModelAdmin):
 # REPORT ADMIN
 
 class ReportAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user_report', 'reported_id', 'type']
+    list_display = ['id', 'reported_id', 'type']
 
 
 # TYPE REPORT ADMIN
@@ -112,6 +112,6 @@ admin_site.register(Notification)
 admin_site.register(TypeNotification, TypeNotificationAdmin)
 admin_site.register(ImagePost)
 admin_site.register(ImageAuctionPost)
-admin_site.register(Pay)
-admin_site.register(Report)
+admin_site.register(Pay, PayAdmin)
+admin_site.register(Report, ReportAdmin)
 admin_site.register(TypeReport, TypeReportAdmin)
