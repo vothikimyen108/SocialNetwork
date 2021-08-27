@@ -13,14 +13,21 @@ import PhoneNumber from "./PhoneNumber";
 import SlideShow from "../../UI/SlideShow";
 //css
 import SignUpFormStyles from "./SignUpFormStyles";
-import ModalFull from "../../UI/ModalFull";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 const steps = ["chọn ảnh", "địa chỉ", "hoàn tất"];
 export default function SignUpForm() {
   const classes = SignUpFormStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    //nếu xảy ra lỗi thì k đi tới các bước khác
+    form.isFormValid(false).then((isValid) => {
+      if (isValid) {
+        // if (activeStep < 2) {
+        setActiveStep(activeStep + 1);
+        // }
+      }
+    });
   };
 
   const handleBack = () => {
@@ -54,7 +61,7 @@ export default function SignUpForm() {
   //khai báo các trường cần thiết
   const { province, district, ward, address, gender, birthday, phone } = state;
   const values = { province, district, ward, address, gender, birthday, phone };
-  //hàm xử lí onchange
+  //hàm xử lý onchange
   const handleChangeAll = (input) => (e) => {
     if (input === "birthday") {
       setState({ ...state, [input]: e });
@@ -63,6 +70,12 @@ export default function SignUpForm() {
     }
     console.log(e, "oke");
   };
+  //xử lý submit
+  const handleSubmit = () => {
+    // e.preventDefault();
+    // console.log(e);
+    // e.target.reset();
+  };
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -70,14 +83,18 @@ export default function SignUpForm() {
           <div className={classes.content}>
             <UploadAvatar
               values={img}
-              handleChange={handleChangeAll}
+              handleChange={handleChange}
             ></UploadAvatar>
           </div>
         );
       case 1:
         return (
           <div className={classes.content}>
-            <Abc handleChange={handleChangeAll} values={values}></Abc>
+            <Abc
+              handleChange={handleChangeAll}
+              values={values}
+              // handleSubmit={handleSubmit}
+            ></Abc>
           </div>
         );
       case 2:
@@ -93,71 +110,81 @@ export default function SignUpForm() {
         throw new Error("Unknown step");
     }
   }
-
+  let form = null;
   return (
-    <Grid container className={classes.test}>
-      <Grid item xs={12} sm={12} md={6}>
-        <Paper className={classes.paper}>
-          <SlideShow></SlideShow>
-        </Paper>
-      </Grid>
-      <Grid item xs={12} sm={12} md={6} className={classes.right}>
-        <CssBaseline></CssBaseline>
-        <main className={classes.layout}>
+    <ValidatorForm
+      className={classes.form}
+      ref={(r) => {
+        form = r;
+      }}
+      onSubmit={handleSubmit}
+      instantValidate
+    >
+      <Grid container className={classes.test}>
+        <Grid item xs={12} sm={12} md={6}>
           <Paper className={classes.paper}>
-            <h2>Hoàn tất đăng ký</h2>
-            <Stepper activeStep={activeStep} className={classes.stepper}>
-              {steps.map((label) => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-            <React.Fragment>
-              {activeStep === steps.length ? (
-                <React.Fragment>
-                  <Typography variant="h5" gutterBottom>
-                    Cảm ơn bạn đã tham gia
-                  </Typography>
-                  <Typography variant="subtitle1">
-                    Chúc bạn có những trải nghiệm vui nhất
-                  </Typography>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  {getStepContent(activeStep)}
-                  <div className={classes.buttons}>
-                    {activeStep !== 0 && (
+            <SlideShow></SlideShow>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={12} md={6} className={classes.right}>
+          <CssBaseline></CssBaseline>
+          <main className={classes.layout}>
+            <Paper className={classes.paper}>
+              <h2>Hoàn tất đăng ký</h2>
+              <Stepper activeStep={activeStep} className={classes.stepper}>
+                {steps.map((label) => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+              <React.Fragment>
+                {activeStep === steps.length ? (
+                  <React.Fragment>
+                    <Typography variant="h5" gutterBottom>
+                      Cảm ơn bạn đã tham gia
+                    </Typography>
+                    <Typography variant="subtitle1">
+                      Chúc bạn có những trải nghiệm vui nhất
+                    </Typography>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    {getStepContent(activeStep)}
+                    <div className={classes.buttons}>
+                      {activeStep !== 0 && (
+                        <Button
+                          onClick={handleBack}
+                          classes={{
+                            root: classes.submitBack, // class name, e.g. `classes-nesting-root-x`
+                            label: classes.label, // class name, e.g. `classes-nesting-label-x`
+                          }}
+                        >
+                          quay lại
+                        </Button>
+                      )}
                       <Button
-                        onClick={handleBack}
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        onClick={handleNext}
                         classes={{
-                          root: classes.submitBack, // class name, e.g. `classes-nesting-root-x`
+                          root: classes.submit, // class name, e.g. `classes-nesting-root-x`
                           label: classes.label, // class name, e.g. `classes-nesting-label-x`
                         }}
                       >
-                        quay lại
+                        {activeStep === steps.length - 1
+                          ? "xác nhận"
+                          : "tiếp tục"}
                       </Button>
-                    )}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      classes={{
-                        root: classes.submit, // class name, e.g. `classes-nesting-root-x`
-                        label: classes.label, // class name, e.g. `classes-nesting-label-x`
-                      }}
-                    >
-                      {activeStep === steps.length - 1
-                        ? "xác nhận"
-                        : "tiếp tục"}
-                    </Button>
-                  </div>
-                </React.Fragment>
-              )}
-            </React.Fragment>
-          </Paper>
-        </main>
-      </Grid>
-    </Grid>
+                    </div>
+                  </React.Fragment>
+                )}
+              </React.Fragment>
+            </Paper>
+          </main>
+        </Grid>
+      </Grid>{" "}
+    </ValidatorForm>
   );
 }

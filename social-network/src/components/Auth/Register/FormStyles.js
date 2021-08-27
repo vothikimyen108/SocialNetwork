@@ -63,6 +63,13 @@ const FormStyles = makeStyles((theme) => ({
       margin: 0,
       marginLeft: 0,
     },
+    "& .MuiSelect-root": {
+      // background: "#000",
+      width: 180,
+      "& .MuiSelect-iconOutlined": {
+        background: "#000",
+      },
+    },
   },
   textFieldDate: {
     padding: 0,

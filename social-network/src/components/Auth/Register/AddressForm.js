@@ -3,25 +3,26 @@ import { useMinimalSelectStyles } from "@mui-treasury/styles/select/minimal";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import {
+
+  TextValidator,
+  SelectValidator,
+} from "react-material-ui-form-validator";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 //call api
 import ProvincesApi from "../../../api/ProvincesApi";
 //css
 import FormStyles from "./FormStyles";
-import { set } from "date-fns";
+import { useBorderSelectStyles } from "@mui-treasury/styles/select/border";
+
+import InputLabel from "@material-ui/core/InputLabel";
+
+import FormControl from "@material-ui/core/FormControl";
+
 const AddressForm = (props) => {
   const classes = FormStyles();
   const { values, handleChange } = props;
-  // const [valProvinces, setvalProvinces] = useState(values.province);
-
-  // const handleChange1 = (event) => {
-  //   setvalProvinces(event.target.value);
-
-  //   // console.log(valProvinces);
-  //   setValWards(null);
-  // };
-
   const minimalSelectClasses = useMinimalSelectStyles();
 
   const iconComponent = (props) => {
@@ -52,7 +53,7 @@ const AddressForm = (props) => {
 
   //test
   const [provinces, setProvinces] = useState([]);
-
+  const [wards, setWards] = useState([]);
   useEffect(() => {
     const fetchProvinces = async () => {
       try {
@@ -94,24 +95,9 @@ const AddressForm = (props) => {
     };
     fetchProvinces();
   }, [values.province]);
-  //code xa huyện
-  // const [valdistricts, setValdistricts] = useState(null);
-  // const handleChangeDistricts = (event) => {
-  //   setValdistricts(event.target.value);
-  // };
-  // const handleChangewards = (event) => {
-  //   setValWards(event.target.value);
-  // };
-  const [wards, setWards] = useState([]);
-
-  // useEffect(() => {
-  //   setValWards(true);
-  // }, [values.province]);
   useEffect(() => {
     const fetchProvinces = async () => {
       try {
-        //gọi từ axios
-        // if (valwards) {
         const response = await ProvincesApi.getwards(values.district);
         const wardsData = [];
         for (let i = 0; i < response.wards.length; i++) {
@@ -127,112 +113,122 @@ const AddressForm = (props) => {
     };
     fetchProvinces();
   }, [values.district]);
-
+  const handleSubmit = () => {
+    // e.preventDefault();
+    console.log("ok");
+    // e.target.reset();
+  };
   return (
-    <ValidatorForm
-      className={classes.form}
-      //ref="form"
-      // onSubmit={handleSubmit}
-      onError={(errors) => console.log(errors)}
-    >
-      <Grid container spacing={2} className={classes.root}>
-        <Grid item className={classes.box}>
-          <nav>
-            {" "}
-            <p className={classes.labelId}>Tỉnh/Thành:</p>
-          </nav>
-          <nav>
-            <Select
-              disableUnderline
-              className={classes.input}
-              labelId="inputLabel"
-              IconComponent={iconComponent}
-              MenuProps={menuProps}
-              value={values.province ? values.province : ""}
-              onChange={handleChange("province")}
-            >
-              {provinces.map((item, id) => (
-                <MenuItem value={item.code} key={id}>
-                  {item.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </nav>
-        </Grid>
-        <Grid item className={classes.box}>
-          <nav>
-            {" "}
-            <p className={classes.labelId}>Quận/huyện:</p>{" "}
-          </nav>
-          <nav>
-            <Select
-              disableUnderline
-              className={classes.input}
-              labelId="inputLabel"
-              IconComponent={iconComponent}
-              MenuProps={menuProps}
-              value={values.district ? values.district : ""}
-              onChange={handleChange("district")}
-            >
-              {districts.map((item, id) => (
-                <MenuItem value={item.code} key={id}>
-                  {item.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </nav>
-        </Grid>
-        <Grid item xs={12} className={classes.box}>
-          <nav>
-            {" "}
-            <p className={classes.labelId}>Xã/phường:</p>{" "}
-          </nav>
-          <nav>
-            <Select
-              disableUnderline
-              className={classes.input}
-              labelId="inputLabel"
-              IconComponent={iconComponent}
-              MenuProps={menuProps}
-              value={values.ward ? values.ward : ""}
-              onChange={handleChange("ward")}
-            >
-              {wards.map((item, id) => (
-                <MenuItem value={item.name} key={id}>
-                  {item.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </nav>
-        </Grid>
-        <Grid item xs={12} className={classes.box}>
-          <nav>
-            {" "}
-            <p className={classes.labelId}>Đại chỉ:</p>{" "}
-          </nav>
-          <nav>
-            <TextValidator
-              className={classes.textField}
-              variant="outlined"
-              margin="normal"
-              // fullWidth
-              id="email"
-              // name="email"
-              // autoComplete="email"
-              // autoFocus
-              size="small"
-              // onChange={handleChange}
-              // value={info.formData.email}
-              validators={["required", "isEmail"]}
-              errorMessages={[
-                "không để trống dòng này",
-                "vui lòng nhập đúng email",
-              ]}
-            ></TextValidator>
-          </nav>
-        </Grid>
+    <Grid container className={classes.root}>
+      <Grid item className={classes.box}>
+        <nav>
+          {" "}
+          <p className={classes.labelId}>Tỉnh/Thành:</p>
+        </nav>
+        <nav>
+          <SelectValidator
+            className={classes.textField}
+            variant="outlined"
+            size="small"
+            SelectProps={{
+              IconComponent: iconComponent,
+              MenuProps: menuProps,
+            }}
+            value={values.province ? values.province : ""}
+            select={values.province ? values.province : ""}
+            onChange={handleChange("province")}
+            validators={["required"]}
+            errorMessages={["không để trống dòng này"]}
+          >
+            {provinces.map((item, id) => (
+              <MenuItem value={item.code} key={id}>
+                {item.name}
+              </MenuItem>
+            ))}
+          </SelectValidator>
+        </nav>
       </Grid>
-    </ValidatorForm>
+      <Grid item className={classes.box}>
+        <nav>
+          {" "}
+          <p className={classes.labelId}>Quận/huyện:</p>{" "}
+        </nav>
+        <nav>
+          <SelectValidator
+            className={classes.textField}
+            // labelId="inputLabel"
+            variant="outlined"
+            size="small"
+            SelectProps={{
+              IconComponent: iconComponent,
+              MenuProps: menuProps,
+            }}
+            value={values.district ? values.district : ""}
+            select={values.district ? values.district : ""}
+            onChange={handleChange("district")}
+            validators={["required"]}
+            errorMessages={["không để trống dòng này"]}
+          >
+            {districts.map((item, id) => (
+              <MenuItem value={item.code} key={id}>
+                {item.name}
+              </MenuItem>
+            ))}
+          </SelectValidator>
+        </nav>
+      </Grid>
+      <Grid item xs={12} className={classes.box}>
+        <nav>
+          {" "}
+          <p className={classes.labelId}>Xã/phường:</p>{" "}
+        </nav>
+        <nav>
+          <SelectValidator
+            className={classes.textField}
+            variant="outlined"
+            size="small"
+            SelectProps={{
+              IconComponent: iconComponent,
+              MenuProps: menuProps,
+            }}
+            value={values.ward ? values.ward : ""}
+            onChange={handleChange("ward")}
+            validators={["required"]}
+            errorMessages={["không để trống dòng này"]}
+            select={values.ward ? values.ward : ""}
+            margin="normal"
+          >
+            {wards.map((item, id) => (
+              <MenuItem value={item.name} key={id}>
+                {item.name}
+              </MenuItem>
+            ))}
+          </SelectValidator>
+        </nav>
+      </Grid>
+      <Grid item xs={12} className={classes.box}>
+        <nav>
+          {" "}
+          <p className={classes.labelId}>Đại chỉ:</p>{" "}
+        </nav>
+        <nav>
+          <TextValidator
+            className={classes.textField}
+            variant="outlined"
+            margin="normal"
+            id="email"
+            autoFocus
+            size="small"
+            value={values.address ? values.address : ""}
+            onChange={handleChange("address")}
+            validators={["required"]}
+            errorMessages={["không để trống dòng này"]}
+          ></TextValidator>
+        </nav>
+      </Grid>
+      {/* <button>tiếp tục</button> */}
+    </Grid>
+    //</ValidatorForm>
   );
 };
 

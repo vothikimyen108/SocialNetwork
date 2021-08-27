@@ -36,6 +36,7 @@ const SignUpFormStyles = makeStyles((theme) => ({
 
     textAlign: "center",
     height: 300,
+    marginBottom: 13,
   },
   submit: {
     background: "linear-gradient(to right, #8e2de2, #4a00e0)",
