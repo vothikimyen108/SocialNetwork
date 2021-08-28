@@ -8,6 +8,11 @@ const FormStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(1),
     },
+    "& input::-webkit-clear-button, & input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
+      {
+        display: "none",
+        margin: 80,
+      },
   },
   small: {
     width: theme.spacing(3),

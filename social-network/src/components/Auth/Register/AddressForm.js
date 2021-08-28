@@ -1,30 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { useMinimalSelectStyles } from "@mui-treasury/styles/select/minimal";
-import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {
-
   TextValidator,
   SelectValidator,
 } from "react-material-ui-form-validator";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 //call api
 import ProvincesApi from "../../../api/ProvincesApi";
 //css
 import FormStyles from "./FormStyles";
-import { useBorderSelectStyles } from "@mui-treasury/styles/select/border";
-
-import InputLabel from "@material-ui/core/InputLabel";
-
-import FormControl from "@material-ui/core/FormControl";
+import { TramRounded } from "@material-ui/icons";
 
 const AddressForm = (props) => {
   const classes = FormStyles();
   const { values, handleChange } = props;
   const minimalSelectClasses = useMinimalSelectStyles();
-
   const iconComponent = (props) => {
     return (
       <ExpandMoreIcon
@@ -32,7 +25,6 @@ const AddressForm = (props) => {
       />
     );
   };
-
   // moves the menu below the select input
   const menuProps = {
     classes: {
@@ -67,7 +59,6 @@ const AddressForm = (props) => {
           });
         }
         setProvinces((prevImages) => prevImages.concat(provincesData));
-        setWards([]);
       } catch (error) {
         console.log(error);
       }
@@ -89,6 +80,7 @@ const AddressForm = (props) => {
           });
         }
         setDistricts(districtsData);
+        //values.ward = "";
       } catch (error) {
         console.log(error);
       }
@@ -113,11 +105,6 @@ const AddressForm = (props) => {
     };
     fetchProvinces();
   }, [values.district]);
-  const handleSubmit = () => {
-    // e.preventDefault();
-    console.log("ok");
-    // e.target.reset();
-  };
   return (
     <Grid container className={classes.root}>
       <Grid item className={classes.box}>
@@ -150,13 +137,11 @@ const AddressForm = (props) => {
       </Grid>
       <Grid item className={classes.box}>
         <nav>
-          {" "}
           <p className={classes.labelId}>Quận/huyện:</p>{" "}
         </nav>
         <nav>
           <SelectValidator
             className={classes.textField}
-            // labelId="inputLabel"
             variant="outlined"
             size="small"
             SelectProps={{
@@ -165,6 +150,7 @@ const AddressForm = (props) => {
             }}
             value={values.district ? values.district : ""}
             select={values.district ? values.district : ""}
+            disabled={values.province ? false : true}
             onChange={handleChange("district")}
             validators={["required"]}
             errorMessages={["không để trống dòng này"]}
@@ -196,6 +182,7 @@ const AddressForm = (props) => {
             validators={["required"]}
             errorMessages={["không để trống dòng này"]}
             select={values.ward ? values.ward : ""}
+            disabled={values.district ? false : true}
             margin="normal"
           >
             {wards.map((item, id) => (
@@ -221,14 +208,15 @@ const AddressForm = (props) => {
             size="small"
             value={values.address ? values.address : ""}
             onChange={handleChange("address")}
-            validators={["required"]}
-            errorMessages={["không để trống dòng này"]}
+            validators={["required", "maxStringLength:120"]}
+            errorMessages={[
+              "không để trống dòng này",
+              "vui lòng ghi ngắn gọn địa chỉ",
+            ]}
           ></TextValidator>
         </nav>
       </Grid>
-      {/* <button>tiếp tục</button> */}
     </Grid>
-    //</ValidatorForm>
   );
 };
 

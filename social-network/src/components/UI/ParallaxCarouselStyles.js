@@ -14,11 +14,9 @@ const ParallaxCarouselStyles = makeStyles(
       height: "92%",
       marginLeft: "10%",
       marginTop: "2%",
-      // relative is a must if you want to create overlapping layers in children
       position: "relative",
       margin: 0,
       paddingTop: spacing(5),
-      // paddingTop: spacing(1),
       [breakpoints.up("md")]: {
         paddingTop: spacing(0),
       },
@@ -33,15 +31,11 @@ const ParallaxCarouselStyles = makeStyles(
       paddingBottom: "100%",
     },
     image: {
-      // display: "block",
       position: "absolute",
       zIndex: 10,
       width: "100%",
       height: "100%",
       objectFit: "cover",
-      // [breakpoints.up("sm")]: {
-      //   marginLeft: "10%",
-      // },
     },
     arrow: {
       position: "absolute",

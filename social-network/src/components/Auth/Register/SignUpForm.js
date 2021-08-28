@@ -8,17 +8,21 @@ import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import UploadAvatar from "./UploadAvatar";
-import Abc from "./AddressForm";
-import PhoneNumber from "./PhoneNumber";
+import AddressForm from "./AddressForm";
+import PhoneNumber from "./PhoneNumberForm";
 import SlideShow from "../../UI/SlideShow";
 //css
 import SignUpFormStyles from "./SignUpFormStyles";
-import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { ValidatorForm } from "react-material-ui-form-validator";
+//redux
+import { useDispatch } from "react-redux";
+import { uiActions } from "../../../store/ui-slice";
+
+//khai báo các bước đăng ký hoàn tất
 const steps = ["chọn ảnh", "địa chỉ", "hoàn tất"];
-export default function SignUpForm() {
+export default function SignUpForm(props) {
   const classes = SignUpFormStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-
   const handleNext = () => {
     //nếu xảy ra lỗi thì k đi tới các bước khác
     form.isFormValid(false).then((isValid) => {
@@ -28,26 +32,13 @@ export default function SignUpForm() {
         // }
       }
     });
+    if (activeStep === steps.length - 1) {
+      handleRegister();
+    }
   };
-
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  //img
-  const [img, setImg] = useState("");
-  const handleChange = (e) => {
-    if (e.target.files) {
-      let filesArray = "";
-      for (let i = 0; i < e.target.files.length; i++) {
-        filesArray = URL.createObjectURL(e.target.files[i]);
-      }
-
-      setImg((prevImages) => (prevImages = filesArray));
-      Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
-    }
-    console.log(e);
-  };
-
   //code
   const [state, setState] = useState({
     province: "",
@@ -57,18 +48,42 @@ export default function SignUpForm() {
     gender: "",
     birthday: "",
     phone: "",
+    avatar: "",
   });
   //khai báo các trường cần thiết
-  const { province, district, ward, address, gender, birthday, phone } = state;
-  const values = { province, district, ward, address, gender, birthday, phone };
+  const { province, district, ward, address, gender, birthday, phone, avatar } =
+    state;
+  const values = {
+    province,
+    district,
+    ward,
+    address,
+    gender,
+    birthday,
+    phone,
+    avatar,
+  };
   //hàm xử lý onchange
   const handleChangeAll = (input) => (e) => {
     if (input === "birthday") {
       setState({ ...state, [input]: e });
+    } else if (input === "avatar") {
+      //xử lý lưu ảnh hiện ảnh
+      if (e.target.files) {
+        let filesArray = "";
+        for (let i = 0; i < e.target.files.length; i++) {
+          filesArray = URL.createObjectURL(e.target.files[i]);
+        }
+        setState({ ...state, [input]: filesArray });
+        Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
+      }
+    } else if (input === "province") {
+      setState({ ...state, [input]: e.target.value, ward: "", district: "" });
+    } else if (input === "district") {
+      setState({ ...state, [input]: e.target.value, ward: "" });
     } else {
       setState({ ...state, [input]: e.target.value });
     }
-    console.log(e, "oke");
   };
   //xử lý submit
   const handleSubmit = () => {
@@ -82,19 +97,18 @@ export default function SignUpForm() {
         return (
           <div className={classes.content}>
             <UploadAvatar
-              values={img}
-              handleChange={handleChange}
+              values={values}
+              handleChange={handleChangeAll}
             ></UploadAvatar>
           </div>
         );
       case 1:
         return (
           <div className={classes.content}>
-            <Abc
+            <AddressForm
               handleChange={handleChangeAll}
               values={values}
-              // handleSubmit={handleSubmit}
-            ></Abc>
+            ></AddressForm>
           </div>
         );
       case 2:
@@ -110,7 +124,13 @@ export default function SignUpForm() {
         throw new Error("Unknown step");
     }
   }
+  //khai báo form ban đầu rỗng
   let form = null;
+  //sử dung dispatch redux
+  const dispatch = useDispatch();
+  const handleRegister = () => {
+    dispatch(uiActions.registered(true));
+  };
   return (
     <ValidatorForm
       className={classes.form}
@@ -184,7 +204,7 @@ export default function SignUpForm() {
             </Paper>
           </main>
         </Grid>
-      </Grid>{" "}
+      </Grid>
     </ValidatorForm>
   );
 }

@@ -3,22 +3,17 @@ import CreateNews from "../components/News/CreateNews";
 import React from "react";
 
 import Grid from "@material-ui/core/Grid";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BasicPagination from "../components/Layout/BasicPagination";
 import NewsForm from "../components/News/NewsForm";
 import LayoutListMember from "../components/Layout/LayoutListMember";
-import {
-  useParams,
-  Route,
-  Link,
-  useRouteMatch,
-  useHistory,
-} from "react-router-dom";
+import { useRouteMatch, useHistory } from "react-router-dom";
 //importpage
-import PhotoDetail from "./PhotoDetail";
 import SignUpForm from "../components/Auth/Register/SignUpForm";
 import { makeStyles } from "@material-ui/core/styles";
 import AlertNoti from "../components/UI/AlertNoti";
+//redux
+import { useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -126,6 +121,8 @@ const NewsFeed = () => {
   };
   //dong formnews
   const classe = useStyles();
+  // dùng redux uiSlice
+  const registerIsVisible = useSelector((state) => state.ui.registerIsVisible);
   return (
     <div>
       <Grid item xs={12} sm={12} md={9} className={classe.root}>
@@ -145,9 +142,11 @@ const NewsFeed = () => {
         <LayoutListMember></LayoutListMember>
       </Grid>
       {openNewsForm && <NewsForm onClose={handerClose}></NewsForm>}
-      <AlertNoti onClose={handerClose} open={true}>
-        <SignUpForm></SignUpForm>
-      </AlertNoti>
+      {!registerIsVisible && (
+        <AlertNoti open={!registerIsVisible}>
+          <SignUpForm></SignUpForm>
+        </AlertNoti>
+      )}
     </div>
   );
 };

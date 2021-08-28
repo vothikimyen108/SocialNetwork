@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useMinimalSelectStyles } from "@mui-treasury/styles/select/minimal";
-import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Grid from "@material-ui/core/Grid";
-import { KeyboardDatePicker } from "@material-ui/pickers";
+import ValidatedDatePicker from "./ValidatedDatePicker";
 import {
   TextValidator,
   SelectValidator,
@@ -16,9 +15,8 @@ const PhoneNumber = (props) => {
   //khai báo
   const { values, handleChange } = props;
 
-  const selectedDate = new Date();
   const minimalSelectClasses = useMinimalSelectStyles();
-
+  const selectedDate = new Date();
   const iconComponent = (props) => {
     return (
       <ExpandMoreIcon
@@ -77,7 +75,7 @@ const PhoneNumber = (props) => {
           <p className={classes.labelId}>Ngày sinh:</p>{" "}
         </nav>
         <nav>
-          <KeyboardDatePicker
+          <ValidatedDatePicker
             autoOk
             variant="inline"
             className={classes.textFieldDate}
@@ -85,6 +83,8 @@ const PhoneNumber = (props) => {
             format="MM/dd/yyyy"
             value={values.birthday ? values.birthday : selectedDate}
             size="small"
+            validators={["required"]}
+            errorMessages={["không để trống dòng này"]}
             style={{ width: "231px" }}
             InputAdornmentProps={{ position: "start" }}
             onChange={handleChange("birthday")}
@@ -102,10 +102,14 @@ const PhoneNumber = (props) => {
             variant="outlined"
             margin="normal"
             size="small"
+            type="number"
             onChange={handleChange("phone")}
             value={values.phone ? values.phone : ""}
-            validators={["required"]}
-            errorMessages={["không để trống dòng này"]}
+            validators={["required", "minStringLength:10"]}
+            errorMessages={[
+              "không để trống dòng này",
+              "vui lòng nhập đúng số điện thoại",
+            ]}
           ></TextValidator>
         </nav>
       </Grid>
