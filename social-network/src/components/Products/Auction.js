@@ -203,7 +203,7 @@ export default function Auction() {
       </Grid>
       {renderAlert()}
       {openNewsForm && (
-        <AlertNoti onClose={handerClose} open={NewsForm}>
+        <AlertNoti onClose={handerClose} open={true}>
           {renderConfirm()}
         </AlertNoti>
       )}{" "}

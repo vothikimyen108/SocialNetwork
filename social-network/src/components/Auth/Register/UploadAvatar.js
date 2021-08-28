@@ -1,12 +1,7 @@
-import ImageListItem from "@material-ui/core/ImageListItem";
-import ImageListItemBar from "@material-ui/core/ImageListItemBar";
 import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import React, { useState, useRef, useEffect } from "react";
-import ImageList from "@material-ui/core/ImageList";
-import NewsFormStyles from "../../News/NewsFormStyles";
+import React from "react";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
-import Upload from "../../../assets/img/upload.svg";
+import Upload from "../../../assets/img/uploadfile.svg";
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
@@ -35,33 +30,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 const UploadAvatar = (props) => {
   const classes = useStyles();
-
+  const { values, handleChange } = props;
   const handlerImg = () => {
     return (
       <div className={classes.root}>
-        {values === "" ? (
+        {values.avatar === "" ? (
           <Avatar alt="Remy Sharp" src={Upload} className={classes.large} />
         ) : (
-          <Avatar alt="Remy Sharp" src={values} className={classes.large} />
+          <Avatar
+            alt="Remy Sharp"
+            src={values.avatar}
+            className={classes.large}
+          />
         )}
       </div>
     );
   };
-
-  const { values, handleChange } = props;
   return (
     <div className={classes.name}>
-      {" "}
       {handlerImg()}
       <input
         accept="image/*"
         className={classes.input}
         id="icon-button-file"
         type="file"
-        // aria-describedby="inputGroupFileAddon01"
-        // ref={fileInputRef}
-        //defaultValue={values}
-        onChange={handleChange}
+        onChange={handleChange("avatar")}
       />
       <label htmlFor="icon-button-file">
         <IconButton
