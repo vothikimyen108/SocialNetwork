@@ -15,11 +15,11 @@ const DashboardLayout = ({ children, ...rest }) => {
       <Grid item xs={12} md={12}>
         <MainNavigation></MainNavigation>
       </Grid>
-      <Grid item xs={12} sm={12} md={3}>
+      <Grid item xs={12} sm={12} md={12} lg={3}>
         <SecondNavigation mt={10}></SecondNavigation>
         <LayoutMenber></LayoutMenber>
       </Grid>
-      <Grid item xs={12} sm={12} md={8}>
+      <Grid item xs={12} sm={12} md={12} lg={8}>
         {children}
       </Grid>
     </Grid>

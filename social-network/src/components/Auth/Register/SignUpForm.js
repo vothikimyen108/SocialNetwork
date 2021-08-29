@@ -32,9 +32,6 @@ export default function SignUpForm(props) {
         // }
       }
     });
-    if (activeStep === steps.length - 1) {
-      handleRegister();
-    }
   };
   const handleBack = () => {
     setActiveStep(activeStep - 1);
@@ -85,12 +82,6 @@ export default function SignUpForm(props) {
       setState({ ...state, [input]: e.target.value });
     }
   };
-  //xử lý submit
-  const handleSubmit = () => {
-    // e.preventDefault();
-    // console.log(e);
-    // e.target.reset();
-  };
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -137,7 +128,6 @@ export default function SignUpForm(props) {
       ref={(r) => {
         form = r;
       }}
-      onSubmit={handleSubmit}
       instantValidate
     >
       <Grid container className={classes.test}>
@@ -165,8 +155,18 @@ export default function SignUpForm(props) {
                       Cảm ơn bạn đã tham gia
                     </Typography>
                     <Typography variant="subtitle1">
-                      Chúc bạn có những trải nghiệm vui nhất
+                      Chúc bạn có những trải nghiệm vui nhất{" "}
                     </Typography>
+                    <Button
+                      variant="contained"
+                      classes={{
+                        root: classes.submit, // class name, e.g. `classes-nesting-root-x`
+                        label: classes.label, // class name, e.g. `classes-nesting-label-x`
+                      }}
+                      onClick={handleRegister}
+                    >
+                      đi
+                    </Button>
                   </React.Fragment>
                 ) : (
                   <React.Fragment>

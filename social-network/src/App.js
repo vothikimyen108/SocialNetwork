@@ -14,6 +14,7 @@ import SignUpForm from "./components/Auth/Register/SignUpForm";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 //c
+import Profile from "./pages/Profile";
 function App() {
   return (
     <>
@@ -28,6 +29,11 @@ function App() {
             path="/news/:newsId"
             exact
             component={NewsDetail}
+          ></DashboardLayoutRoute>
+          <DashboardLayoutRoute
+            path="/profile/:idUser"
+            exact
+            component={Profile}
           ></DashboardLayoutRoute>
           <Route path="/photo/:photoId" exact>
             <PhotoDetail></PhotoDetail>
