@@ -8,23 +8,25 @@ import NewsDetail from "./pages/NewsDetail";
 import NewsFeed from "./pages/NewsFeed";
 import PhotoDetail from "./pages/PhotoDetail";
 import DashboardLayoutRoute from "./components/Layout/DashboardLayoutRoute";
+import MembersPage from "./pages/MembersPage";
 //impor
 import { BrowserRouter as Router } from "react-router-dom";
 import SignUpForm from "./components/Auth/Register/SignUpForm";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 //c
+
 import Profile from "./pages/Profile";
 function App() {
   return (
     <>
       <Router>
         <Switch>
-          <DashboardLayoutRoute
+          {/* <DashboardLayoutRoute
             path="/"
             exact
             component={NewsFeed}
-          ></DashboardLayoutRoute>
+          ></DashboardLayoutRoute> */}
           <DashboardLayoutRoute
             path="/news/:newsId"
             exact
@@ -34,6 +36,11 @@ function App() {
             path="/profile/:idUser"
             exact
             component={Profile}
+          ></DashboardLayoutRoute>
+          <DashboardLayoutRoute
+            path="/members"
+            exact
+            component={MembersPage}
           ></DashboardLayoutRoute>
           <Route path="/photo/:photoId" exact>
             <PhotoDetail></PhotoDetail>
