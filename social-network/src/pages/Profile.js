@@ -14,13 +14,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import AlertNoti from "../components/UI/AlertNoti";
 //redux
 import { useSelector } from "react-redux";
+//
+import HeaderProfile from "../components/Profile/HeaderProfile";
+import InfoProfile from "../components/Profile/InfoProfile";
+import ListPhoTo from "../components/Profile/ListPhoto";
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-    marginTop: 110,
-    [theme.breakpoints.down("md")]: {
-      marginTop: 160,
-    },
+    marginTop: 30,
   },
 }));
 const data = [
@@ -99,9 +99,10 @@ const data = [
     totalComment: 10,
   },
 ];
-
-const NewsFeed = () => {
-  //mowr formNews -> tao moi bai viet
+const Profile = () => {
+  const classe = useStyles();
+  // dùng redux uiSlice
+  const registerIsVisible = useSelector((state) => state.ui.registerIsVisible);
   const [openNewsForm, setNewsForm] = useState(false);
   let history = useHistory();
   //ham mow tao bai viet moi
@@ -119,36 +120,38 @@ const NewsFeed = () => {
   const handlerIsOpenPhoto = () => {
     history.push(`${match.path}/photo`);
   };
-  //dong formnews
-  const classe = useStyles();
-  // dùng redux uiSlice
-  const registerIsVisible = useSelector((state) => state.ui.registerIsVisible);
   return (
     <div>
-      <Grid item xs={12} sm={12} md={12} lg={9} className={classe.root}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <CreateNews onOpen={handlerOpenNewsForm}></CreateNews>
+      <Grid item xs={12} sm={12} md={12} className={classe.root}>
+        <HeaderProfile></HeaderProfile>
+        <Grid container className={classe.root} spacing={3}>
+          <Grid item md={4}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <InfoProfile></InfoProfile>
+              </Grid>
+              <Grid item xs={12}>
+                <ListPhoTo></ListPhoTo>
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <NewsList data={data} open={handlerIsOpenPhoto}></NewsList>
-          </Grid>
-          <Grid item xs={12}>
-            <BasicPagination></BasicPagination>
+          <Grid item md={8}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <CreateNews onOpen={handlerOpenNewsForm}></CreateNews>
+              </Grid>
+              <Grid item xs={12}>
+                <NewsList data={data} open={handlerIsOpenPhoto}></NewsList>
+              </Grid>
+              <Grid item xs={12}>
+                {openNewsForm && <NewsForm onClose={handerClose}></NewsForm>}
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} sm={12} md={3}>
-        <LayoutListMember></LayoutListMember>
-      </Grid>
-      {openNewsForm && <NewsForm onClose={handerClose}></NewsForm>}
-      {!registerIsVisible && (
-        <AlertNoti open={!registerIsVisible} onClose={() => !registerIsVisible}>
-          <SignUpForm></SignUpForm>
-        </AlertNoti>
-      )}
     </div>
   );
 };
 
-export default NewsFeed;
+export default Profile;

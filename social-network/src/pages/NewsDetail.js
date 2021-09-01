@@ -40,7 +40,7 @@ const NewsDetail = () => {
   const classe = useStyles();
   return (
     <Fragment>
-      <Grid item xs={12} sm={12} md={9} className={classe.root}>
+      <Grid item xs={12} sm={12} md={12} lg={9} className={classe.root}>
         <NewsItem
           key={item.id}
           isGo={true}
@@ -56,7 +56,7 @@ const NewsDetail = () => {
           open={handlerIsOpenPhoto}
         ></NewsItem>
       </Grid>
-      <Grid item xs={12} sm={12} md={3}>
+      <Grid item xs={12} sm={12} md={12} lg={3}>
         <LayoutListMember></LayoutListMember>
       </Grid>
     </Fragment>

@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    "&:focus": {
+      outline: "none",
+    },
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -16,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 2, 2),
     border: "1px solid #f0f2f5",
     borderRadius: "20px",
+    outline: 0,
   },
 }));
 
@@ -23,7 +27,7 @@ export default function AlertNoti(props) {
   const classes = useStyles();
 
   return (
-    <div>
+    <div style={{ outline: "none" }}>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
