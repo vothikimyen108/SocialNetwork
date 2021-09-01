@@ -5,7 +5,7 @@ import Cat from "../../assets/img/cat.svg";
 import Upload from "../../assets/img/upload.svg";
 import Money from "../../assets/img/money.svg";
 import Post from "../../assets/img/post.svg";
-import Help from "../../assets/img/help.svg";
+import help from "../../assets/img/help.svg";
 //css
 import "./SlideShow.css";
 import "react-slideshow-image/dist/styles.css";
@@ -78,7 +78,7 @@ export default function SlideShow() {
           <div style={{ ...style }}>
             <div className="top">
               <div className="circle">
-                <img src={Help} alt={Cat} className="img"></img>
+                <img src={help} alt={Cat} className="img"></img>
               </div>
             </div>
             <div className="bottom">
