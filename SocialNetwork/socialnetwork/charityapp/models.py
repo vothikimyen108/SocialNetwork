@@ -1,21 +1,34 @@
+import cloudinary
+import cloudinary_storage.storage
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
 # Create your models here.
 
 class User(AbstractUser):
-    avatar = models.ImageField(upload_to='avatar_user/%Y/%m', blank=False)
+    avatar = models.ImageField(upload_to='avatar_user/%Y/%m', blank=True)
     address = models.CharField(max_length=255, null=True)
     phone_number = models.CharField(max_length=10, null=True)
     ADMIN = 1
     USER = 0
     USER_TYPE_CHOICES = (
-          (ADMIN, 'ADMIN'),
-          (USER, 'USER')
-      )
+        (ADMIN, 'ADMIN'),
+        (USER, 'USER')
+    )
 
     role = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=USER)
+
+    def save(self, *args, **kwargs):
+        self.set_password(self.password)
+        if self.is_superuser:
+            self.role = self.ADMIN
+        if self.role == self.ADMIN:
+            self.is_superuser = True
+        else:
+            self.is_superuser = False
+        super(User, self).save(*args, **kwargs)
 
 
 class Tag(models.Model):
@@ -58,8 +71,8 @@ class Post(PostBase):
 
 class Like(models.Model):
     is_like = models.BooleanField(default=True)
-    post = models.OneToOneField(Post, null=True, blank=False, on_delete=models.SET_NULL)
-    user = models.OneToOneField(User, null=True, blank=False, on_delete=models.SET_NULL)
+    post = models.ForeignKey(Post, null=True, blank=False, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, null=True, blank=False, on_delete=models.SET_NULL)
 
     class Meta:
         unique_together = ['post', 'user']
@@ -71,7 +84,7 @@ class Comment(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    images = models.ImageField(upload_to='Comment/%Y/%m', blank=False)
+    images = models.ImageField(upload_to='Comment/%Y/%m', blank=True)
 
 
 class Notification(models.Model):
@@ -82,6 +95,10 @@ class Notification(models.Model):
     is_seen = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
+
+    def clean(self):
+        if self.user_to.id == self.user_from.id:
+            raise ValidationError("User to have to difference User from")
 
 
 class TypeNotification(models.Model):
