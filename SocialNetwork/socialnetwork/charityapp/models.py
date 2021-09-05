@@ -26,8 +26,10 @@ class User(AbstractUser):
             self.role = self.ADMIN
         if self.role == self.ADMIN:
             self.is_superuser = True
+            self.is_staff = True
         else:
             self.is_superuser = False
+            self.is_staff = False
         super(User, self).save(*args, **kwargs)
 
 
@@ -43,9 +45,9 @@ class ImagePost(models.Model):
     post = models.ForeignKey("Post", on_delete=models.CASCADE, null=True)
 
 
-class ImageAuctionPost(models.Model):
-    image_url = models.ImageField(upload_to='Auction_Post/%Y/%m', blank=False)
-    auction_post = models.ForeignKey("AuctionPost", on_delete=models.CASCADE, null=True)
+# class ImageAuctionPost(models.Model):
+#     image_url = models.ImageField(upload_to='Auction_Post/%Y/%m', blank=False)
+#     auction_post = models.ForeignKey("AuctionPost", on_delete=models.CASCADE, null=True)
 
 
 class PostBase(models.Model):
@@ -112,15 +114,19 @@ class TypeNotification(models.Model):
 
 
 class Auction(models.Model):
-    auction_post = models.OneToOneField("AuctionPost", on_delete=models.SET_NULL, null=True)
+    auction_post = models.ForeignKey("AuctionPost", on_delete=models.SET_NULL, null=True)
     start_date = models.DateTimeField(auto_now_add=True)
     finish_date = models.DateTimeField(auto_now=True)
-    user_join = models.ManyToManyField(User, null=False)
+    user_join = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     user_win = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
 
+    class Meta:
+        unique_together = ['auction_post', 'user_join']
 
-class AuctionPost(PostBase):
+
+class AuctionPost(models.Model):
+    post = models.OneToOneField(Post, on_delete=models.CASCADE, null=False)
     product = models.OneToOneField("Product", on_delete=models.SET_NULL, null=True)
 
     def __str__(self):

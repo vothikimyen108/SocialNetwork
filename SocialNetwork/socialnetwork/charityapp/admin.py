@@ -31,24 +31,25 @@ class PostAdmin(admin.ModelAdmin):
 
 
 # Đấu giá post admin
-class ImageAuctionPostInlineAdmin(admin.TabularInline):
-    model = ImageAuctionPost
-    fk_name = 'auction_post'  # Này là cho auction post regular
+# class ImageAuctionPostInlineAdmin(admin.TabularInline):
+#     model = ImageAuctionPost
+#     fk_name = 'auction_post'  # Này là cho auction post regular
 
 
-class TagAuctionPostInlineAdmin(admin.TabularInline):
-    model = AuctionPost.tags.through
+# class TagAuctionPostInlineAdmin(admin.TabularInline):
+#     # model = AuctionPost.tags.through
+#     pass
 
 
 # AUCTION POST ADMIN
 
 class AuctionPostAdmin(admin.ModelAdmin):
-    list_display = ['id', 'product', 'created_date', 'updated_date', 'user', 'active']
-    search_fields = ['created_date', 'updated_date', 'user__username']
-    list_filter = ['user', 'active']
+    # list_display = ['id', 'product', 'created_date', 'updated_date', 'user', 'active']
+    # search_fields = ['created_date', 'updated_date', 'user__username']
+    # list_filter = ['user', 'active']
 
     model = AuctionPost
-    inlines = [ImageAuctionPostInlineAdmin, TagAuctionPostInlineAdmin]
+    # inlines = [ImageAuctionPostInlineAdmin]
 
 
 # Tag admin
@@ -66,7 +67,7 @@ class ProductAdmin(admin.ModelAdmin):
 # AUCTION ADMIN
 
 class AuctionAdmin(admin.ModelAdmin):
-    list_display = ['id', 'auction_post', 'start_date', 'finish_date', 'active']
+    list_display = ['id', 'auction_post', 'user_join', 'start_date', 'finish_date', 'active']
 
 
 # USER ADMIN
@@ -166,7 +167,7 @@ admin_site.register(Product, ProductAdmin)
 admin_site.register(Notification, NotificationAdmin)
 admin_site.register(TypeNotification, TypeNotificationAdmin)
 admin_site.register(ImagePost, ImagePostAdmin)
-admin_site.register(ImageAuctionPost, ImageAuctionPostAdmin)
+# admin_site.register(ImageAuctionPost, ImageAuctionPostAdmin)
 admin_site.register(Pay, PayAdmin)
 admin_site.register(Report, ReportAdmin)
 admin_site.register(TypeReport, TypeReportAdmin)
