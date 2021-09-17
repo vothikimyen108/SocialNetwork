@@ -30,17 +30,6 @@ class PostAdmin(admin.ModelAdmin):
     inlines = [ImagePostInlineAdmin, TagPostInlineAdmin]
 
 
-# Đấu giá post admin
-# class ImageAuctionPostInlineAdmin(admin.TabularInline):
-#     model = ImageAuctionPost
-#     fk_name = 'auction_post'  # Này là cho auction post regular
-
-
-# class TagAuctionPostInlineAdmin(admin.TabularInline):
-#     # model = AuctionPost.tags.through
-#     pass
-
-
 # AUCTION POST ADMIN
 
 class AuctionPostAdmin(admin.ModelAdmin):
@@ -55,7 +44,6 @@ class AuctionPostAdmin(admin.ModelAdmin):
 # Tag admin
 class TagAdmin(admin.ModelAdmin):
     list_display = ['id', 'content']
-    # inlines = [TagPostInlineAdmin, TagAuctionPostInlineAdmin]
 
 
 # PRODUCT ADMIN
@@ -167,7 +155,6 @@ admin_site.register(Product, ProductAdmin)
 admin_site.register(Notification, NotificationAdmin)
 admin_site.register(TypeNotification, TypeNotificationAdmin)
 admin_site.register(ImagePost, ImagePostAdmin)
-# admin_site.register(ImageAuctionPost, ImageAuctionPostAdmin)
 admin_site.register(Pay, PayAdmin)
 admin_site.register(Report, ReportAdmin)
 admin_site.register(TypeReport, TypeReportAdmin)

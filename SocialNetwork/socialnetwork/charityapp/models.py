@@ -45,11 +45,6 @@ class ImagePost(models.Model):
     post = models.ForeignKey("Post", on_delete=models.CASCADE, null=True)
 
 
-# class ImageAuctionPost(models.Model):
-#     image_url = models.ImageField(upload_to='Auction_Post/%Y/%m', blank=False)
-#     auction_post = models.ForeignKey("AuctionPost", on_delete=models.CASCADE, null=True)
-
-
 class PostBase(models.Model):
     content = models.TextField(null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -91,6 +86,7 @@ class Comment(models.Model):
 
 class Notification(models.Model):
     content = models.CharField(max_length=255, null=True, blank=True)
+    post = models.ForeignKey(Post, null=True, blank=False, on_delete=models.SET_NULL)
     type = models.ForeignKey("TypeNotification", on_delete=models.SET_NULL, null=True)
     user_to = models.ForeignKey(User, related_name="user_to", on_delete=models.SET_NULL, null=True)
     user_from = models.ForeignKey(User, related_name="user_from", on_delete=models.SET_NULL, null=True)
@@ -100,7 +96,10 @@ class Notification(models.Model):
 
     def clean(self):
         if self.user_to.id == self.user_from.id:
-            raise ValidationError("User to have to difference User from")
+            raise ValidationError({"user_to": "User to have to difference User from"})
+        user_to_post = Post.objects.filter(id=self.post.id, user__id=self.user_to.id).first()
+        if user_to_post is None and self.type.type == 'Like':
+            raise ValidationError({"user_to": "User To dont have this Post"})
 
 
 class TypeNotification(models.Model):
@@ -123,6 +122,14 @@ class Auction(models.Model):
 
     class Meta:
         unique_together = ['auction_post', 'user_join']
+
+    def clean(self):
+        auction_post = Auction.objects.filter(auction_post__id=self.auction_post.id).first()
+        if auction_post is not None:
+            raise ValidationError({"auction_post": "Post nay da duoc dau gia !!"})
+
+    def __str__(self):
+        return self.auction_post.product.name + str(self.start_date)
 
 
 class AuctionPost(models.Model):
