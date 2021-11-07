@@ -14,7 +14,7 @@ export default function Member() {
     <Grid container className={classes.root}>
       <Grid item xs={12} className={classes.center}>
         <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        <h2>Võ Yến</h2>
+        <h3>Võ Yến</h3>
         <p>Đã tham gia: 10 ngày</p>
       </Grid>
       <Grid item xs={12} className={classes.button}>

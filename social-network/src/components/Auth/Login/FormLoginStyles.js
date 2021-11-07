@@ -23,7 +23,9 @@ const FormLoginStyles = makeStyles((theme) => ({
   avatar: {
     padding: theme.spacing(1),
   },
-
+  signupForm: {
+    marginBottom: 3,
+  },
   form: {
     width: "100%", // Fix IE 11 issue.
     height: "100%",
@@ -40,6 +42,9 @@ const FormLoginStyles = makeStyles((theme) => ({
     padding: "0 30px",
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
   },
+  label: {
+    textTransform: "capitalize",
+  },
   signup: {
     background: "#fff",
     borderRadius: 25,
@@ -49,11 +54,7 @@ const FormLoginStyles = makeStyles((theme) => ({
     width: "100%",
     padding: "0 30px",
   },
-  logo: {},
 
-  label: {
-    textTransform: "capitalize",
-  },
   textField: {
     [`& fieldset`]: {
       borderRadius: 25,

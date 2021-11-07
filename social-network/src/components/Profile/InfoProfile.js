@@ -13,10 +13,18 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
   info: {
-    margin: "0 20px",
-    minWidth: 275,
+    // margin: "0 20px",
+    minWidth: "100%",
     boxShadow: "none",
-    borderRadius: 20,
+    // borderRadius: 20,
+    border: "2px solid",
+    borderColor: "#E7EDF3",
+    borderRadius: 16,
+    transition: "0.4s",
+    background: "#fff",
+    "&:hover": {
+      borderColor: "#5B9FED",
+    },
     "& .MuiPaper-elevation1": { border: 0 },
   },
   subButton: {

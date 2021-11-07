@@ -13,6 +13,12 @@ const useStyles = makeStyles((theme) => ({
     "& > * + *": {
       marginTop: theme.spacing(2),
     },
+    snackbar: {
+      bottom: 100,
+      [theme.breakpoints.down("xs")]: {
+        bottom: 90,
+      },
+    },
   },
 }));
 
@@ -22,6 +28,8 @@ export default function CustomizedSnackbars(props) {
   return (
     <div className={classes.root}>
       <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        className={classes.snackbar}
         open={props.open}
         autoHideDuration={6000}
         onClose={props.handleClose}

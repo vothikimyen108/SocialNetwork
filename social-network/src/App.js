@@ -1,54 +1,23 @@
 import Grid from "@material-ui/core/Grid";
 import React, { Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Layout from "./components/Layout/Layout";
-import LayoutListMember from "./components/Layout/LayoutListMember";
-import Auction from "./components/Products/Auction";
+import LoginLayoutRoute from "./components/Layout/LoginLayoutRoute";
+import Login from "./components/Auth/Login/Login";
 //cac pages
 import NewsDetail from "./pages/NewsDetail";
 import NewsFeed from "./pages/NewsFeed";
 import PhotoDetail from "./pages/PhotoDetail";
+import DashboardLayoutRoute from "./components/Layout/DashboardLayoutRoute";
+import MembersPage from "./pages/MembersPage";
 //impor
-import { makeStyles } from "@material-ui/core/styles";
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    marginTop: 110,
-    [theme.breakpoints.down("md")]: {
-      marginTop: 160,
-    },
-  },
-}));
-const dataMember = [
-  {
-    id: 1,
-    name: "Lê Phước",
-    createJoin: "12 ngày trước",
-  },
-  {
-    id: 2,
-    name: "Lê Phước",
-    createJoin: "12 ngày trước",
-  },
-  {
-    id: 3,
-    name: "Lê Phước",
-    createJoin: "12 ngày trước",
-  },
-  {
-    id: 4,
-    name: "Lê Phước",
-    createJoin: "12 ngày trước",
-  },
-  {
-    id: 5,
-    name: "Lê Phước",
-    createJoin: "12 ngày trước",
-  },
-];
+import { BrowserRouter as Router } from "react-router-dom";
+import SignUpForm from "./components/Auth/Register/SignUpForm";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 //c
+import anh from "./assets/ImgProfile/196900128_337098007802082_959440697203316550_n (1).jpg";
+import Profile from "./pages/Profile";
 function App() {
-  const classe = useStyles();
   return (
     <Layout>
       <Switch>
@@ -79,6 +48,37 @@ function App() {
       </Switch>
     </Layout>
     // <Auction></Auction>
+    <>
+      {/* <Router>
+        <Switch>
+          <DashboardLayoutRoute
+            path="/"
+            exact
+            component={NewsFeed}
+          ></DashboardLayoutRoute>
+          <DashboardLayoutRoute
+            path="/news/:newsId"
+            exact
+            component={NewsDetail}
+          ></DashboardLayoutRoute>
+          <DashboardLayoutRoute
+            path="/profile/:idUser"
+            exact
+            component={Profile}
+          ></DashboardLayoutRoute>
+          <DashboardLayoutRoute
+            path="/members"
+            exact
+            component={MembersPage}
+          ></DashboardLayoutRoute>
+          <Route path="/photo/:photoId" exact>
+            <PhotoDetail></PhotoDetail>
+          </Route>
+          <LoginLayoutRoute path="/loginsignup" component={Login} />
+        </Switch>
+      </Router> */}
+      <img src={anh} alt="ahh"></img>
+    </>
   );
 }
 export default App;

@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-const ProductSlyles = makeStyles((theme) => ({
+const ProductStyles = makeStyles((theme) => ({
   root: {
     marginBottom: 10,
     transition: "transform .2s",
@@ -15,6 +15,8 @@ const ProductSlyles = makeStyles((theme) => ({
   },
   go: {
     margin: 5,
+  },
+  goLast: {
     "&:last-of-type": {
       marginLeft: "auto",
       display: "flex",
@@ -22,6 +24,9 @@ const ProductSlyles = makeStyles((theme) => ({
       justifyContent: "center",
       color: "grey",
     },
+  },
+  auction: {
+    width: "100%",
   },
   action: {
     backgroundColor: "#fff",
@@ -36,15 +41,9 @@ const ProductSlyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  text: {
-    // display: "inline",
-    margin: 0,
-    paddingRight: 10,
-    color: "grey",
-    display: "none",
-    [theme.breakpoints.up("lg")]: {
-      display: "inline",
-    },
+
+  link: {
+    textDecoration: "none",
   },
 }));
-export default ProductSlyles;
+export default ProductStyles;
