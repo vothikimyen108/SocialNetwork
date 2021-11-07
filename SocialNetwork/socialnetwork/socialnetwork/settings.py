@@ -44,9 +44,24 @@ INSTALLED_APPS = [
     'charityapp.apps.CharityappConfig',
     'cloudinary_storage',
     'cloudinary',
+    'oauth2_provider',
+    'rest_framework',
+    'drf_yasg'
     # 'ckeditor',
     # 'ckeditor-uploader'
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    )
+}
+
+#auth cua en
+OAUTH2_INFO = {
+    "client_id": "tJMVNQJLIjH9AjhkESzGM6OO5efAJH4VlXczDeff",
+    "client_serect": "0oLEzObcoMLXj7uh59Ij2BnpgqBaj5hPhChWeCMiViRR0EFE1DuEczXV29PH5HajtDoHsJ5ah9PuAAIsjxfPtLAH58ezSIN0dZAqzeqbcC9faa3wFGWPGxTBMKEcuGLY"
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -86,7 +101,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'socialnetwork',
         'USER': 'root',
-        'PASSWORD': '12345',
+        'PASSWORD': '123456789',
         'HOST': '',
     }
 }

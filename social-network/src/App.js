@@ -49,7 +49,7 @@ function App() {
     </Layout>
     // <Auction></Auction>
     <>
-      {/* <Router>
+      <Router>
         <Switch>
           <DashboardLayoutRoute
             path="/"
@@ -76,8 +76,8 @@ function App() {
           </Route>
           <LoginLayoutRoute path="/loginsignup" component={Login} />
         </Switch>
-      </Router> */}
-      <img src={anh} alt="ahh"></img>
+      </Router>
+      {/* <img src={anh} alt="ahh"></img> */}
     </>
   );
 }

@@ -62,7 +62,7 @@ class AuctionAdmin(admin.ModelAdmin):
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['id', 'username', 'password', 'role', 'is_superuser', 'is_active']
+    list_display = ['id', 'username', 'password', 'is_superuser', 'is_active']
     readonly_fields = ['avatar_image']
     exclude = ['last_login', 'is_staff', 'date_joined', 'is_superuser']
 
