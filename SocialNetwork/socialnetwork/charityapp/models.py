@@ -11,26 +11,26 @@ class User(AbstractUser):
     avatar = models.ImageField(upload_to='avatar_user/%Y/%m', blank=True)
     address = models.CharField(max_length=255, null=True)
     phone_number = models.CharField(max_length=10, null=True)
-    ADMIN = 1
-    USER = 0
-    USER_TYPE_CHOICES = (
-        (ADMIN, 'ADMIN'),
-        (USER, 'USER')
-    )
+    # ADMIN = 1
+    # USER = 0
+    # USER_TYPE_CHOICES = (
+    #     (ADMIN, 'ADMIN'),
+    #     (USER, 'USER')
+    # )
+    #
+    # role = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=USER)
 
-    role = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=USER)
-
-    def save(self, *args, **kwargs):
-        self.set_password(self.password)
-        if self.is_superuser:
-            self.role = self.ADMIN
-        if self.role == self.ADMIN:
-            self.is_superuser = True
-            self.is_staff = True
-        else:
-            self.is_superuser = False
-            self.is_staff = False
-        super(User, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.set_password(self.password)
+    #     if self.is_superuser:
+    #         self.role = self.ADMIN
+    #     if self.role == self.ADMIN:
+    #         self.is_superuser = True
+    #         self.is_staff = True
+    #     else:
+    #         self.is_superuser = False
+    #         self.is_staff = False
+    #     super(User, self).save(*args, **kwargs)
 
 
 class Tag(models.Model):
