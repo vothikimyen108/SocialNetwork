@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'charityapp.apps.CharityappConfig',
-    'cloudinary'
+    'cloudinary_storage',
+    'cloudinary',
+    # 'ckeditor',
+    # 'ckeditor-uploader'
 ]
 
 MIDDLEWARE = [
@@ -129,9 +132,15 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-cloudinary.config(
-    cloud_name="ou-hcmc",
-    api_key="969386329894481",
-    api_secret="mg_eWP3Hbfzx-csv5H-9uPVcBA4",
-    secure=True
-)
+
+MEDIA_URL = '/SocialNetwork/'  # NÀY LÀ THƯ MỤC TRÊN CLOUDINARY
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'  # LƯU TRỮ KIỂU ẢNH
+
+# INFO ACCOUNT CLOUDINARY
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'ou-hcmc',
+    'API_KEY': '969386329894481',
+    'API_SECRET': 'mg_eWP3Hbfzx-csv5H-9uPVcBA4'
+}
