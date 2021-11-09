@@ -46,36 +46,22 @@ INSTALLED_APPS = [
     'cloudinary',
     'oauth2_provider',
     'rest_framework',
-    'drf_yasg',
-    'corsheaders',
+    'drf_yasg'
     # 'ckeditor',
     # 'ckeditor-uploader'
 ]
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS':
-        'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.FormParser',
-        'rest_framework.parsers.MultiPartParser',
-        'rest_framework.parsers.JSONParser'
-    ],
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    )
+}
 
-    'DEFAULT_AUTHENTICATION_CLASSES': ('oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-                                       'rest_framework.authentication.SessionAuthentication'),
-}
-# #chạy post man bỏ biến này ra
-OAUTH2_PROVIDER = {
-    'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
-}
 #auth cua en
 OAUTH2_INFO = {
-    "client_id": "Rslevl6tdCfaiXBFc4uOfpRbmK7ujcIiLrYbZezP",
-    "client_serect": "h22iJQWVtoErUIJuE5SldfCEpL31Ve0HcGQC3fFUTlEkRy5GNDEknEXB8RbJJMuetTiqc0ho4qyBVk6YQu8uqoy2WD6TtLyTaU0hbezlcjl3ZSzYjBjlP3aPANCTYEBH"
+    "client_id": "tJMVNQJLIjH9AjhkESzGM6OO5efAJH4VlXczDeff",
+    "client_serect": "0oLEzObcoMLXj7uh59Ij2BnpgqBaj5hPhChWeCMiViRR0EFE1DuEczXV29PH5HajtDoHsJ5ah9PuAAIsjxfPtLAH58ezSIN0dZAqzeqbcC9faa3wFGWPGxTBMKEcuGLY"
 }
 
-CORS_ORIGIN_ALLOW_ALL = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -85,8 +71,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'socialnetwork.urls'
