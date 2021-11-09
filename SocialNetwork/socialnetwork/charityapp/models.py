@@ -20,8 +20,8 @@ class User(AbstractUser):
     #
     # role = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=USER)
 
-    # def save(self, *args, **kwargs):
-    #     self.set_password(self.password)
+    def save(self, *args, **kwargs):
+        self.set_password(self.password)
     #     if self.is_superuser:
     #         self.role = self.ADMIN
     #     if self.role == self.ADMIN:
@@ -30,7 +30,7 @@ class User(AbstractUser):
     #     else:
     #         self.is_superuser = False
     #         self.is_staff = False
-    #     super(User, self).save(*args, **kwargs)
+        super(User, self).save(*args, **kwargs)
 
 
 class Tag(models.Model):

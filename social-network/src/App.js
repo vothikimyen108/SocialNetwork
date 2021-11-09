@@ -19,34 +19,34 @@ import anh from "./assets/ImgProfile/196900128_337098007802082_95944069720331655
 import Profile from "./pages/Profile";
 function App() {
   return (
-    <Layout>
-      <Switch>
-        <Route path="/" exact>
-          <Redirect to="/newsfeed" />
-        </Route>
-        <Route path="/newsfeed">
-          <Grid item xs={12} sm={12} md={9} className={classe.root}>
-            <NewsFeed></NewsFeed>
-          </Grid>
-          <Grid item xs={12} sm={12} md={3}>
-            <LayoutListMember data={dataMember}></LayoutListMember>
-          </Grid>
-        </Route>
-        <Route path="/news/:newsId">
-          <Grid item xs={12} sm={12} md={9} className={classe.root}>
-            <NewsDetail></NewsDetail>
-          </Grid>
-          <Grid item xs={12} sm={12} md={3}>
-            <LayoutListMember data={dataMember}></LayoutListMember>
-          </Grid>
-        </Route>
-        <Route path="/photo/:photoId">
-          <Grid item xs={12} sm={12} md={9} className={classe.root}>
-            <PhotoDetail></PhotoDetail>
-          </Grid>
-        </Route>
-      </Switch>
-    </Layout>
+    // <Layout>
+    //   <Switch>
+    //     <Route path="/" exact>
+    //       <Redirect to="/newsfeed" />
+    //     </Route>
+    //     <Route path="/newsfeed">
+    //       <Grid item xs={12} sm={12} md={9} className={classe.root}>
+    //         <NewsFeed></NewsFeed>
+    //       </Grid>
+    //       <Grid item xs={12} sm={12} md={3}>
+    //         <LayoutListMember data={dataMember}></LayoutListMember>
+    //       </Grid>
+    //     </Route>
+    //     <Route path="/news/:newsId">
+    //       <Grid item xs={12} sm={12} md={9} className={classe.root}>
+    //         <NewsDetail></NewsDetail>
+    //       </Grid>
+    //       <Grid item xs={12} sm={12} md={3}>
+    //         <LayoutListMember data={dataMember}></LayoutListMember>
+    //       </Grid>
+    //     </Route>
+    //     <Route path="/photo/:photoId">
+    //       <Grid item xs={12} sm={12} md={9} className={classe.root}>
+    //         <PhotoDetail></PhotoDetail>
+    //       </Grid>
+    //     </Route>
+    //   </Switch>
+    // </Layout>
     // <Auction></Auction>
     <>
       <Router>
@@ -74,7 +74,7 @@ function App() {
           <Route path="/photo/:photoId" exact>
             <PhotoDetail></PhotoDetail>
           </Route>
-          <LoginLayoutRoute path="/loginsignup" component={Login} />
+          <LoginLayoutRoute path="/login" component={Login} />
         </Switch>
       </Router>
       {/* <img src={anh} alt="ahh"></img> */}

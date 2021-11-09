@@ -7,7 +7,14 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import { ReactComponent as GG } from "../../../assets/Login/google.svg";
 import FormLoginStyles from "./FormLoginStyles";
-
+import userApi from "../../../api/useApi";
+import { useHistory } from "react-router-dom";
+//cookies
+import cookies from "react-cookies";
+//redux
+import { getMe } from "../../../store/userSlice";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
 //lấy năm hiện tại
 function Copyright() {
   return (
@@ -23,6 +30,9 @@ function Copyright() {
 }
 
 const FormLogin = function FormLogin() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [issErr, setIsErr] = useState(false);
   const classes = FormLoginStyles();
   const [isSignIn, setisSignIn] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
@@ -69,7 +79,7 @@ const FormLogin = function FormLogin() {
   //state nhiều biến
   const [info, setInfo] = useState({
     formData: {
-      email: "",
+      username: "",
       password: "",
     },
   });
@@ -81,8 +91,40 @@ const FormLogin = function FormLogin() {
   };
 
   //submit
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     // your submit logic
+    //gửi nguyên trang
+    e.preventDefault();
+    // xử lý đăng nhập
+    const fetchLogin = async () => {
+      try {
+        //gọi từ axios
+        // const response = await userApi.login()
+        const authInfo = await userApi.getAuthInfo();
+        console.log(authInfo);
+        //from data
+        const fromData = {
+          ...info.formData,
+          grant_type: "password",
+          ...authInfo,
+        };
+        console.log(fromData);
+        const response = await userApi.login(fromData);
+        //lưu vô cookie
+        cookies.save("access-token", response.access_token);
+        cookies.save("refresh_token", response.refresh_token);
+        const action = getMe();
+        const actionResult = await dispatch(action);
+        //update thong tin user
+        unwrapResult(actionResult);
+        //chuyen qua trang chu
+        history.replace("/");
+      } catch (error) {
+        setIsErr(true);
+        console.log(error);
+      }
+    };
+    fetchLogin();
   };
   //
   const vali = ["required"];
@@ -115,11 +157,11 @@ const FormLogin = function FormLogin() {
           fullWidth
           id="email"
           label="Email *"
-          name="email"
+          name="username"
           autoComplete="email"
           autoFocus
           onChange={handleChange}
-          value={info.formData.email}
+          value={info.formData.username}
           validators={["required", "isEmail"]}
           errorMessages={[
             "không để trống dòng này",
@@ -156,6 +198,11 @@ const FormLogin = function FormLogin() {
             ),
           }}
         />
+        {issErr && (
+          <p style={{ textAlign: "center", color: "red" }}>
+            {"sai user name hoặc mật khẩu"}
+          </p>
+        )}
         <Button
           type="submit"
           classes={{
