@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import { Row, Item } from "@mui-treasury/components/flex";
 import { Info, InfoTitle, InfoSubtitle } from "@mui-treasury/components/info";
@@ -6,54 +6,62 @@ import { useTutorInfoStyles } from "@mui-treasury/styles/info/tutor";
 import Productimg from "../../assets/product/product.svg";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { useSpring, animated } from "react-spring";
+import { NavLink } from "react-router-dom";
+import Auction from "./Auction";
 ///css
-import ProductSlyles from "./ProductSlyles";
+import ProductStyles from "./ProductStyles";
 export const Product = function TutorCard(props) {
-  const styles = ProductSlyles();
+  const styles = ProductStyles();
   //animate
   const stylesSpring = useSpring({
     loop: { reverse: true },
     from: { x: 0 },
     to: { x: 20 },
   });
-
+  //true hiện aution
+  const isAution = props.isAution;
+  //true hiện đi đấu giá
+  const isGo = props.isGo;
   return (
-    <Row
-      p={1.5}
-      gap={2}
-      bgcolor={"#f5f5f5"}
-      borderRadius={10}
-      key={props.key}
-      className={styles.root}
-    >
-      <Item className={styles.go}>
-        <Avatar src={Productimg} />
-      </Item>
-      <Info
-        position={"middle"}
-        useStyles={useTutorInfoStyles}
-        className={styles.go}
+    <div>
+      <Row
+        p={1.5}
+        gap={2}
+        bgcolor={"#f5f5f5"}
+        borderRadius={10}
+        key={props.key}
+        className={styles.root}
       >
-        <InfoTitle>Chè khoai môn - khởi điểm: 10k</InfoTitle>
-        <InfoSubtitle>hạn chót: 2020-1-1</InfoSubtitle>
-      </Info>
-      <Item position={"middle"} className={styles.go}>
-        {/* <IconButton className={styles.action} classes={iconBtnStyles}>
-          <AttachMoneyIcon></AttachMoneyIcon>
-        </IconButton> */}
-        {/* <div className={styles.button}> */}
-        <p className={styles.text}>đi đấu giá</p>
-        <animated.div
-          style={{
-            ...stylesSpring,
-          }}
+        <Item className={styles.go}>
+          <Avatar src={Productimg} />
+        </Item>
+        <Info
+          position={"middle"}
+          useStyles={useTutorInfoStyles}
+          className={styles.go}
         >
-          <ArrowForwardIosIcon></ArrowForwardIosIcon>
-          <ArrowForwardIosIcon></ArrowForwardIosIcon>
-        </animated.div>
+          <InfoTitle>Chè khoai môn - khởi điểm: 10k</InfoTitle>
+          <InfoSubtitle>hạn chót: 2020-1-1</InfoSubtitle>
+        </Info>
 
-        {/* </div> */}
-      </Item>
-    </Row>
+        {isGo && (
+          <Item position={"middle"} className={styles.goLast}>
+            {" "}
+            <NavLink to="/photo/1" className={styles.link}>
+              <animated.div
+                style={{
+                  ...stylesSpring,
+                }}
+              >
+                <ArrowForwardIosIcon></ArrowForwardIosIcon>
+                <ArrowForwardIosIcon></ArrowForwardIosIcon>
+              </animated.div>{" "}
+            </NavLink>
+          </Item>
+        )}
+      </Row>
+
+      {isAution && <Auction></Auction>}
+    </div>
   );
 };

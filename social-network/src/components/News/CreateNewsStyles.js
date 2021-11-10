@@ -6,7 +6,7 @@ const CreateNewsStyles = makeStyles((theme) => ({
     padding: "10px",
     height: "auto",
     float: "left",
-    width: "93%",
+    width: "97%",
     marginTop: "10px",
     backgroundColor: "#f0f2f5",
   },

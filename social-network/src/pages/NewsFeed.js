@@ -3,18 +3,26 @@ import CreateNews from "../components/News/CreateNews";
 import React from "react";
 
 import Grid from "@material-ui/core/Grid";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BasicPagination from "../components/Layout/BasicPagination";
 import NewsForm from "../components/News/NewsForm";
-import {
-  useParams,
-  Route,
-  Link,
-  useRouteMatch,
-  useHistory,
-} from "react-router-dom";
+import LayoutListMember from "../components/Layout/LayoutListMember";
+import { useRouteMatch, useHistory } from "react-router-dom";
 //importpage
-import PhotoDetail from "./PhotoDetail";
+import SignUpForm from "../components/Auth/Register/SignUpForm";
+import { makeStyles } from "@material-ui/core/styles";
+import AlertNoti from "../components/UI/AlertNoti";
+//redux
+import { useSelector } from "react-redux";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginTop: 110,
+    [theme.breakpoints.down("md")]: {
+      marginTop: 160,
+    },
+  },
+}));
 const data = [
   {
     id: 1,
@@ -112,10 +120,12 @@ const NewsFeed = () => {
     history.push(`${match.path}/photo`);
   };
   //dong formnews
-
+  const classe = useStyles();
+  // dùng redux uiSlice
+  const registerIsVisible = useSelector((state) => state.ui.registerIsVisible);
   return (
     <div>
-      <Route path={`${match.path}`}>
+      <Grid item xs={12} sm={12} md={12} lg={9} className={classe.root}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <CreateNews onOpen={handlerOpenNewsForm}></CreateNews>
@@ -127,8 +137,16 @@ const NewsFeed = () => {
             <BasicPagination></BasicPagination>
           </Grid>
         </Grid>
-        {openNewsForm && <NewsForm onClose={handerClose}></NewsForm>}
-      </Route>
+      </Grid>
+      <Grid item xs={12} sm={12} md={3}>
+        <LayoutListMember></LayoutListMember>
+      </Grid>
+      {openNewsForm && <NewsForm onClose={handerClose}></NewsForm>}
+      {!registerIsVisible && (
+        <AlertNoti open={!registerIsVisible} onClose={() => !registerIsVisible}>
+          <SignUpForm></SignUpForm>
+        </AlertNoti>
+      )}
     </div>
   );
 };

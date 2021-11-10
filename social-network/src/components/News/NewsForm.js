@@ -115,7 +115,6 @@ const NewsForm = (props) => {
       for (let i = 0; i < e.target.files.length; i++) {
         filesArray.push(URL.createObjectURL(e.target.files[i]));
       }
-
       setImages((prevImages) => prevImages.concat(filesArray));
       Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
     }

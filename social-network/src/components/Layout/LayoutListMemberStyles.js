@@ -27,6 +27,7 @@ const LayoutListMemberStyles = makeStyles((theme) => ({
         color: "#482880",
       },
     },
+
   },
 }));
 export default LayoutListMemberStyles;

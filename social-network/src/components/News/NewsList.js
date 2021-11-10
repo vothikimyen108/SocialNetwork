@@ -3,7 +3,10 @@ import NewsItem from "./NewsItem";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
+import NewsListStyles from "./NewsListStyles";
 const NewsList = (props) => {
+  //css
+  const classes = NewsListStyles();
   //animated
   useEffect(() => {
     AOS.init({ duration: 1000 });
@@ -11,9 +14,10 @@ const NewsList = (props) => {
   return (
     <div>
       {props.data.map((item) => (
-        <div data-aos="fade-right">
+        <div data-aos="fade-right" className={classes.root} key={item.id}>
           <NewsItem
-            key={item.id}
+            isGo={true}
+            className={classes.border}
             avatar={item.avatar}
             name={item.name}
             content={item.content}

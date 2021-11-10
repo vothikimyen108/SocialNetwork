@@ -6,10 +6,10 @@ import Grid from "@material-ui/core/Grid";
 import Member from "./Member";
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    // flexGrow: 1,
   },
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     textAlign: "center",
     margin: 20,
     boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
@@ -31,17 +31,17 @@ export default function MembersList() {
   return (
     <div className={classes.root}>
       <Grid container>
-        <Grid item xs={12} mt={1}>
+        <Grid item xs={12} sm={12} md={12} lg={4}>
           <Paper className={classes.paper}>
             <Member></Member>
           </Paper>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={12} md={12} lg={4}>
           <Paper className={classes.paper}>
             <Member></Member>
           </Paper>
         </Grid>
-        <Grid item xs={12}>
+        <Grid itemxs={12} sm={12} md={12} lg={4}>
           <Paper className={classes.paper}>
             <Member></Member>
           </Paper>
