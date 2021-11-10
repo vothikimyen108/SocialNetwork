@@ -14,7 +14,12 @@ const userApi = {
   },
   signUp: (data) => {
     const url = `/users/`;
-    return axiosClientApp.post(url, data);
+    const headers = {
+      "content-type":
+        "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+    };
+    console.log(data);
+    return axiosClientApp.post(url, data, { headers: headers });
   },
 };
 export default userApi;

@@ -9,6 +9,8 @@ import { ReactComponent as GG } from "../../../assets/Login/google.svg";
 import FormLoginStyles from "./FormLoginStyles";
 import userApi from "../../../api/useApi";
 import { useHistory } from "react-router-dom";
+//alert
+import CustomizedSnackbars from "../../UI/CustomizedSnackbars";
 //cookies
 import cookies from "react-cookies";
 //redux
@@ -32,12 +34,23 @@ function Copyright() {
 const FormLogin = function FormLogin() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [issErr, setIsErr] = useState(false);
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setAlert({ nameAlert: "", message: "", open: false });
+  };
   const classes = FormLoginStyles();
   const [isSignIn, setisSignIn] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const [alert, setAlert] = useState({
+    nameAlert: "",
+    message: "",
+    open: false,
+  });
   //if is insSing bằng true => mở đăng nhập
   const HandlerChange = () => {
     setisSignIn(!isSignIn);
@@ -55,6 +68,8 @@ const FormLogin = function FormLogin() {
             id="firstName"
             label="Họ *"
             className={classes.textField}
+            onChange={handleChange}
+            value={info.formData.firstName}
             validators={["required"]}
             errorMessages={["không để trống dòng này"]}
             autoFocus
@@ -68,6 +83,8 @@ const FormLogin = function FormLogin() {
             label="Tên *"
             name="lastName"
             autoComplete="lname"
+            onChange={handleChange}
+            value={info.formData.lastName}
             className={classes.textField}
             validators={["required"]}
             errorMessages={["không để trống dòng này"]}
@@ -81,6 +98,8 @@ const FormLogin = function FormLogin() {
     formData: {
       username: "",
       password: "",
+      lastName: "",
+      firstName: "",
     },
   });
   //handler xử lý sự kiện onchange
@@ -88,6 +107,7 @@ const FormLogin = function FormLogin() {
     const { formData } = info;
     formData[event.target.name] = event.target.value;
     setInfo({ formData });
+    console.log(formData);
   };
 
   //submit
@@ -103,13 +123,14 @@ const FormLogin = function FormLogin() {
         const authInfo = await userApi.getAuthInfo();
         console.log(authInfo);
         //from data
-        const fromData = {
-          ...info.formData,
+        const data = {
+          password: info.formData.password,
+          username: info.formData.username,
           grant_type: "password",
           ...authInfo,
         };
-        console.log(fromData);
-        const response = await userApi.login(fromData);
+        console.log(data);
+        const response = await userApi.login(data);
         //lưu vô cookie
         cookies.save("access-token", response.access_token);
         cookies.save("refresh_token", response.refresh_token);
@@ -117,14 +138,54 @@ const FormLogin = function FormLogin() {
         const actionResult = await dispatch(action);
         //update thong tin user
         unwrapResult(actionResult);
+        setAlert({
+          nameAlert: "Error",
+          message: "Sai email hoặc mật khẩu!!!",
+          open: true,
+        });
         //chuyen qua trang chu
         history.replace("/");
       } catch (error) {
-        setIsErr(true);
-        console.log(error);
+        setAlert({
+          nameAlert: "Error",
+          message: "Sai email hoặc mật khẩu!!!",
+          open: true,
+        });
       }
     };
-    fetchLogin();
+
+    //xư lý đăng ký
+    const fetchSignUp = async () => {
+      try {
+        //gọi từ axios
+        //from data
+        const data = new FormData();
+        data.append("first_name", info.formData.firstName);
+        data.append("last_name", info.formData.lastName);
+        data.append("password", info.formData.password);
+        data.append("username", info.formData.username);
+        const response = await userApi.signUp(data);
+        setAlert({
+          nameAlert: "success",
+          message: "tạo thành công tài khoản",
+          open: true,
+        });
+        setisSignIn(!isSignIn)
+
+      } catch (error) {
+        console.log(error.response.data)
+        setAlert({
+          nameAlert: "Error",
+          message: error.response.data.username,
+          open: true,
+        });
+      }
+    };
+    // eslint-disable-next-line no-lone-blocks
+    {
+      isSignIn ? fetchLogin() : fetchSignUp();
+    }
+
   };
   //
   const vali = ["required"];
@@ -198,11 +259,6 @@ const FormLogin = function FormLogin() {
             ),
           }}
         />
-        {issErr && (
-          <p style={{ textAlign: "center", color: "red" }}>
-            {"sai user name hoặc mật khẩu"}
-          </p>
-        )}
         <Button
           type="submit"
           classes={{
@@ -252,6 +308,14 @@ const FormLogin = function FormLogin() {
       <Box mt={9}>
         <Copyright />
       </Box>
+      {alert.nameAlert && (
+        <CustomizedSnackbars
+          open={alert.open}
+          handleClose={handleClose}
+          nameAlert={alert.nameAlert}
+          message={alert.message}
+        ></CustomizedSnackbars>
+      )}
     </div>
   );
 };
