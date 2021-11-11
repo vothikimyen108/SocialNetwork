@@ -29,3 +29,15 @@ code {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+.btnFacebook { 
+  width: 55px;
+  height:55px;  
+  background: #3b5998;
+  color:white;
+  border:0px transparent;  
+  text-align: center;
+  padding-left: 10px;
+  padding-top: 5px;
+  /* display: inline-block; */
+  border-radius: 50%;
+}
