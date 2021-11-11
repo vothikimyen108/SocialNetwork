@@ -9,6 +9,8 @@ import { ReactComponent as GG } from "../../../assets/Login/google.svg";
 import FormLoginStyles from "./FormLoginStyles";
 import userApi from "../../../api/useApi";
 import { useHistory } from "react-router-dom";
+//facebook
+import FacebookLogin from 'react-facebook-login'
 //alert
 import CustomizedSnackbars from "../../UI/CustomizedSnackbars";
 //cookies
@@ -51,6 +53,78 @@ const FormLogin = function FormLogin() {
     message: "",
     open: false,
   });
+  //đăng nhập
+  const fetchLogin = async (username, password) => {
+    try {
+      //gọi từ axios
+      // const response = await userApi.login()
+      const authInfo = await userApi.getAuthInfo();
+ 
+      //from data
+      const data = {
+        password: password,
+        username: username,
+        grant_type: "password",
+        ...authInfo,
+      };  
+      console.log(data);
+      const response = await userApi.login(data);
+      //lưu vô cookie
+      cookies.save("access-token", response.access_token);
+      cookies.save("refresh_token", response.refresh_token);
+      const action = getMe();
+      const actionResult = await dispatch(action);
+      //update thong tin user
+      unwrapResult(actionResult);
+      setAlert({
+        nameAlert: "Error",
+        message: "Sai email hoặc mật khẩu!!!",
+        open: true,
+      });
+      //chuyen qua trang chu
+      history.replace("/");
+    } catch (error) {
+      setAlert({
+        nameAlert: "Error",
+        message: "Sai email hoặc mật khẩu!!!",
+        open: true,
+      });
+    }
+  };
+
+
+  //login with fb
+  const responseFacebook = (response) => {
+    const data = new FormData();
+    data.append("first_name", response.name);
+    data.append("last_name", "");
+    data.append("password", response.id);
+    data.append("username", response.id);
+    let img =response.picture.data.url
+    const fetchSignUp = async () => {
+      try {
+        //gọi từ axios  
+        const response1 = await fetch(img);
+        // here image is url/location of image
+        const blob = await response1.blob();
+        const file = new File([blob], 'image.jpg', {type: blob.type});
+        data.append("avatar", file );
+        console.log(data.get("avatar") +"ủa1")
+        const response = await userApi.signUp(data);
+        setAlert({
+          nameAlert: "success",
+          message: "tạo thành công tài khoản",
+          open: true,
+        });
+        setisSignIn(!isSignIn);
+        return response;
+      } catch (error) {
+        console.log(error.response.data);
+        fetchLogin(data.get("username"), data.get("password"))
+      }
+    };
+    fetchSignUp()
+  };
   //if is insSing bằng true => mở đăng nhập
   const HandlerChange = () => {
     setisSignIn(!isSignIn);
@@ -116,43 +190,7 @@ const FormLogin = function FormLogin() {
     //gửi nguyên trang
     e.preventDefault();
     // xử lý đăng nhập
-    const fetchLogin = async () => {
-      try {
-        //gọi từ axios
-        // const response = await userApi.login()
-        const authInfo = await userApi.getAuthInfo();
-        console.log(authInfo);
-        //from data
-        const data = {
-          password: info.formData.password,
-          username: info.formData.username,
-          grant_type: "password",
-          ...authInfo,
-        };
-        console.log(data);
-        const response = await userApi.login(data);
-        //lưu vô cookie
-        cookies.save("access-token", response.access_token);
-        cookies.save("refresh_token", response.refresh_token);
-        const action = getMe();
-        const actionResult = await dispatch(action);
-        //update thong tin user
-        unwrapResult(actionResult);
-        setAlert({
-          nameAlert: "Error",
-          message: "Sai email hoặc mật khẩu!!!",
-          open: true,
-        });
-        //chuyen qua trang chu
-        history.replace("/");
-      } catch (error) {
-        setAlert({
-          nameAlert: "Error",
-          message: "Sai email hoặc mật khẩu!!!",
-          open: true,
-        });
-      }
-    };
+
 
     //xư lý đăng ký
     const fetchSignUp = async () => {
@@ -170,10 +208,9 @@ const FormLogin = function FormLogin() {
           message: "tạo thành công tài khoản",
           open: true,
         });
-        setisSignIn(!isSignIn)
-
+        setisSignIn(!isSignIn);
       } catch (error) {
-        console.log(error.response.data)
+        console.log(error.response.data);
         setAlert({
           nameAlert: "Error",
           message: error.response.data.username,
@@ -185,7 +222,6 @@ const FormLogin = function FormLogin() {
     {
       isSignIn ? fetchLogin() : fetchSignUp();
     }
-
   };
   //
   const vali = ["required"];
@@ -299,9 +335,17 @@ const FormLogin = function FormLogin() {
             </Fab>
           </Grid>
           <Grid item className={classes.avatar}>
-            <Fab color="primary" aria-label="add">
-              <FacebookIcon />
-            </Fab>
+            <FacebookLogin
+              appId="320267436154163"
+              autoLoad={true}
+              cssClass="btnFacebook"
+              fields="name,email,picture"
+              scope="public_profile,user_friends"
+              callback={responseFacebook}
+              // icon="fa-facebook"
+              icon={<FacebookIcon />}
+              textButton = "&nbsp;&nbsp;"    
+            />
           </Grid>
         </Grid>
       </ValidatorForm>
