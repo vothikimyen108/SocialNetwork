@@ -21,5 +21,9 @@ const userApi = {
     console.log(data);
     return axiosClientApp.post(url, data, { headers: headers });
   },
+  changeNewPass: (data) => {
+    const url = `/sendpass/send_pass/?email=${data}`;
+    return axiosClientApp.get(url);
+  },
 };
 export default userApi;

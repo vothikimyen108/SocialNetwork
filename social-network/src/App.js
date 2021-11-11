@@ -9,6 +9,7 @@ import NewsFeed from "./pages/NewsFeed";
 import PhotoDetail from "./pages/PhotoDetail";
 import DashboardLayoutRoute from "./components/Layout/DashboardLayoutRoute";
 import MembersPage from "./pages/MembersPage";
+import ForgotPass from "./pages/ForgotPass";
 //impor
 import { BrowserRouter as Router } from "react-router-dom";
 import SignUpForm from "./components/Auth/Register/SignUpForm";
@@ -71,6 +72,11 @@ function App() {
             exact
             component={MembersPage}
           ></DashboardLayoutRoute>
+          <LoginLayoutRoute
+            path="/forgotpass"
+            exact
+            component={ForgotPass}
+          ></LoginLayoutRoute>
           <Route path="/photo/:photoId" exact>
             <PhotoDetail></PhotoDetail>
           </Route>

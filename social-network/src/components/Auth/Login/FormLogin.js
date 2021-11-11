@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { InputAdornment, IconButton } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import { Button, Grid, Typography, Link, Box, Fab } from "@material-ui/core";
+import { Button, Grid, Typography, Box, Fab } from "@material-ui/core";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import { ReactComponent as GG } from "../../../assets/Login/google.svg";
 import FormLoginStyles from "./FormLoginStyles";
 import userApi from "../../../api/useApi";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 //google
-import GoogleLogin from 'react-google-login';
+import GoogleLogin from "react-google-login";
 //facebook
-import FacebookLogin from 'react-facebook-login'
+import FacebookLogin from "react-facebook-login";
 //alert
 import CustomizedSnackbars from "../../UI/CustomizedSnackbars";
 //cookies
@@ -61,14 +61,14 @@ const FormLogin = function FormLogin() {
       //gọi từ axios
       // const response = await userApi.login()
       const authInfo = await userApi.getAuthInfo();
- 
+
       //from data
       const data = {
         password: password,
         username: username,
         grant_type: "password",
         ...authInfo,
-      };  
+      };
       console.log(data);
       const response = await userApi.login(data);
       //lưu vô cookie
@@ -94,7 +94,6 @@ const FormLogin = function FormLogin() {
     }
   };
 
-
   //login with fb
   const responseFacebook = (response) => {
     const data = new FormData();
@@ -102,16 +101,16 @@ const FormLogin = function FormLogin() {
     data.append("last_name", "");
     data.append("password", response.id);
     data.append("username", response.id);
-    let img =response.picture.data.url
+    let img = response.picture.data.url;
     const fetchSignUp = async () => {
       try {
-        //gọi từ axios  
+        //gọi từ axios
         const response1 = await fetch(img);
         // here image is url/location of image
         const blob = await response1.blob();
-        const file = new File([blob], 'image.jpg', {type: blob.type});
-        data.append("avatar", file );
-        console.log(data.get("avatar") +"ủa1")
+        const file = new File([blob], "image.jpg", { type: blob.type });
+        data.append("avatar", file);
+        console.log(data.get("avatar") + "ủa1");
         const response = await userApi.signUp(data);
         setAlert({
           nameAlert: "success",
@@ -122,10 +121,10 @@ const FormLogin = function FormLogin() {
         return response;
       } catch (error) {
         console.log(error.response.data);
-        fetchLogin(data.get("username"), data.get("password"))
+        fetchLogin(data.get("username"), data.get("password"));
       }
     };
-    fetchSignUp()
+    fetchSignUp();
   };
   //if is insSing bằng true => mở đăng nhập
   const HandlerChange = () => {
@@ -140,18 +139,18 @@ const FormLogin = function FormLogin() {
     data.append("password", response.wa);
     data.append("username", response.mt.Xt);
     data.append("gamil", response.mt.Xt);
-    let img =response.mt.nK;
+    let img = response.mt.nK;
     const fetchSignUp = async () => {
       try {
-        //gọi từ axios  
+        //gọi từ axios
         const response1 = await fetch(img);
         // here image is url/location of image
         const blob = await response1.blob();
-        const file = new File([blob], 'image.jpg', {type: blob.type});
-        data.append("avatar", file );
-        console.log(data.get("avatar") +"ủa1")
+        const file = new File([blob], "image.jpg", { type: blob.type });
+        data.append("avatar", file);
+        console.log(data.get("avatar") + "ủa1");
         const response = await userApi.signUp(data);
-        fetchLogin(data.get("username"), data.get("password"))
+        fetchLogin(data.get("username"), data.get("password"));
         setAlert({
           nameAlert: "success",
           message: "đăng nhập thành công",
@@ -160,12 +159,11 @@ const FormLogin = function FormLogin() {
         setisSignIn(!isSignIn);
         return response;
       } catch (error) {
-        console.log(error.response.data);
-        fetchLogin(data.get("username"), data.get("password"))
+        fetchLogin(data.get("username"), data.get("password"));
       }
     };
-    fetchSignUp()
-  }
+    fetchSignUp();
+  };
   // đăng ký
   const signup = () => {
     return (
@@ -226,7 +224,7 @@ const FormLogin = function FormLogin() {
     // your submit logic
     //gửi nguyên trang
     e.preventDefault();
-   //xư lý đăng ký
+    //xư lý đăng ký
     const fetchSignUp = async () => {
       try {
         //gọi từ axios
@@ -348,7 +346,7 @@ const FormLogin = function FormLogin() {
         >
           {isSignIn && (
             <Grid item className={classes.avatar}>
-              <Link href="#" variant="body2">
+              <Link to="/forgotpass" variant="body2">
                 Quên mật khẩu?
               </Link>
             </Grid>
@@ -365,19 +363,24 @@ const FormLogin = function FormLogin() {
             <Typography color="textSecondary">Hoặc tiếp tục bằng</Typography>
           </Grid>
           <Grid item className={classes.avatar}>
-          <GoogleLogin
-            clientId="80202530466-8crlsiq64qp2n4r27g0ggelhqcevotb4.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy={'single_host_origin'}
-            render={renderProps => (
-              
-              <Fab aria-label="add" color="primary" onClick={renderProps.onClick} disabled={renderProps.disabled}>
-              <GG></GG>
-            </Fab>
-            )}
-          />,
+            <GoogleLogin
+              clientId="80202530466-8crlsiq64qp2n4r27g0ggelhqcevotb4.apps.googleusercontent.com"
+              buttonText="Login"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={"single_host_origin"}
+              render={(renderProps) => (
+                <Fab
+                  aria-label="add"
+                  color="primary"
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                >
+                  <GG></GG>
+                </Fab>
+              )}
+            />
+            ,
           </Grid>
           <Grid item className={classes.avatar}>
             <FacebookLogin
@@ -389,7 +392,7 @@ const FormLogin = function FormLogin() {
               callback={responseFacebook}
               // icon="fa-facebook"
               icon={<FacebookIcon />}
-              textButton = "&nbsp;&nbsp;"    
+              textButton="&nbsp;&nbsp;"
             />
           </Grid>
         </Grid>
