@@ -62,6 +62,19 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('oauth2_provider.contrib.rest_framework.OAuth2Authentication',
                                        'rest_framework.authentication.SessionAuthentication'),
 }
+
+#gửi mail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'socialnetwork1081111@gmail.com'
+EMAIL_HOST_PASSWORD = 'voyen24.12'
+EMAIL_PORT = 587
+
+
+
+
+
 # #chạy post man bỏ biến này ra
 OAUTH2_PROVIDER = {
     'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',

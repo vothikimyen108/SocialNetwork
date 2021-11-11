@@ -7,7 +7,7 @@ from django.urls import path, include
 
 router = routers.DefaultRouter()
 router.register("users", views.UserViewSet, 'user')
-
+router.register('sendpass', views.SendPass, basename='MyModel')
 
 urlpatterns = [
     path('', include(router.urls)),
