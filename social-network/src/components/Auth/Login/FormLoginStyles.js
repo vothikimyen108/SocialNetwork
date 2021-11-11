@@ -14,6 +14,20 @@ const FormLoginStyles = makeStyles((theme) => ({
       margin: theme.spacing(5, 12),
     },
   },
+  paperCenter: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      margin: theme.spacing(8, 4),
+    },
+    [theme.breakpoints.up("md")]: {
+      margin: theme.spacing(8, 4),
+    },
+    [theme.breakpoints.up("lg")]: {
+      margin: theme.spacing(5, 12),
+    },
+  },
   center: {
     display: "flex",
     flexDirection: "column",
