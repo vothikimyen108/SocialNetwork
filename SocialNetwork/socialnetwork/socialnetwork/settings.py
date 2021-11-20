@@ -77,12 +77,17 @@ EMAIL_PORT = 587
 
 # #chạy post man bỏ biến này ra
 OAUTH2_PROVIDER = {
-    'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
+    # 'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
 }
-#auth cua en
+# #auth cua en
+# OAUTH2_INFO = {
+#     "client_id": "Rslevl6tdCfaiXBFc4uOfpRbmK7ujcIiLrYbZezP",
+#     "client_serect": "h22iJQWVtoErUIJuE5SldfCEpL31Ve0HcGQC3fFUTlEkRy5GNDEknEXB8RbJJMuetTiqc0ho4qyBVk6YQu8uqoy2WD6TtLyTaU0hbezlcjl3ZSzYjBjlP3aPANCTYEBH"
+# }
+
 OAUTH2_INFO = {
-    "client_id": "Rslevl6tdCfaiXBFc4uOfpRbmK7ujcIiLrYbZezP",
-    "client_serect": "h22iJQWVtoErUIJuE5SldfCEpL31Ve0HcGQC3fFUTlEkRy5GNDEknEXB8RbJJMuetTiqc0ho4qyBVk6YQu8uqoy2WD6TtLyTaU0hbezlcjl3ZSzYjBjlP3aPANCTYEBH"
+    "client_id": "SdjaWhebwopbnuBepJHtL4skbLSEmg91MTt5GDd8",
+    "client_serect": "mJ24fLMQBKE7u3jySf2Gl3uXvXilbqRtOlAdpbzP2yj1UcxO2R0OVnWxjCVyvTV5Tx2GzNw0bh5zZcgZOoEzdyct2TkHBnjWFOuvTixKfLKSsnQXJBIxR4sNO9ILpgM7"
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -127,7 +132,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'socialnetwork',
         'USER': 'root',
-        'PASSWORD': '123456789',
+        'PASSWORD': '12345',
         'HOST': '',
     }
 }

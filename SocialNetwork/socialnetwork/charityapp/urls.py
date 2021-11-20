@@ -8,6 +8,10 @@ from django.urls import path, include
 router = routers.DefaultRouter()
 router.register("users", views.UserViewSet, 'user')
 router.register('sendpass', views.SendPass, basename='MyModel')
+router.register("post", views.PostView)
+router.register("auction_post", views.AuctionPostView)
+router.register("image", views.ImageView)
+router.register("product", views.ProductView)
 
 urlpatterns = [
     path('', include(router.urls)),
