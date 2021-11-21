@@ -4,34 +4,45 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from .BaseView import BaseView
-from ..models import Post, Tag, ImagePost
-from ..serializers import PostSerializer, PostCreateSerializer, ImageSerializer
+from ..models import Post, Tag, ImagePost, Like, Comment
+from ..serializers import PostSerializer, PostCreateSerializer, ImageSerializer, LikeSerializer, CommentSerializer, \
+    CommentCreateSerializer
 
 
 class PostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
     queryset = Post.objects.filter(active=True)
 
     def get_permissions(self):
-        if self.action in ['get_post']:
-            return [permissions.IsAuthenticated()]
-        return [permissions.AllowAny()]
+        if self.action in ['get-post']:
+            return [permissions.AllowAny()]
+        return [permissions.IsAuthenticated()]
 
     def get_serializer_class(self):
         if self.action in ['create_post']:
             return PostCreateSerializer
+        if self.action in ['like_or_unlike']:
+            return None
+        if self.action in ['add_comment']:
+            return CommentCreateSerializer
         else:
             return PostSerializer
 
-    @action(methods=['get'], detail=True, url_path="get_post")
+    @action(methods=['get'], detail=True, url_path="get-post")
     def get_post(self, request, pk):
         try:
             post = self.get_object()
         except Post.DoesNotExist:
             return Response({"Post": "Not found"}, status=status.HTTP_404_NOT_FOUND)
-        print("")
-        i = ImagePost.objects.get(pk=1)
-        print(i.image_url)
         serializer = PostSerializer(post)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(methods=['get'], detail=False, url_path="get-user-post")
+    def get_user_post(self, request):
+        try:
+            post = Post.objects.filter(active=True, user=request.user)
+        except Post.DoesNotExist:
+            return Response({"Post": "Not found"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = PostSerializer(post, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(methods=['post'], detail=False, url_path="create-post")
@@ -63,6 +74,61 @@ class PostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
         post.delete()
         return Response(data='Delete successfully', status=status.HTTP_200_OK)
 
+    @action(methods=['post'], detail=True, url_path="like-or-unlike")
+    def like_or_unlike(self, request, pk):
+        try:
+            post = self.get_object()
+        except Post.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        like, _ = Like.objects.get_or_create(user=request.user, post=post)
+        if _:
+            like.save()
+        else:
+            like.delete()
+        return Response(data=LikeSerializer(like).data, status=status.HTTP_200_OK)
+
+    @action(methods=['post'], detail=True, url_path="add-comment")
+    def add_comment(self, request, pk):
+        content = request.data.get('content')
+        images = request.FILES.get('images')
+        try:
+            post = self.get_object()
+        except Post.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        comment = Comment.objects.create(user=request.user, post=post, content=content, images=images)
+        return Response(data=CommentSerializer(comment).data, status=status.HTTP_200_OK)
+
+    @action(methods=['put'], detail=True, url_path="update-comment/(?P<comment_id>[0-9]+)")
+    def update_comment(self, request, pk, comment_id):
+        content = request.data.get('content')
+        try:
+            post = self.get_object()
+            comment = Comment.objects.get(user=request.user, post=post, pk=comment_id)
+        except Post.DoesNotExist and Comment.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        comment.content = content
+        comment.save()
+        return Response(data=CommentSerializer(comment).data, status=status.HTTP_200_OK)
+
+    @action(methods=['delete'], detail=True, url_path="delete-comment/(?P<comment_id>[0-9]+)")
+    def delete_comment(self, request, pk, comment_id):
+        try:
+            post = self.get_object()
+            comment = Comment.objects.get(user=request.user, post=post, pk=comment_id)
+        except Post.DoesNotExist and Comment.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        comment.delete()
+        return Response(data='Delete successfully', status=status.HTTP_200_OK)
+
+    @action(methods=['get'], detail=True, url_path="get-comment/(?P<comment_id>[0-9]+)")
+    def get_comment(self, request, pk, comment_id):
+        try:
+            post = self.get_object()
+            comment = Comment.objects.get(user=request.user, post=post, pk=comment_id)
+        except Post.DoesNotExist and Comment.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = CommentSerializer(comment)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 # PHẦN TEST
 
 class ImageView(viewsets.ViewSet, generics.CreateAPIView):
@@ -77,4 +143,3 @@ class ImageView(viewsets.ViewSet, generics.CreateAPIView):
         # img = ImagePost.objects.create(image_url=s, post=pp)
         # print(img.image_url)
         return Response(status=status.HTTP_200_OK)
-

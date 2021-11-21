@@ -111,3 +111,16 @@ class AuctionPostCreateSerializer(serializers.Serializer):
     tags = serializers.CharField(max_length=50, required=False, allow_null=True, allow_blank=False)
     product = serializers.IntegerField(min_value=1)
 
+
+class LikeSerializer(ModelSerializer):
+    user = UserSerializer(many=False)
+
+    class Meta:
+        model = Like
+        fields = ['user', 'post', 'created_date']
+
+
+class CommentCreateSerializer(serializers.Serializer):
+    content = serializers.CharField(allow_blank=True, max_length=None)
+    image = serializers.ImageField(max_length=None, allow_empty_file=True, allow_null=True)
+
