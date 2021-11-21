@@ -1,3 +1,5 @@
+import datetime
+
 import cloudinary
 import cloudinary_storage.storage
 from django.contrib.auth.models import AbstractUser
@@ -42,14 +44,14 @@ class Tag(models.Model):
 
 class ImagePost(models.Model):
     image_url = models.ImageField(upload_to='Post/%Y/%m', blank=False)
-    post = models.ForeignKey("Post", on_delete=models.CASCADE, null=True)
+    post = models.ForeignKey("Post", related_name='image', on_delete=models.CASCADE, null=True)
 
 
 class PostBase(models.Model):
     content = models.TextField(null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
-    tags = models.ManyToManyField(Tag, null=True)
+    tags = models.ManyToManyField(Tag, related_name='post', null=True)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     active = models.BooleanField(default=True)
 
@@ -67,9 +69,10 @@ class Post(PostBase):
 
 
 class Like(models.Model):
-    is_like = models.BooleanField(default=True)
-    post = models.ForeignKey(Post, null=True, blank=False, on_delete=models.SET_NULL)
-    user = models.ForeignKey(User, null=True, blank=False, on_delete=models.SET_NULL)
+    # is_like = models.BooleanField(default=True)
+    post = models.ForeignKey(Post, related_name='like', null=True, blank=False, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, related_name='like', null=True, blank=False, on_delete=models.SET_NULL)
+    created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ['post', 'user']
@@ -79,14 +82,14 @@ class Comment(models.Model):
     content = models.TextField(null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='comment', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='comment', on_delete=models.CASCADE)
     images = models.ImageField(upload_to='Comment/%Y/%m', blank=True)
 
 
 class Notification(models.Model):
     content = models.CharField(max_length=255, null=True, blank=True)
-    post = models.ForeignKey(Post, null=True, blank=False, on_delete=models.SET_NULL)
+    post = models.ForeignKey(Post, related_name='notification', null=True, blank=False, on_delete=models.SET_NULL)
     type = models.ForeignKey("TypeNotification", on_delete=models.SET_NULL, null=True)
     user_to = models.ForeignKey(User, related_name="user_to", on_delete=models.SET_NULL, null=True)
     user_from = models.ForeignKey(User, related_name="user_from", on_delete=models.SET_NULL, null=True)
@@ -113,28 +116,27 @@ class TypeNotification(models.Model):
 
 
 class Auction(models.Model):
-    auction_post = models.ForeignKey("AuctionPost", on_delete=models.SET_NULL, null=True)
-    start_date = models.DateTimeField(auto_now_add=True)
-    finish_date = models.DateTimeField(auto_now=True)
-    user_join = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    auction_post = models.ForeignKey("AuctionPost", related_name='auction', on_delete=models.SET_NULL, null=True)
+    user_join = models.ForeignKey(User, related_name='auction', on_delete=models.SET_NULL, null=True)
     user_win = models.BooleanField(default=False)
+    money_auctioned = models.IntegerField(default=0)
     active = models.BooleanField(default=True)
 
     class Meta:
         unique_together = ['auction_post', 'user_join']
 
-    def clean(self):
-        auction_post = Auction.objects.filter(auction_post__id=self.auction_post.id).first()
-        if auction_post is not None:
-            raise ValidationError({"auction_post": "Post nay da duoc dau gia !!"})
+    # def clean(self):
+    #     auction_post = Auction.objects.filter(auction_post__id=self.auction_post.id).first()
+    #     if auction_post is not None:
+    #         raise ValidationError({"auction_post": "Post nay da duoc dau gia !!"})
 
     def __str__(self):
-        return self.auction_post.product.name + str(self.start_date)
+        return self.auction_post.product.name + ' ' + str(self.start_date)
 
 
 class AuctionPost(models.Model):
-    post = models.OneToOneField(Post, on_delete=models.CASCADE, null=False)
-    product = models.OneToOneField("Product", on_delete=models.SET_NULL, null=True)
+    post = models.OneToOneField(Post, related_name='auction_post', on_delete=models.CASCADE, null=False)
+    product = models.OneToOneField("Product", related_name='auction_post', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.product.name
@@ -142,8 +144,10 @@ class AuctionPost(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=100, null=False)
+    description = models.TextField(max_length=None, blank=True, null=True)
     price_begin = models.DecimalField(max_digits=17, decimal_places=2)
     price_end = models.DecimalField(max_digits=17, decimal_places=2)
+    user = models.ForeignKey(User, related_name='product', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name
@@ -151,7 +155,7 @@ class Product(models.Model):
 
 class Pay(models.Model):
     is_pay = models.BooleanField(default=True)
-    auction = models.OneToOneField(Auction, on_delete=models.SET_NULL, null=True)
+    auction = models.OneToOneField(Auction, related_name='pay', on_delete=models.SET_NULL, null=True)
     pay_date = models.DateTimeField(auto_now_add=True)
     payment_term = models.DateTimeField(auto_now_add=True)
 
@@ -164,6 +168,7 @@ class TypeReport(models.Model):
 
 
 class Report(models.Model):
-    user_report = models.ManyToManyField(User, blank=False)
-    type = models.ForeignKey(TypeReport, on_delete=models.SET_NULL, null=True)
+    user_report = models.ManyToManyField(User, related_name='report', blank=False)
+    type = models.ForeignKey(TypeReport, related_name='report', on_delete=models.SET_NULL, null=True)
     reported_id = models.IntegerField(null=False, default=0)
+    created_date = models.DateTimeField(auto_now_add=True)

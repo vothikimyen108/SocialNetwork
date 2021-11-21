@@ -148,7 +148,6 @@ const FormLogin = function FormLogin() {
         const blob = await response1.blob();
         const file = new File([blob], "image.jpg", { type: blob.type });
         data.append("avatar", file);
-        console.log(data.get("avatar") + "ủa1");
         const response = await userApi.signUp(data);
         fetchLogin(data.get("username"), data.get("password"));
         setAlert({

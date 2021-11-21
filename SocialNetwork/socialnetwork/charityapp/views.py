@@ -1,5 +1,6 @@
 from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render
+from .view import *
 from rest_framework import viewsets, generics, status, permissions
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
@@ -22,7 +23,7 @@ from django.views import View
 
 
 def index(request):
-    return HttpResponse("Hello bạn Lộc!!")
+    return HttpResponse("Home town Cha cha cha")
 
 
 class TestView(View):
