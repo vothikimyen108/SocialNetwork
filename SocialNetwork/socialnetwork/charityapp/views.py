@@ -10,6 +10,8 @@ from django.conf import settings
 import random
 import string
 import json
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect
 #import email
 from django.core.mail import BadHeaderError, send_mail
 
@@ -78,3 +80,29 @@ class SendPass(viewsets.ViewSet,generics.RetrieveAPIView):
         letters = string.ascii_lowercase
         result_str = ''.join(random.choice(letters) for i in range(6))
         return result_str
+
+
+
+class Login(View):
+    def get(self, request):
+        return render(request, template_name='login.html')
+
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+        print('before login: username: ' + username, 'password: ' + password)
+        user = authenticate(request, username=username, password=password)
+        print(user)
+        if user is not None:
+            login(request, user)
+            next_to = request.GET.get("next")
+            if next_to is not None:
+                return redirect(next_to)
+            return redirect('/')
+        return redirect('/accounts/login')
+
+
+def logouts(request):
+    logout(request)
+
+    return redirect("/accounts/login")

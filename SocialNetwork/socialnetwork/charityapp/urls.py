@@ -16,5 +16,6 @@ router.register("product", views.ProductView)
 urlpatterns = [
     path('', include(router.urls)),
     path('oauth2-info/', views.AuthInfo.as_view()),
-    path('admin/', admin_site.urls)
+    path('admin/', admin_site.urls),
+    path('accounts/login/', views.Login.as_view())
 ]

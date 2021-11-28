@@ -141,7 +141,7 @@ class CharityAppAdminSite(admin.AdminSite):
 admin_site = CharityAppAdminSite('Bài tập lớn đề 6')
 
 # Phần register site admin page
-admin_site.register(User, UserAdmin)
+admin_site.register(User)
 admin_site.register(Post, PostAdmin)
 admin_site.register(Comment, CommentAdmin)
 admin_site.register(Like, LikeAdmin)
