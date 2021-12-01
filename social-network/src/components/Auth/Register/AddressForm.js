@@ -71,7 +71,7 @@ const AddressForm = (props) => {
     const fetchProvinces = async () => {
       try {
         //gọi từ axios
-        const response1 = await ProvincesApi.getDistricts(values.province);
+        const response1 = await ProvincesApi.getDistricts(values.province.code);
         const districtsData = [];
         for (let i = 0; i < response1.districts.length; i++) {
           districtsData.push({
@@ -90,7 +90,7 @@ const AddressForm = (props) => {
   useEffect(() => {
     const fetchProvinces = async () => {
       try {
-        const response = await ProvincesApi.getwards(values.district);
+        const response = await ProvincesApi.getwards(values.district.code);
         const wardsData = [];
         for (let i = 0; i < response.wards.length; i++) {
           wardsData.push({
@@ -128,7 +128,7 @@ const AddressForm = (props) => {
             errorMessages={["không để trống dòng này"]}
           >
             {provinces.map((item, id) => (
-              <MenuItem value={item.code} key={id}>
+              <MenuItem value={item} key={id}>
                 {item.name}
               </MenuItem>
             ))}
@@ -156,7 +156,7 @@ const AddressForm = (props) => {
             errorMessages={["không để trống dòng này"]}
           >
             {districts.map((item, id) => (
-              <MenuItem value={item.code} key={id}>
+              <MenuItem value={item} key={id}>
                 {item.name}
               </MenuItem>
             ))}

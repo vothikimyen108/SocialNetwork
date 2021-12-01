@@ -1,5 +1,5 @@
 import Grid from "@material-ui/core/Grid";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import LoginLayoutRoute from "./components/Layout/LoginLayoutRoute";
 import Login from "./components/Auth/Login/Login";
@@ -18,7 +18,23 @@ import DateFnsUtils from "@date-io/date-fns";
 //c
 import anh from "./assets/ImgProfile/196900128_337098007802082_959440697203316550_n (1).jpg";
 import Profile from "./pages/Profile";
+import { getMe } from "./store/userSlice";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchLogin = async () => {
+      try {
+        const action = getMe();
+        const actionResult = await dispatch(action);
+        unwrapResult(actionResult);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchLogin();
+  }, []);
   return (
     // <Layout>
     //   <Switch>
