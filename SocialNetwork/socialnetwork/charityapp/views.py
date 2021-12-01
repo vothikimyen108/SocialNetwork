@@ -66,7 +66,7 @@ class SendPass(viewsets.ViewSet,generics.RetrieveAPIView):
         email = self.request.query_params.get('email')
         new_pass = self.get_random_string()
         try:
-            user = User.objects.get(email=email, is_active=True)
+            user = User.objects.get(username=email)
             user.set_password(new_pass)
             user.save()
             message="New password is: " +new_pass

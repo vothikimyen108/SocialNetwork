@@ -120,8 +120,9 @@ export default function SignUpForm(props) {
   //sử dung dispatch redux
   const dispatch = useDispatch();
   const handleRegister = () => {
-    dispatch(uiActions.registered(true));
-  };
+    console.log(state);
+    //dispatch(uiActions.registered(true));
+  };;
   return (
     <ValidatorForm
       className={classes.form}

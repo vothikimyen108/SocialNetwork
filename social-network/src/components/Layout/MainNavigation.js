@@ -186,9 +186,10 @@ export default function MainNavigation() {
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <div className={classes.item}>
-                <Avatar className={classes.green}>
-                  {currentUser ? currentUser.avatar : "uar"}
-                </Avatar>
+                <Avatar
+                  className={classes.green}
+                  src={currentUser.avatar}
+                ></Avatar>
                 <h3>
                   {currentUser.first_name} {currentUser.last_name}
                 </h3>

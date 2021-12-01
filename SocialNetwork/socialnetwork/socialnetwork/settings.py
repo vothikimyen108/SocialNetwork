@@ -86,8 +86,8 @@ OAUTH2_PROVIDER = {
 # }
 
 OAUTH2_INFO = {
-    "client_id": "c2GUosbLI97iclDDOiBR6CZQBKgpS0OIWtqtOF8P",
-    "client_secret": "lBZ5XbCKXvupVTnr4Cqc8aYhk7ovhtjimjsw9BBsq4zB2t4BM4YUpcrAcS4oyqyB2h0R9PT9e6UgQl7z5HEv5QZHqsI6xVRHxeOlxIJT5FnAdIcPtE1qX1v2u7HZFVCg"
+    "client_id": "paqmI9h2jDRsXymvRUoaQDtSocolCk8HvEjukZGE",
+    "client_secret": "Gf26B3APWmjlP2wr53gFPtyJelKzicuvbaQh4Hfhkv0E6EUS7H7jmGV0yedJ5bJuZEzg5yWfBvcfyWNLCX5lf2FO0GGHwstOmBB85xQ98HstEwlAsvY4sKtHW1q2TQEl"
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
