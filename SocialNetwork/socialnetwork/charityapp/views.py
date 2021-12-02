@@ -1,4 +1,4 @@
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .view import *
 from rest_framework import viewsets, generics, status, permissions
@@ -12,12 +12,12 @@ import string
 import json
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
-#import email
+# import email
 from django.core.mail import BadHeaderError, send_mail
 
-#import serializer class
+# import serializer class
 from .serializers import UserSerializer
-#import model
+# import model
 from .models import User
 
 # Create your views here.
@@ -35,10 +35,14 @@ class TestView(View):
     def post(self, request):
         pass
 
-class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
+
+class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.UpdateAPIView):
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserSerializer
     parser_classes = [MultiPartParser, ]
+
+    def get_object(self):
+        return User.objects.get(user=self.request.user)
 
     def get_permissions(self):
         if self.action == 'get_current_user':
@@ -52,15 +56,14 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
                         status=status.HTTP_200_OK)
 
 
-
-
 # lấy thông tin AuthInfo
 class AuthInfo(APIView):
     def get(self, request):
         return Response(settings.OAUTH2_INFO, status=status.HTTP_200_OK)
 
-#gửi email
-class SendPass(viewsets.ViewSet,generics.RetrieveAPIView):
+
+# gửi email
+class SendPass(viewsets.ViewSet, generics.RetrieveAPIView):
     @action(methods=['get'], detail=False, url_path="send_pass")
     def send_pass(self, request):
         email = self.request.query_params.get('email')
@@ -69,18 +72,17 @@ class SendPass(viewsets.ViewSet,generics.RetrieveAPIView):
             user = User.objects.get(username=email)
             user.set_password(new_pass)
             user.save()
-            message="New password is: " +new_pass
-            #gủi về email
+            message = "New password is: " + new_pass
+            # gủi về email
             user.email_user(subject="[Charity Social Network An Tam][New PassWord]", message=message)
         except User.DoesNotExist:
-            return Response(data="Email is not in the system",status=status.HTTP_400_BAD_REQUEST)
-        return Response(data="Thành công",status=status.HTTP_200_OK)
+            return Response(data="Email is not in the system", status=status.HTTP_400_BAD_REQUEST)
+        return Response(data="Thành công", status=status.HTTP_200_OK)
 
     def get_random_string(self):
         letters = string.ascii_lowercase
         result_str = ''.join(random.choice(letters) for i in range(6))
         return result_str
-
 
 
 class Login(View):
