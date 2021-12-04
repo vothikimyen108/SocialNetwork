@@ -36,13 +36,14 @@ class TestView(View):
 
 class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
     queryset = User.objects.filter(is_active=True)
+    permission_classes = [permissions.IsAuthenticated, ]
     parser_classes = [MultiPartParser, ]
 
-    def get_permissions(self):
-        if self.action == 'get_current_user':
-            return [permissions.IsAuthenticated()]
-
-        return [permissions.AllowAny()]
+    # def get_permissions(self):
+    #     if self.action == 'get_current_user':
+    #         return [permissions.IsAuthenticated()]
+    #
+    #     return [permissions.AllowAny()]
 
     def get_serializer_class(self):
         if self.action in ['update_info_user']:
@@ -57,23 +58,26 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
 
     @action(methods=['put'], detail=True, url_path="update-info-user")
     def update_info_user(self, request, pk):
-        first_name = request.data.get('first_name')
-        last_name = request.data.get('last_name')
-        avatar = request.FILES.get('avatar')
-        address = request.data.get('address')
-        phone_number = request.data.get('phone_number')
-        email = request.data.get('email')
         user = self.get_object()
-        user.avatar = avatar
-        if email is not None:
-            user.email = email
+        if request.user != user:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         else:
-            user.email = ' '
-        user.first_name = first_name
-        user.last_name = last_name
-        user.address = address
-        user.phone_number = phone_number
-        user.save()
+            first_name = request.data.get('first_name')
+            last_name = request.data.get('last_name')
+            avatar = request.FILES.get('avatar')
+            address = request.data.get('address')
+            phone_number = request.data.get('phone_number')
+            email = request.data.get('email')
+            user.avatar = avatar
+            if email is not None:
+                user.email = email
+            else:
+                user.email = ' '
+            user.first_name = first_name
+            user.last_name = last_name
+            user.address = address
+            user.phone_number = phone_number
+            user.save()
         serializer = UpdateUserSerializer(user, many=False)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
