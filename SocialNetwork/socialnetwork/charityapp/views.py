@@ -64,8 +64,7 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
         phone_number = request.data.get('phone_number')
         email = request.data.get('email')
         user = self.get_object()
-        if avatar is not None:
-            user.avatar = avatar
+        user.avatar = avatar
         if email is not None:
             user.email = email
         else:
