@@ -33,6 +33,7 @@ class TestView(View):
     def post(self, request):
         pass
 
+
 class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
     queryset = User.objects.filter(is_active=True)
     parser_classes = [MultiPartParser, ]
