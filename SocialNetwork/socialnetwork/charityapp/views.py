@@ -16,7 +16,7 @@ from django.shortcuts import render, redirect
 from django.core.mail import BadHeaderError, send_mail
 
 #import serializer class
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UpdateUserSerializer
 #import model
 from .models import User
 
@@ -35,21 +35,53 @@ class TestView(View):
     def post(self, request):
         pass
 
+
 class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
     queryset = User.objects.filter(is_active=True)
-    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated, ]
     parser_classes = [MultiPartParser, ]
 
-    def get_permissions(self):
-        if self.action == 'get_current_user':
-            return [permissions.IsAuthenticated()]
+    # def get_permissions(self):
+    #     if self.action == 'get_current_user':
+    #         return [permissions.IsAuthenticated()]
+    #
+    #     return [permissions.AllowAny()]
 
-        return [permissions.AllowAny()]
+    def get_serializer_class(self):
+        if self.action in ['update_info_user']:
+            return UpdateUserSerializer
+        else:
+            return UserSerializer
 
     @action(methods=['get'], detail=False, url_path="current-user")
     def get_current_user(self, request):
         return Response(self.serializer_class(request.user, context={"request": request}).data,
                         status=status.HTTP_200_OK)
+
+    @action(methods=['put'], detail=True, url_path="update-info-user")
+    def update_info_user(self, request, pk):
+        user = self.get_object()
+        if request.user != user:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        else:
+            first_name = request.data.get('first_name')
+            last_name = request.data.get('last_name')
+            avatar = request.FILES.get('avatar')
+            address = request.data.get('address')
+            phone_number = request.data.get('phone_number')
+            email = request.data.get('email')
+            user.avatar = avatar
+            if email is not None:
+                user.email = email
+            else:
+                user.email = ' '
+            user.first_name = first_name
+            user.last_name = last_name
+            user.address = address
+            user.phone_number = phone_number
+            user.save()
+        serializer = UpdateUserSerializer(user, many=False)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 
@@ -60,7 +92,7 @@ class AuthInfo(APIView):
         return Response(settings.OAUTH2_INFO, status=status.HTTP_200_OK)
 
 #gửi email
-class SendPass(viewsets.ViewSet,generics.RetrieveAPIView):
+class SendPass(viewsets.ViewSet, generics.RetrieveAPIView):
     @action(methods=['get'], detail=False, url_path="send_pass")
     def send_pass(self, request):
         email = self.request.query_params.get('email')
