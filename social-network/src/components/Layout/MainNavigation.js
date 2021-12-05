@@ -6,13 +6,10 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
-
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Avatar from "@material-ui/core/Avatar";
 import NotificationsButon from "../Notifications/NotificationsButton";
@@ -23,7 +20,7 @@ import TranslateIcon from "@material-ui/icons/Translate";
 import StarsIcon from "@material-ui/icons/Stars";
 import MainNavigationStyles from "./MainNavigationStyles";
 import { useState } from "react";
-
+import { useSelector, useDispatch } from "react-redux";
 import NotificationList from "../Notifications/NotificationList";
 
 export default function MainNavigation() {
@@ -149,7 +146,9 @@ export default function MainNavigation() {
       <NotificationList></NotificationList>
     </Menu>
   );
-
+  //thong tin user
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   return (
     <div className={classes.main}>
       <div className={classes.grow}>
@@ -187,10 +186,13 @@ export default function MainNavigation() {
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <div className={classes.item}>
-                <Avatar className={classes.green}>
-                  <Anh></Anh>
-                </Avatar>
-                <h3> Yến</h3>
+                <Avatar
+                  className={classes.green}
+                  src={currentUser.avatar}
+                ></Avatar>
+                <h3>
+                  {currentUser.first_name} {currentUser.last_name}
+                </h3>
               </div>
               <div className={classes.item}>
                 <NotificationsButon

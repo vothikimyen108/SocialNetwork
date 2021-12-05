@@ -77,17 +77,17 @@ EMAIL_PORT = 587
 
 # #chạy post man bỏ biến này ra
 OAUTH2_PROVIDER = {
-    # 'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
+     'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
 }
-# #auth cua en
+#auth cua en
 # OAUTH2_INFO = {
-#     "client_id": "Rslevl6tdCfaiXBFc4uOfpRbmK7ujcIiLrYbZezP",
-#     "client_serect": "h22iJQWVtoErUIJuE5SldfCEpL31Ve0HcGQC3fFUTlEkRy5GNDEknEXB8RbJJMuetTiqc0ho4qyBVk6YQu8uqoy2WD6TtLyTaU0hbezlcjl3ZSzYjBjlP3aPANCTYEBH"
+#     "client_id": "akx1bLCdoAd2tOPQfnHlYQYnAPhONkCUlRn3kgYj",
+#     "client_secret": "p19XK5VlYN4EBYqkcVgGOwDDdtTiIILM2FIiH5DXbwkpjDUzMh3o5amdRgYqvTuT4uTShdR5VxPJC0uvceGLAim3ZsGP73CruyyTvcKJ60UPNBbwMnnvsuIzmxUsYqkC"
 # }
 
 OAUTH2_INFO = {
-    "client_id": "SdjaWhebwopbnuBepJHtL4skbLSEmg91MTt5GDd8",
-    "client_serect": "mJ24fLMQBKE7u3jySf2Gl3uXvXilbqRtOlAdpbzP2yj1UcxO2R0OVnWxjCVyvTV5Tx2GzNw0bh5zZcgZOoEzdyct2TkHBnjWFOuvTixKfLKSsnQXJBIxR4sNO9ILpgM7"
+    "client_id": "paqmI9h2jDRsXymvRUoaQDtSocolCk8HvEjukZGE",
+    "client_secret": "Gf26B3APWmjlP2wr53gFPtyJelKzicuvbaQh4Hfhkv0E6EUS7H7jmGV0yedJ5bJuZEzg5yWfBvcfyWNLCX5lf2FO0GGHwstOmBB85xQ98HstEwlAsvY4sKtHW1q2TQEl"
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -132,7 +132,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'socialnetwork',
         'USER': 'root',
-        'PASSWORD': '12345',
+        'PASSWORD': '123456789',
         'HOST': '',
     }
 }

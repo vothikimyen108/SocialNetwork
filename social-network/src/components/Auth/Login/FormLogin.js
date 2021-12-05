@@ -55,43 +55,48 @@ const FormLogin = function FormLogin() {
     message: "",
     open: false,
   });
-  //đăng nhập
-  const fetchLogin = async (username, password) => {
-    try {
-      //gọi từ axios
-      // const response = await userApi.login()
-      const authInfo = await userApi.getAuthInfo();
 
-      //from data
-      const data = {
-        password: password,
-        username: username,
-        grant_type: "password",
-        ...authInfo,
-      };
-      console.log(data);
-      const response = await userApi.login(data);
-      //lưu vô cookie
-      cookies.save("access-token", response.access_token);
-      cookies.save("refresh_token", response.refresh_token);
-      const action = getMe();
-      const actionResult = await dispatch(action);
-      //update thong tin user
-      unwrapResult(actionResult);
-      setAlert({
-        nameAlert: "Error",
-        message: "Sai email hoặc mật khẩu!!!",
-        open: true,
-      });
-      //chuyen qua trang chu
-      history.replace("/");
-    } catch (error) {
-      setAlert({
-        nameAlert: "Error",
-        message: "Sai email hoặc mật khẩu!!!",
-        open: true,
-      });
-    }
+  const callLogin = (username, password) => {
+    //đăng nhập
+    const fetchLogin = async () => {
+      try {
+        //gọi từ axios
+        // const response = await userApi.login()
+        const authInfo = await userApi.getAuthInfo();
+
+        //from data
+        const data = {
+          password: password,
+          username: username,
+          grant_type: "password",
+          ...authInfo,
+        };
+        console.log(data);
+        const response = await userApi.login(data);
+        //lưu vô cookie
+        cookies.save("access-token", response.access_token);
+        cookies.save("refresh_token", response.refresh_token);
+        const action = getMe();
+        const actionResult = await dispatch(action);
+        //update thong tin user
+        unwrapResult(actionResult);
+        setAlert({
+          nameAlert: "success",
+          message: "tạo thành công tài khoản",
+          open: true,
+        });
+        //chuyen qua trang chu
+        history.replace("/");
+      } catch (error) {
+        console.log(error.response);
+        setAlert({
+          nameAlert: "Error",
+          message: "Sai email hoặc mật khẩu!!!",
+          open: true,
+        });
+      }
+    };
+    fetchLogin();
   };
 
   //login with fb
@@ -110,8 +115,15 @@ const FormLogin = function FormLogin() {
         const blob = await response1.blob();
         const file = new File([blob], "image.jpg", { type: blob.type });
         data.append("avatar", file);
-        console.log(data.get("avatar") + "ủa1");
         const response = await userApi.signUp(data);
+        //lưu vô cookie
+        cookies.save("access-token", response.access_token);
+        cookies.save("refresh_token", response.refresh_token);
+        const action = getMe();
+        const actionResult = await dispatch(action);
+        //update thong tin user
+        unwrapResult(actionResult);
+        console.log(response + "token");
         setAlert({
           nameAlert: "success",
           message: "tạo thành công tài khoản",
@@ -120,8 +132,8 @@ const FormLogin = function FormLogin() {
         setisSignIn(!isSignIn);
         return response;
       } catch (error) {
-        console.log(error.response.data);
-        fetchLogin(data.get("username"), data.get("password"));
+        console.log(error.data);
+        callLogin(data.get("username"), data.get("password"));
       }
     };
     fetchSignUp();
@@ -149,7 +161,7 @@ const FormLogin = function FormLogin() {
         const file = new File([blob], "image.jpg", { type: blob.type });
         data.append("avatar", file);
         const response = await userApi.signUp(data);
-        fetchLogin(data.get("username"), data.get("password"));
+        callLogin(data.get("username"), data.get("password"));
         setAlert({
           nameAlert: "success",
           message: "đăng nhập thành công",
@@ -158,7 +170,7 @@ const FormLogin = function FormLogin() {
         setisSignIn(!isSignIn);
         return response;
       } catch (error) {
-        fetchLogin(data.get("username"), data.get("password"));
+        callLogin(data.get("username"), data.get("password"));
       }
     };
     fetchSignUp();
@@ -242,7 +254,6 @@ const FormLogin = function FormLogin() {
         setisSignIn(!isSignIn);
         return response;
       } catch (error) {
-        console.log(error.response.data);
         setAlert({
           nameAlert: "Error",
           message: error.response.data.username,
@@ -250,10 +261,8 @@ const FormLogin = function FormLogin() {
         });
       }
     };
-    // eslint-disable-next-line no-lone-blocks
-    {
-      isSignIn ? fetchLogin() : fetchSignUp();
-    }
+    if (isSignIn) callLogin(info.formData.username, info.formData.password);
+    else fetchSignUp();
   };
   //
   const vali = ["required"];
@@ -291,11 +300,11 @@ const FormLogin = function FormLogin() {
           autoFocus
           onChange={handleChange}
           value={info.formData.username}
-          validators={["required", "isEmail"]}
-          errorMessages={[
-            "không để trống dòng này",
-            "vui lòng nhập đúng email",
-          ]}
+          // validators={["required", "isEmail"]}
+          // errorMessages={[
+          //   "không để trống dòng này",
+          //   "vui lòng nhập đúng email",
+          // ]}
         />
         <TextValidator
           onChange={handleChange}
