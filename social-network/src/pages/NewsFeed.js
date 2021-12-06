@@ -122,7 +122,9 @@ const NewsFeed = () => {
   //dong formnews
   const classe = useStyles();
   // dùng redux uiSlice
-  const registerIsVisible = useSelector((state) => state.ui.registerIsVisible);
+  const registerIsVisible = useSelector(
+    (state) => state.user.currentUser.address,
+  );
   return (
     <div>
       <Grid item xs={12} sm={12} md={12} lg={9} className={classe.root}>

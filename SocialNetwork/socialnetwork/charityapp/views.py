@@ -75,6 +75,8 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
             address = request.data.get('address')
             phone_number = request.data.get('phone_number')
             email = request.data.get('email')
+            gender = request.data.get('gender')
+            birthday = request.data.get('birthday')
             user.avatar = avatar
             if email is not None:
                 user.email = email
@@ -90,7 +92,8 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
                 user.last_name = last_name
             else:
                 user.last_name = user.last_name
-
+            user.gender = gender
+            user.birthday = birthday
             user.address = address
             user.phone_number = phone_number
             user.save()
