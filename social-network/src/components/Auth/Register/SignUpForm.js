@@ -11,17 +11,32 @@ import UploadAvatar from "./UploadAvatar";
 import AddressForm from "./AddressForm";
 import PhoneNumber from "./PhoneNumberForm";
 import SlideShow from "../../UI/SlideShow";
+//alert
+import CustomizedSnackbars from "../../UI/CustomizedSnackbars";
 //css
 import SignUpFormStyles from "./SignUpFormStyles";
 import { ValidatorForm } from "react-material-ui-form-validator";
 //redux
 import { useDispatch } from "react-redux";
-import { uiActions } from "../../../store/ui-slice";
-
+import userApi from "../../../api/useApi";
+import { getMe } from "./../../../store/userSlice";
+import { unwrapResult } from "@reduxjs/toolkit";
 //khai báo các bước đăng ký hoàn tất
 const steps = ["chọn ảnh", "địa chỉ", "hoàn tất"];
 export default function SignUpForm(props) {
   const classes = SignUpFormStyles();
+  const [alert, setAlert] = useState({
+    nameAlert: "",
+    message: "",
+    open: false,
+  });
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setAlert({ nameAlert: "", message: "", open: false });
+  };
   const [activeStep, setActiveStep] = React.useState(0);
   const handleNext = () => {
     //nếu xảy ra lỗi thì k đi tới các bước khác
@@ -121,11 +136,47 @@ export default function SignUpForm(props) {
   let form = null;
   //sử dung dispatch redux
   const dispatch = useDispatch();
+
   const handleRegister = () => {
-    console.log(state);
-    console.log(avatarFile);
-    //dispatch(uiActions.registered(true));
-  };;
+    //đăng nhập
+    const fetchLogin = async () => {
+      try {
+        //gửi data
+        const formData = new FormData();
+        let address =
+          state.address +
+          ", " +
+          state.ward +
+          ", " +
+          state.district.name +
+          ", " +
+          state.province.name;
+        formData.append("avatar", avatarFile);
+        formData.append("address", address);
+        formData.append("phone_number", state.phone);
+        formData.append("gender", state.gender);
+        formData.append("birthday", state.birthday.toLocaleDateString("en-CA"));
+        const response = await userApi.updateUser(formData);
+        const action = getMe();
+        const actionResult = await dispatch(action);
+        unwrapResult(actionResult);
+        setAlert({
+          nameAlert: "success",
+          message: "tạo thành công tài khoản",
+          open: true,
+        });
+        return response;
+      } catch (error) {
+        setAlert({
+          nameAlert: "Error",
+          message: "Error!!!",
+          open: true,
+        });
+      }
+    };
+
+    if (activeStep === 3) fetchLogin();
+  };
   return (
     <ValidatorForm
       className={classes.form}
@@ -133,6 +184,7 @@ export default function SignUpForm(props) {
         form = r;
       }}
       instantValidate
+      onSubmit={handleRegister}
     >
       <Grid container className={classes.test}>
         <Grid item xs={12} sm={12} md={6}>
@@ -158,19 +210,9 @@ export default function SignUpForm(props) {
                     <Typography variant="h5" gutterBottom>
                       Cảm ơn bạn đã tham gia
                     </Typography>
-                    <Typography variant="subtitle1">
+                    <Typography variant="subtitle1" m={1}>
                       Chúc bạn có những trải nghiệm vui nhất{" "}
                     </Typography>
-                    <Button
-                      variant="contained"
-                      classes={{
-                        root: classes.submit, // class name, e.g. `classes-nesting-root-x`
-                        label: classes.label, // class name, e.g. `classes-nesting-label-x`
-                      }}
-                      onClick={handleRegister}
-                    >
-                      đi
-                    </Button>
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
@@ -209,6 +251,14 @@ export default function SignUpForm(props) {
           </main>
         </Grid>
       </Grid>
+      {alert.nameAlert && (
+        <CustomizedSnackbars
+          open={alert.open}
+          handleClose={handleClose}
+          nameAlert={alert.nameAlert}
+          message={alert.message}
+        ></CustomizedSnackbars>
+      )}
     </ValidatorForm>
   );
 }
