@@ -88,7 +88,7 @@ const FormLogin = function FormLogin() {
         //chuyen qua trang chu
         history.replace("/");
       } catch (error) {
-        console.log(error.response);
+        console.log(error);
         setAlert({
           nameAlert: "Error",
           message: "Sai email hoặc mật khẩu!!!",
@@ -132,7 +132,7 @@ const FormLogin = function FormLogin() {
         setisSignIn(!isSignIn);
         return response;
       } catch (error) {
-        console.log(error.data);
+        console.log(error.response);
         callLogin(data.get("username"), data.get("password"));
       }
     };

@@ -2,8 +2,9 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from .models import *
 
+
 class UserSerializer(ModelSerializer):
-    #avatar = SerializerMethodField()
+    # avatar = SerializerMethodField()
 
     def get_avatar(self, user):
         request = self.context['request']
@@ -17,7 +18,7 @@ class UserSerializer(ModelSerializer):
             return request.build_absolute_uri(path)
 
     def create(self, validated_data):
-        #avatar = validated_data.pop('avatar', None)
+        # avatar = validated_data.pop('avatar', None)
         user = User(**validated_data)
         user.set_password(user.password)
         user.save()
@@ -25,19 +26,20 @@ class UserSerializer(ModelSerializer):
         # user.save()
         return user
 
-    def update(self, instance, validated_data):
-        instance.username = validated_data.get('username', instance.username)
-        print('instance of username', instance.username)
-        return instance
-
-
     class Meta:
         model = User
         fields = ["id", "first_name", "last_name", "avatar",
-                  "username", "password", "email", "date_joined","address", "phone_number"]
+                  "username", "password", "email", "date_joined", "address", "phone_number"]
         extra_kwargs = {
             'password': {'write_only': 'true'}
         }
+
+
+class UpdateUserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "first_name", "last_name", "avatar",
+                  "email", "address", "phone_number"]
 
 
 class CommentSerializer(ModelSerializer):
@@ -129,4 +131,3 @@ class LikeSerializer(ModelSerializer):
 class CommentCreateSerializer(serializers.Serializer):
     content = serializers.CharField(allow_blank=True, max_length=None)
     image = serializers.ImageField(max_length=None, allow_empty_file=True, allow_null=True)
-
