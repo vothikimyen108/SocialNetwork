@@ -1,4 +1,4 @@
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .view import *
 from rest_framework import viewsets, generics, status, permissions
@@ -12,9 +12,13 @@ import string
 import json
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
-#import email
+# import email
 from django.core.mail import BadHeaderError, send_mail
 
+
+# import serializer class
+from .serializers import UserSerializer
+# import model
 #import serializer class
 from .serializers import UserSerializer, UpdateUserSerializer
 #import model
@@ -36,16 +40,17 @@ class TestView(View):
         pass
 
 
+
 class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
     queryset = User.objects.filter(is_active=True)
-    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = UserSerializer
     parser_classes = [MultiPartParser, ]
 
-    # def get_permissions(self):
-    #     if self.action == 'get_current_user':
-    #         return [permissions.IsAuthenticated()]
-    #
-    #     return [permissions.AllowAny()]
+    def get_permissions(self):
+        if self.action == 'get_current_user':
+            return [permissions.IsAuthenticated()]
+
+        return [permissions.AllowAny()]
 
     def get_serializer_class(self):
         if self.action in ['update_info_user']:
@@ -58,9 +63,9 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
         return Response(self.serializer_class(request.user, context={"request": request}).data,
                         status=status.HTTP_200_OK)
 
-    @action(methods=['put'], detail=True, url_path="update-info-user")
-    def update_info_user(self, request, pk):
-        user = self.get_object()
+    @action(methods=['PATCH'], detail=False, url_path="update-info-user")
+    def update_info_user(self, request):
+        user = self.request.user
         if request.user != user:
             return Response(status=status.HTTP_403_FORBIDDEN)
         else:
@@ -74,9 +79,18 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
             if email is not None:
                 user.email = email
             else:
-                user.email = ' '
-            user.first_name = first_name
-            user.last_name = last_name
+                user.email = user.email
+
+            if first_name is not None:
+                user.first_name = first_name
+            else:
+                user.first_name = user.first_name
+
+            if last_name is not None:
+                user.last_name = last_name
+            else:
+                user.last_name = user.last_name
+
             user.address = address
             user.phone_number = phone_number
             user.save()
@@ -85,13 +99,13 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
 
 
 
-
 # lấy thông tin AuthInfo
 class AuthInfo(APIView):
     def get(self, request):
         return Response(settings.OAUTH2_INFO, status=status.HTTP_200_OK)
 
-#gửi email
+
+
 class SendPass(viewsets.ViewSet, generics.RetrieveAPIView):
     @action(methods=['get'], detail=False, url_path="send_pass")
     def send_pass(self, request):
@@ -101,18 +115,17 @@ class SendPass(viewsets.ViewSet, generics.RetrieveAPIView):
             user = User.objects.get(username=email)
             user.set_password(new_pass)
             user.save()
-            message="New password is: " +new_pass
-            #gủi về email
+            message = "New password is: " + new_pass
+            # gủi về email
             user.email_user(subject="[Charity Social Network An Tam][New PassWord]", message=message)
         except User.DoesNotExist:
-            return Response(data="Email is not in the system",status=status.HTTP_400_BAD_REQUEST)
-        return Response(data="Thành công",status=status.HTTP_200_OK)
+            return Response(data="Email is not in the system", status=status.HTTP_400_BAD_REQUEST)
+        return Response(data="Thành công", status=status.HTTP_200_OK)
 
     def get_random_string(self):
         letters = string.ascii_lowercase
         result_str = ''.join(random.choice(letters) for i in range(6))
         return result_str
-
 
 
 class Login(View):

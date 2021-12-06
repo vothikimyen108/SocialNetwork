@@ -60,6 +60,7 @@ export default function SignUpForm(props) {
     phone,
     avatar,
   };
+  const [avatarFile, setAvatarFile] = useState("");
   //hàm xử lý onchange
   const handleChangeAll = (input) => (e) => {
     if (input === "birthday") {
@@ -72,6 +73,7 @@ export default function SignUpForm(props) {
           filesArray = URL.createObjectURL(e.target.files[i]);
         }
         setState({ ...state, [input]: filesArray });
+        setAvatarFile(e.target.files[0]);
         Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
       }
     } else if (input === "province") {
@@ -121,6 +123,7 @@ export default function SignUpForm(props) {
   const dispatch = useDispatch();
   const handleRegister = () => {
     console.log(state);
+    console.log(avatarFile);
     //dispatch(uiActions.registered(true));
   };;
   return (
