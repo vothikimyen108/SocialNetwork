@@ -64,8 +64,8 @@ const PhoneNumber = (props) => {
             validators={["required"]}
             errorMessages={["không để trống dòng này"]}
           >
-            <MenuItem value={"Nam"}>Nam</MenuItem>
-            <MenuItem value={"Nữ"}>Nữ</MenuItem>
+            <MenuItem value={"True"}>Nam</MenuItem>
+            <MenuItem value={"False"}>Nữ</MenuItem>
           </SelectValidator>
         </nav>
       </Grid>

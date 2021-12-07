@@ -29,7 +29,7 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "first_name", "last_name", "avatar",
-                  "username", "password", "email", "date_joined", "address", "phone_number"]
+                  "username", "password", "email", "date_joined", "address", "phone_number" ,"gender","birthday"]
         extra_kwargs = {
             'password': {'write_only': 'true'}
         }
@@ -39,7 +39,7 @@ class UpdateUserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "first_name", "last_name", "avatar",
-                  "email", "address", "phone_number"]
+                  "email", "address", "phone_number","gender","birthday"]
 
 
 class CommentSerializer(ModelSerializer):
