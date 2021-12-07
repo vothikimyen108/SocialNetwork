@@ -15,7 +15,6 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=10, null=True)
     gender = models.BooleanField(default=True)
     birthday = models.DateTimeField(null=True)
-
     # # def save(self, *args, **kwargs):
     #     self.set_password(self.password)
     #     super(User, self).save(*args, **kwargs)
