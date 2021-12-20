@@ -85,6 +85,7 @@ class PostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
             like.save()
         else:
             like.delete()
+        self.create_notification(1, request.user, post.user, post)
         return Response(data=LikeSerializer(like).data, status=status.HTTP_200_OK)
 
     @action(methods=['post'], detail=True, url_path="add-comment")
@@ -95,6 +96,7 @@ class PostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
             post = self.get_object()
         except Post.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        self.create_notification(2, request.user, post.user, post)
         comment = Comment.objects.create(user=request.user, post=post, content=content, images=images)
         return Response(data=CommentSerializer(comment).data, status=status.HTTP_200_OK)
 

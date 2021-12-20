@@ -47,7 +47,7 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
     parser_classes = [MultiPartParser, ]
 
     def get_permissions(self):
-        if self.action == 'get_current_user':
+        if self.action in ['get_current_user', 'update_info_user']:
             return [permissions.IsAuthenticated()]
 
         return [permissions.AllowAny()]
