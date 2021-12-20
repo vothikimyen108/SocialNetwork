@@ -1,3 +1,6 @@
+import json
+
+from django.forms import model_to_dict
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from .models import *
@@ -44,10 +47,30 @@ class UpdateUserSerializer(ModelSerializer):
 
 class CommentSerializer(ModelSerializer):
     user = UserSerializer(many=False)
+    notification = serializers.SerializerMethodField('get_notification')
 
     class Meta:
         model = Comment
-        fields = ['id', 'content', 'created_date', 'updated_date', 'user', 'post', 'images']
+        fields = ['id', 'content', 'created_date', 'updated_date', 'user', 'post', 'images', 'notification']
+
+    def get_notification(self, like):
+        notify = Notification.objects.filter(type__type__icontains='comment', post=like.post,
+                                          user_to=like.user, user_from=like.post.user,
+                                             active=True).latest('created_date')
+
+        dict_notice = model_to_dict(notify)
+        dict_user_from = model_to_dict(like.post.user)
+        dict_user_from['avatar'] = like.user.avatar.url
+        del dict_user_from['password']
+        del dict_user_from['last_login']
+        del dict_user_from['is_superuser']
+        del dict_user_from['is_staff']
+        del dict_user_from['is_active']
+        del dict_user_from['date_joined']
+        del dict_user_from['groups']
+        del dict_user_from['user_permissions']
+        dict_notice['user_from'] = dict_user_from
+        return dict_notice
 
 
 class TagSerializer(ModelSerializer):
@@ -120,14 +143,46 @@ class AuctionPostCreateSerializer(serializers.Serializer):
     product = serializers.IntegerField(min_value=1)
 
 
+class NotificationSerializer(ModelSerializer):
+    # user_from_name = serializers.SerializerMethodField('get_user_from')
+
+    class Meta:
+        model = Notification
+        fields = ['id', 'content', 'post', 'type', 'user_to', 'user_from', 'is_seen', 'created_date', 'active']
+
+    # def get_user_from(self, notification):
+    #     return '%s %s' % (notification.user_from.first_name, notification.user_from.last_name)
+
 class LikeSerializer(ModelSerializer):
     user = UserSerializer(many=False)
+    notification = serializers.SerializerMethodField('get_notification')
 
     class Meta:
         model = Like
-        fields = ['user', 'post', 'created_date']
+        fields = ['user', 'post', 'created_date', 'notification']
+
+    def get_notification(self, like):
+        notify = Notification.objects.get(type__type__icontains='like', post=like.post,
+                                          user_to=like.user, user_from=like.post.user, active=True)
+
+        dict_notice = model_to_dict(notify)
+        dict_user_from = model_to_dict(like.post.user)
+        dict_user_from['avatar'] = like.user.avatar.url
+        del dict_user_from['password']
+        del dict_user_from['last_login']
+        del dict_user_from['is_superuser']
+        del dict_user_from['is_staff']
+        del dict_user_from['is_active']
+        del dict_user_from['date_joined']
+        del dict_user_from['groups']
+        del dict_user_from['user_permissions']
+        dict_notice['user_from'] = dict_user_from
+        return dict_notice
+
+
 
 
 class CommentCreateSerializer(serializers.Serializer):
     content = serializers.CharField(allow_blank=True, max_length=None)
     image = serializers.ImageField(max_length=None, allow_empty_file=True, allow_null=True)
+
