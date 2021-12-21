@@ -12,10 +12,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
 import Button from "@material-ui/core/Button";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
+
 //css
 import NewsFormStyles from "./NewsFormStyles";
 //overlay
 import Modal from "../UI/Modal";
+import AddTag from "../Tags/AddTag";
 
 const NewsForm = (props) => {
   const fileInputRef = useRef();
@@ -167,6 +169,7 @@ const NewsForm = (props) => {
                 variant="outlined"
               />{" "}
             </div>
+            <AddTag></AddTag>
             {isOpenAuction && handlerAuction()}
             {isOpenImg && handlerImg()}
           </div>
