@@ -60,7 +60,10 @@ class CommentSerializer(ModelSerializer):
 
         dict_notice = model_to_dict(notify)
         dict_user_from = model_to_dict(like.post.user)
-        dict_user_from['avatar'] = like.user.avatar.url
+        if not like.user.avatar:
+            dict_user_from['avatar'] = ""
+        else:
+            dict_user_from['avatar'] = like.user.avatar.url
         del dict_user_from['password']
         del dict_user_from['last_login']
         del dict_user_from['is_superuser']
