@@ -3,7 +3,7 @@ import React from "react";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-
+import Chip from "@material-ui/core/Chip";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
@@ -127,16 +127,19 @@ export default function NewsItem(props) {
 
   const listTem = () => {
     var rows = [];
-    let totalItemNotShow = itemData.length - 4;
+    let totalItemNotShow = props.image.length - 4;
     let rowHeight = 400;
-    if (itemData.length > 4) {
+    if (props.image.length > 4) {
       rowHeight = 180;
       for (var i = 0; i < 4; i++) {
         if (i === 3) {
           rows.push(
-            <ImageListItem key={itemData[i].id} className={classes.imgItem}>
+            <ImageListItem key={props.image[i].id} className={classes.imgItem}>
               {" "}
-              <img src={itemData[i].img} alt={itemData[i].title} />{" "}
+              <img
+                src={props.image[i].image_url}
+                alt={props.image[i].title}
+              />{" "}
               <NavLink to="/photo/1">
                 <div className={classes.middle}>
                   <div>{totalItemNotShow}+</div>
@@ -146,9 +149,12 @@ export default function NewsItem(props) {
           );
         } else {
           rows.push(
-            <ImageListItem key={itemData[i].id} className={classes.imgItem}>
+            <ImageListItem key={props.image[i].id} className={classes.imgItem}>
               {" "}
-              <img src={itemData[i].img} alt={itemData[i].title} />{" "}
+              <img
+                src={props.image[i].image_url}
+                alt={props.image[i].title}
+              />{" "}
               <NavLink to="/photo/1">
                 <div className={classes.middle2}></div>
               </NavLink>
@@ -157,10 +163,10 @@ export default function NewsItem(props) {
         }
       }
     } else {
-      for (var j = 0; j < itemData.length; j++) {
+      for (var j = 0; j < props.image.length; j++) {
         rows.push(
-          <ImageListItem key={itemData[j].id}>
-            <img src={itemData[j].img} alt={itemData[j].title} />{" "}
+          <ImageListItem key={props.image[j].id}>
+            <img src={props.image[j].image_url} alt={props.image[j].title} />{" "}
             <NavLink to="/photo/1">
               <div className={classes.middle2}></div>
             </NavLink>
@@ -184,9 +190,22 @@ export default function NewsItem(props) {
     } else {
       if (total < 100) {
         return (
-          <span>
-            {content} <NavLink to="/news/:1">Xem thêm</NavLink>
-          </span>
+          <div>
+            <span>{content}</span>
+            <p>
+              {" "}
+              {props.tags.map((item) => (
+                <Chip
+                  variant="outlined"
+                  size="small"
+                  label={item.content}
+                  color="primary"
+                />
+              ))}
+            </p>
+
+            <NavLink to="/news/:1">Xem thêm</NavLink>
+          </div>
         );
       } else {
         return (
@@ -216,7 +235,7 @@ export default function NewsItem(props) {
           </IconButton>
         }
         title={props.name}
-        subheader="September 14, 2016"
+        subheader={props.date}
       />
       <CardContent>
         <Product isAution={props.isAution} isGo={props.isGo}></Product>
