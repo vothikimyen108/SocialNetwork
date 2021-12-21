@@ -94,10 +94,13 @@ class PostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
         images = request.FILES.get('images')
         try:
             post = self.get_object()
+            print("vvv")
         except Post.DoesNotExist:
+            print("aaa")
             return Response(status=status.HTTP_404_NOT_FOUND)
         self.create_notification(2, request.user, post.user, post)
         comment = Comment.objects.create(user=request.user, post=post, content=content, images=images)
+        print(comment)
         return Response(data=CommentSerializer(comment).data, status=status.HTTP_200_OK)
 
     @action(methods=['put'], detail=True, url_path="update-comment/(?P<comment_id>[0-9]+)")
