@@ -183,8 +183,6 @@ class LikeSerializer(ModelSerializer):
         return dict_notice
 
 
-
-
 class CommentCreateSerializer(serializers.Serializer):
     content = serializers.CharField(allow_blank=True, max_length=None)
     image = serializers.ImageField(max_length=None, allow_empty_file=True, allow_null=True)
