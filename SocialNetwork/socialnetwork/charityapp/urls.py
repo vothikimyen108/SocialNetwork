@@ -12,6 +12,7 @@ router.register("post", views.PostView)
 router.register("auction_post", views.AuctionPostView)
 router.register("image", views.ImageView)
 router.register("product", views.ProductView)
+router.register("tag", views.TagView)
 
 urlpatterns = [
     path('', include(router.urls)),
