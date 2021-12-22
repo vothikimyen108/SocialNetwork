@@ -57,6 +57,7 @@ class AddTag extends React.Component {
 
   render() {
     const { tags, suggestions } = this.state;
+    console.log(tags);
     return (
       <div className={styles.ReactTags}>
         <ReactTags
