@@ -96,6 +96,7 @@ class PostSerializer(ModelSerializer, serializers.Serializer):
     total_like = serializers.SerializerMethodField('get_total_like')
     image = ImageSerializer(many=True)
 
+
     class Meta:
         model = Post
         fields = ['id', 'content', 'created_date', 'updated_date', 'tags', 'user',
