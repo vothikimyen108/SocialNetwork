@@ -18,6 +18,8 @@ import NewsFormStyles from "./NewsFormStyles";
 //overlay
 import Modal from "../UI/Modal";
 import AddTag from "../Tags/AddTag";
+//api
+import tagApi from "../../api/tagApi";
 
 const NewsForm = (props) => {
   const fileInputRef = useRef();
@@ -25,6 +27,11 @@ const NewsForm = (props) => {
   const classes = NewsFormStyles();
   const [isOpenAuction, setIsOpenAuction] = useState(false);
   const [isOpenImg, setIsOpenImg] = useState(false);
+  const [tags, setTags] = useState([]);
+  const handleTags = (tags) => {
+    setTags({ tags: tags });
+  };
+
   const handlerAuction = () => {
     return (
       <Grid item xs={12} className={classes.auction}>
