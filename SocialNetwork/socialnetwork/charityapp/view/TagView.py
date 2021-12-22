@@ -16,6 +16,13 @@ class TagView(viewsets.ViewSet, generics.ListAPIView):
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()]
 
+    # @property
+    # def paginator(self):
+    #     self._paginator = super(TagView, self).paginator
+    #     if self.action == 'the_action_you_want_pagination_disabled':
+    #         self._paginator = None
+    #     return self._paginator
+
     # def list(self, request, *args, **kwargs):
     #     try:
     #         tag = Tag.objects.all()
