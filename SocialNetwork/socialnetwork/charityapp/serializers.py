@@ -95,11 +95,13 @@ class PostSerializer(ModelSerializer, serializers.Serializer):
     total_comment = serializers.SerializerMethodField('get_total_comment')
     total_like = serializers.SerializerMethodField('get_total_like')
     image = ImageSerializer(many=True)
+    product = serializers.SerializerMethodField('get_product')
+    auction = serializers.SerializerMethodField('get_auction')
 
     class Meta:
         model = Post
         fields = ['id', 'content', 'created_date', 'updated_date', 'tags', 'user',
-                  'active', 'total_like', 'total_comment', 'image', 'comment']
+                  'active', 'total_like', 'total_comment', 'image', 'comment', 'product', 'auction']
 
     def get_total_comment(self, post):
         count = Post.objects.filter(comment__post=post).count()
@@ -108,6 +110,51 @@ class PostSerializer(ModelSerializer, serializers.Serializer):
     def get_total_like(self, post):
         count = Post.objects.filter(like__post=post).count()
         return count
+
+    def get_product(self, post):
+        try:
+            auction_post = AuctionPost.objects.get(post=post)
+        except AuctionPost.DoesNotExist:
+            auction_post = None
+        if auction_post is not None:
+            product = Product.objects.get(pk=auction_post.product.id)
+            dict_product = model_to_dict(product)
+            return dict_product
+        else:
+            return None
+
+    def get_auction(self, post):
+        try:
+            auction_post = AuctionPost.objects.get(post=post)
+        except AuctionPost.DoesNotExist:
+            auction_post = None
+        try:
+            auctions = Auction.objects.filter(auction_post=auction_post)
+        except Auction.DoesNotExist:
+            auctions = None
+        if auctions.count() > 0:
+            user_join = []
+            for auction in auctions:
+                dict_user = model_to_dict(auction.user_join)
+                if not auction.user_join.avatar:
+                    dict_user['avatar'] = None
+                else:
+                    dict_user['avatar'] = auction.user_join.avatar.url
+                dict_auction = model_to_dict(auction)
+                dict_auction['user_join'] = dict_user
+                del dict_auction['auction_post']
+                del dict_user['password']
+                del dict_user['last_login']
+                del dict_user['is_superuser']
+                del dict_user['is_staff']
+                del dict_user['is_active']
+                del dict_user['date_joined']
+                del dict_user['groups']
+                del dict_user['user_permissions']
+                user_join.append(dict_auction)
+            return user_join
+        else:
+            return None
 
 
 class ProductSerializer(ModelSerializer):
@@ -172,6 +219,7 @@ class NotificationViewSerializer(ModelSerializer):
         fields = NotificationSerializer.Meta.fields
 
 
+
 class LikeSerializer(ModelSerializer):
     user = UserSerializer(many=False)
     notification = serializers.SerializerMethodField('get_notification')
@@ -186,7 +234,10 @@ class LikeSerializer(ModelSerializer):
 
         dict_notice = model_to_dict(notify)
         dict_user_from = model_to_dict(like.post.user)
-        dict_user_from['avatar'] = like.user.avatar.url
+        if not like.user.avatar:
+            dict_user_from['avatar'] = None
+        else:
+            dict_user_from['avatar'] = like.user.avatar.url
         del dict_user_from['password']
         del dict_user_from['last_login']
         del dict_user_from['is_superuser']

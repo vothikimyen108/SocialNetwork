@@ -16,6 +16,7 @@ router.register("tag", views.TagView)
 router.register("notification",views.NotificationViewSet)
 
 
+
 urlpatterns = [
     path('', include(router.urls)),
     path('oauth2-info/', views.AuthInfo.as_view()),

@@ -23,6 +23,9 @@ class User(AbstractUser):
 class Tag(models.Model):
     content = models.CharField(max_length=50, null=False, unique=True)
 
+    class Meta:
+        ordering = ['-id']
+
     def __str__(self):
         return self.content
 
@@ -116,7 +119,7 @@ class Auction(models.Model):
     #         raise ValidationError({"auction_post": "Post nay da duoc dau gia !!"})
 
     def __str__(self):
-        return self.auction_post.product.name + ' ' + str(self.start_date)
+        return self.auction_post.product.name
 
 
 class AuctionPost(models.Model):

@@ -1,3 +1,4 @@
+from django.core import paginator
 from rest_framework import generics, viewsets, permissions, status
 from rest_framework.response import Response
 
@@ -10,17 +11,10 @@ class TagView(viewsets.ViewSet, generics.ListAPIView):
     serializer_class = TagSerializer
     pagination_class = None
 
+
     def get_permissions(self):
         if self.action in ['create']:
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()]
 
-    # def list(self, request, *args, **kwargs):
-    #     try:
-    #         tag = Tag.objects.all()
-    #         page = self.paginate_queryset(tag)
-    #     except Tag.DoesNotExist:
-    #         return Response(status=status.HTTP_400_BAD_REQUEST)
-    #     if page is not None:
-    #         serializer = TagSerializer(page, many=True)
-    #     return self.get_paginated_response(serializer.data)
+
