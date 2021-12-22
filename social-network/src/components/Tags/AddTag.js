@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { WithContext as ReactTags } from "react-tag-input";
 import styles from "./ReactTags.module.css";
-
+import tagApi from "../../api/tagApi";
 const KeyCodes = {
   comma: 188,
   enter: [10, 13],
@@ -19,18 +19,37 @@ class AddTag extends React.Component {
         { id: "Thailand", text: "Thailand" },
         { id: "India", text: "India" },
       ],
-      suggestions: [
-        { id: "USA", text: "USA" },
-        { id: "Germany", text: "Germany" },
-        { id: "Austria", text: "Austria" },
-        { id: "Costa Rica", text: "Costa Rica" },
-        { id: "Sri Lanka", text: "Sri Lanka" },
-        { id: "Thailand", text: "Thailand" },
-      ],
+      suggestions: [],
     };
     this.handleDelete = this.handleDelete.bind(this);
     this.handleAddition = this.handleAddition.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
+  }
+
+  componentWillMount() {
+    this.renderMyData();
+  }
+
+  renderMyData() {
+    const fetchCallAPi = async () => {
+      try {
+        //gọi từ axios
+        const response = await tagApi.getTags();
+
+        const newsTag = [];
+        for (let variable of response) {
+          newsTag.push({ id: variable.content, text: variable.content });
+        }
+        this.setState({
+          suggestions: newsTag,
+        });
+
+        return response;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCallAPi();
   }
 
   handleDelete(i) {
@@ -57,7 +76,6 @@ class AddTag extends React.Component {
 
   render() {
     const { tags, suggestions } = this.state;
-    console.log(tags);
     return (
       <div className={styles.ReactTags}>
         <ReactTags
