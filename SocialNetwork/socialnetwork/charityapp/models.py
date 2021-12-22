@@ -23,6 +23,9 @@ class User(AbstractUser):
 class Tag(models.Model):
     content = models.CharField(max_length=50, null=False, unique=True)
 
+    class Meta:
+        ordering = ['-id']
+
     def __str__(self):
         return self.content
 
