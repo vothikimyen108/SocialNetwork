@@ -58,7 +58,7 @@ const NewsFeed = () => {
   );
 
   //khai báo form ban đầu rỗng
-  const pages = 1;
+  const [pages, setPages] = useState(1);
 
   const {
     sendRequest,
@@ -70,6 +70,11 @@ const NewsFeed = () => {
   useEffect(() => {
     sendRequest(pages);
   }, [pages]);
+
+  const onPageChange = (page) => {
+    setPages(page);
+    console.log(page);
+  };
 
   if (status === "pending") {
     return (
@@ -99,7 +104,10 @@ const NewsFeed = () => {
             <NewsList data={item.results} open={handlerIsOpenPhoto}></NewsList>
           </Grid>
           <Grid item xs={12}>
-            <BasicPagination></BasicPagination>
+            <BasicPagination
+              count={Math.ceil(item.count / 30)}
+              onPageChange={onPageChange}
+            ></BasicPagination>
           </Grid>
         </Grid>
       </Grid>

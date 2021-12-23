@@ -28,7 +28,7 @@ const NewsList = (props) => {
             isExpanded={true}
             isShowImg={true}
             tags={item.tags}
-            date={moment(item.created_date).startOf("hour").fromNow()}
+            date={moment(item.created_date).startOf("minute").fromNow()}
             open={props.open}
             image={item.image}
             isPageDetail={false}
