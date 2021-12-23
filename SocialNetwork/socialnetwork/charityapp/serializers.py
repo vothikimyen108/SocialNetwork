@@ -32,7 +32,7 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "first_name", "last_name", "avatar",
-                  "username", "password", "email", "date_joined", "address", "phone_number" ,"gender","birthday"]
+                  "username", "password", "email", "date_joined", "address", "phone_number", "gender", "birthday"]
         extra_kwargs = {
             'password': {'write_only': 'true'}
         }
@@ -42,7 +42,7 @@ class UpdateUserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "first_name", "last_name", "avatar",
-                  "email", "address", "phone_number","gender","birthday"]
+                  "email", "address", "phone_number", "gender", "birthday"]
 
 
 class CommentSerializer(ModelSerializer):
@@ -55,7 +55,7 @@ class CommentSerializer(ModelSerializer):
 
     def get_notification(self, like):
         notify = Notification.objects.filter(type__type__icontains='comment', post=like.post,
-                                          user_to=like.user, user_from=like.post.user,
+                                             user_to=like.user, user_from=like.post.user,
                                              active=True).latest('created_date')
 
         dict_notice = model_to_dict(notify)
@@ -192,24 +192,26 @@ class AuctionPostCreateSerializer(serializers.Serializer):
     tags = serializers.CharField(max_length=50, required=False, allow_null=True, allow_blank=False)
     product = serializers.IntegerField(min_value=1)
 
-class UserViewInlineSerializer(UserSerializer):
 
+class UserViewInlineSerializer(UserSerializer):
     class Meta:
         model = UserSerializer.Meta.model
         fields = ["id", "first_name", "last_name", "avatar"]
 
+
 class TypeNotificationSerializer(ModelSerializer):
     class Meta:
         model = TypeNotification
-        fields = ["id","type"]
+        fields = ["id", "type"]
+
 
 class NotificationSerializer(ModelSerializer):
     class Meta:
         model = Notification
         fields = ['id', 'content', 'post', 'type', 'user_to', 'user_from', 'is_seen', 'created_date', 'active']
 
+
 class NotificationViewSerializer(ModelSerializer):
-    # user_from_name = serializers.SerializerMethodField('get_user_from')
     user_from = UserViewInlineSerializer()
     user_to = UserViewInlineSerializer()
     type = TypeNotificationSerializer()
@@ -217,7 +219,6 @@ class NotificationViewSerializer(ModelSerializer):
     class Meta:
         model = Notification
         fields = NotificationSerializer.Meta.fields
-
 
 
 class LikeSerializer(ModelSerializer):
@@ -254,3 +255,14 @@ class CommentCreateSerializer(serializers.Serializer):
     content = serializers.CharField(allow_blank=True, max_length=None)
     image = serializers.ImageField(max_length=None, allow_empty_file=True, allow_null=True)
 
+
+class ReportSerializer(ModelSerializer):
+    class Meta:
+        model = Report
+        fields = ['id', 'user_report', 'type', 'reported_id', 'created_date']
+
+
+class TypeReportSerializer(ModelSerializer):
+    class Meta:
+        model = TypeReport
+        fields = ['id', 'type']

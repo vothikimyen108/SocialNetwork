@@ -18,3 +18,9 @@ class TagView(viewsets.ViewSet, generics.ListAPIView):
         return [permissions.IsAuthenticated()]
 
 
+# @property
+# def paginator(self):
+#     self._paginator = super(NotesViewSet, self).paginator
+#     if self.action == 'the_action_you_want_pagination_disabled':
+#         self._paginator = None
+#     return self._paginator
