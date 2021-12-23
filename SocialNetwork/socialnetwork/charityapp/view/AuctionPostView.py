@@ -37,20 +37,35 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
         content = request.data.get('content')
         tags = request.data.getlist("tags")
         images = request.FILES.getlist('images')
-        product_id = request.data.get('product')
-        try:
-            product_id = int(product_id)
-        except:
-            raise ValidationError('Product must be a number')
-        try:
-            product = Product.objects.get(pk=product_id)
-        except Product.DoesNotExist:
-            return Response(data='Product does not exist', status=status.HTTP_400_BAD_REQUEST)
-        product_auctioned = AuctionPost.objects.filter(product=product).count()
-        if product_auctioned > 0:
-            return Response(data='This Product has been auctioned ', status=status.HTTP_400_BAD_REQUEST)
+        # product_id = request.data.get('product')
+        # try:
+        #     product_id = int(product_id)
+        # except:
+        #     raise ValidationError('Product must be a number')
+        # try:
+        #     product = Product.objects.get(pk=product_id)
+        # except Product.DoesNotExist:
+        #     return Response(data='Product does not exist', status=status.HTTP_400_BAD_REQUEST)
+
+        # create product
+
         post = self.create_post_base(content, tags, images, request.user)
-        product = Product.objects.get(pk=product_id)
+        name = request.data.get('name')
+        description = request.data.get('description')
+        price_begin = request.data.get('price')
+        try:
+            price_begin = int(price_begin)
+        except:
+            return Response(data='Price must be a number', status=status.HTTP_400_BAD_REQUEST)
+        product = Product.objects.create(name=name, description=description, price_begin=price_begin,
+                                         price_end=price_begin, user=request.user)
+
+        # product_auctioned = AuctionPost.objects.filter(product=product).count()
+        # if product_auctioned > 0:
+        #     return Response(data='This Product has been auctioned ', status=status.HTTP_400_BAD_REQUEST)
+
+
+        # product = Product.objects.get(pk=product_id)
         auction_post = AuctionPost.objects.create(post=post, product=product)
         serializer = AuctionPostSerializer(auction_post, many=False)
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)
