@@ -15,11 +15,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BasicPagination() {
+export default function BasicPagination(props) {
+  const [page, setPage] = React.useState(1);
+  const handleChange = (event, value) => {
+    setPage(value);
+    props.onPageChange(value);
+    console.log(page);
+  };
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Pagination count={5} color="primary" size="large" />
+      <Pagination
+        onChange={handleChange}
+        count={props.count}
+        color="primary"
+        size="large"
+      />
     </div>
   );
 }

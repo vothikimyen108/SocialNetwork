@@ -15,10 +15,7 @@ class AddTag extends React.Component {
     super(props);
 
     this.state = {
-      tags: [
-        { id: "Thailand", text: "Thailand" },
-        { id: "India", text: "India" },
-      ],
+      tags: [],
       suggestions: [],
     };
     this.handleDelete = this.handleDelete.bind(this);

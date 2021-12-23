@@ -29,7 +29,8 @@ const NewsForm = (props) => {
   const [isOpenImg, setIsOpenImg] = useState(false);
   const [tags, setTags] = useState([]);
   const changeTags = (tags) => {
-    setTags({ tags: tags });
+    setTags(tags);
+    console.log(tags);
   };
   const handlerAuction = () => {
     return (
@@ -139,6 +140,9 @@ const NewsForm = (props) => {
   // //xóa
   const handlerRemove = (id) => {
     console.log(imagesFile[0]);
+    setImagesFile((oldState) =>
+      oldState.filter((item) => item !== oldState[id]),
+    );
     setImages((oldState) => oldState.filter((item) => item !== oldState[id]));
   };
 
@@ -181,8 +185,8 @@ const NewsForm = (props) => {
         }
         if (tags.length > 0) {
           tags.forEach((item) => {
-            formData.append("tags", item);
-            console.log(item)
+            formData.append("tags", item.text);
+            console.log(item.text);
           });
         }
         formData.append("content", info.formData.content);
