@@ -13,7 +13,9 @@ router.register("auction_post", views.AuctionPostView)
 router.register("image", views.ImageView)
 router.register("product", views.ProductView)
 router.register("tag", views.TagView)
-router.register("notification",views.NotificationViewSet)
+router.register("notification", views.NotificationViewSet)
+router.register("report", views.ReportView)
+router.register("type_report", views.TypeReportView)
 
 
 
