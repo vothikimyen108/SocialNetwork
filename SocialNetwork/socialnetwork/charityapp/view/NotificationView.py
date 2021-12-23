@@ -1,22 +1,23 @@
-from rest_framework import viewsets, generics, status, permissions
+from rest_framework import viewsets, generics, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from ..models import Notification
-from ..serializers import NotificationSerializer
+from ..serializers import Notification, NotificationViewSerializer
 
 
-class NotificationView(viewsets.ViewSet, generics.ListAPIView):
+class NotificationViewSet(viewsets.ViewSet, generics.ListAPIView, generics.DestroyAPIView):
     queryset = Notification.objects.all()
-    serializer_class = NotificationSerializer
     permission_classes = [permissions.IsAuthenticated, ]
-    paginator = None
+    serializer_class = NotificationViewSerializer
 
-    @action(methods=['get'], detail=False, url_path="get-notification")
-    def get_notification(self, request):
-        try:
-            query = Notification.objects.filter(user_to=request.user, active=True)
-        except Notification.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = NotificationSerializer(query, many=True)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+    def get_queryset(self):
+        if self.action.__eq__("list"):
+            return Notification.objects.filter(user_to=self.request.user,active=True)
+        return self.queryset
+
+    @action(methods=["GET"], detail=True, url_path="seen")
+    def update_status_notification(self, request, pk, **kwargs):
+        instance = self.get_object()
+        instance.is_seen = True
+        instance.save()
+        return Response(status=status.HTTP_200_OK)

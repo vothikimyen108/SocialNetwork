@@ -12,10 +12,14 @@ import MenuItem from "@material-ui/core/MenuItem";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
 import Button from "@material-ui/core/Button";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
+
 //css
 import NewsFormStyles from "./NewsFormStyles";
 //overlay
 import Modal from "../UI/Modal";
+import AddTag from "../Tags/AddTag";
+//api
+import tagApi from "../../api/tagApi";
 
 const NewsForm = (props) => {
   const fileInputRef = useRef();
@@ -23,6 +27,11 @@ const NewsForm = (props) => {
   const classes = NewsFormStyles();
   const [isOpenAuction, setIsOpenAuction] = useState(false);
   const [isOpenImg, setIsOpenImg] = useState(false);
+  const [tags, setTags] = useState([]);
+  const handleTags = (tags) => {
+    setTags({ tags: tags });
+  };
+
   const handlerAuction = () => {
     return (
       <Grid item xs={12} className={classes.auction}>
@@ -167,6 +176,7 @@ const NewsForm = (props) => {
                 variant="outlined"
               />{" "}
             </div>
+            <AddTag></AddTag>
             {isOpenAuction && handlerAuction()}
             {isOpenImg && handlerImg()}
           </div>

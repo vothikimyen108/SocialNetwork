@@ -76,15 +76,17 @@ EMAIL_PORT = 587
 
 
 # #chạy post man bỏ biến này ra
-# OAUTH2_PROVIDER = {
-#      'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
-# }
-#auth cua en
+OAUTH2_PROVIDER = {
+     'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
+}
+
+
 # OAUTH2_INFO = {
 #     "client_id": "akx1bLCdoAd2tOPQfnHlYQYnAPhONkCUlRn3kgYj",
 #     "client_secret": "p19XK5VlYN4EBYqkcVgGOwDDdtTiIILM2FIiH5DXbwkpjDUzMh3o5amdRgYqvTuT4uTShdR5VxPJC0uvceGLAim3ZsGP73CruyyTvcKJ60UPNBbwMnnvsuIzmxUsYqkC"
 # }
 
+#auth cua en
 OAUTH2_INFO = {
     "client_id": "paqmI9h2jDRsXymvRUoaQDtSocolCk8HvEjukZGE",
     "client_secret": "Gf26B3APWmjlP2wr53gFPtyJelKzicuvbaQh4Hfhkv0E6EUS7H7jmGV0yedJ5bJuZEzg5yWfBvcfyWNLCX5lf2FO0GGHwstOmBB85xQ98HstEwlAsvY4sKtHW1q2TQEl"
@@ -132,7 +134,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'socialnetwork',
         'USER': 'root',
-        'PASSWORD': '12345',
+        'PASSWORD': '123456789',
         'HOST': '',
     }
 }

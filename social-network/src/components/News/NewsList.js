@@ -4,6 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 import NewsListStyles from "./NewsListStyles";
+import moment from "moment";
 const NewsList = (props) => {
   //css
   const classes = NewsListStyles();
@@ -19,14 +20,17 @@ const NewsList = (props) => {
             isGo={true}
             className={classes.border}
             avatar={item.avatar}
-            name={item.name}
+            name={item.user.first_name + item.user.last_name}
             content={item.content}
-            totalLike={item.totalLike}
+            totalLike={item.total_like}
             totalShare={item.totalShare}
-            totalComment={item.totalComment}
+            totalComment={item.total_comment}
             isExpanded={true}
             isShowImg={true}
+            tags={item.tags}
+            date={moment(item.created_date).startOf("hour").fromNow()}
             open={props.open}
+            image={item.image}
             isPageDetail={false}
           ></NewsItem>
         </div>

@@ -192,16 +192,32 @@ class AuctionPostCreateSerializer(serializers.Serializer):
     tags = serializers.CharField(max_length=50, required=False, allow_null=True, allow_blank=False)
     product = serializers.IntegerField(min_value=1)
 
+class UserViewInlineSerializer(UserSerializer):
+
+    class Meta:
+        model = UserSerializer.Meta.model
+        fields = ["id", "first_name", "last_name", "avatar"]
+
+class TypeNotificationSerializer(ModelSerializer):
+    class Meta:
+        model = TypeNotification
+        fields = ["id","type"]
 
 class NotificationSerializer(ModelSerializer):
-    # user_from_name = serializers.SerializerMethodField('get_user_from')
-
     class Meta:
         model = Notification
         fields = ['id', 'content', 'post', 'type', 'user_to', 'user_from', 'is_seen', 'created_date', 'active']
 
-    # def get_user_from(self, notification):
-    #     return '%s %s' % (notification.user_from.first_name, notification.user_from.last_name)
+class NotificationViewSerializer(ModelSerializer):
+    # user_from_name = serializers.SerializerMethodField('get_user_from')
+    user_from = UserViewInlineSerializer()
+    user_to = UserViewInlineSerializer()
+    type = TypeNotificationSerializer()
+
+    class Meta:
+        model = Notification
+        fields = NotificationSerializer.Meta.fields
+
 
 
 class LikeSerializer(ModelSerializer):

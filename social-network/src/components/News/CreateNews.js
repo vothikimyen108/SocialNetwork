@@ -12,6 +12,7 @@ import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 //css
 import CreateNewsStyles from "./CreateNewsStyles";
 
+
 export default function CreateNews(props) {
   const classes = CreateNewsStyles();
 
