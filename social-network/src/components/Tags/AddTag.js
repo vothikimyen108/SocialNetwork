@@ -57,10 +57,12 @@ class AddTag extends React.Component {
     this.setState({
       tags: tags.filter((tag, index) => index !== i),
     });
+    this.props.changeTags(this.state.tags);
   }
 
   handleAddition(tag) {
     this.setState((state) => ({ tags: [...state.tags, tag] }));
+    this.props.changeTags(this.state.tags);
   }
 
   handleDrag(tag, currPos, newPos) {
@@ -72,6 +74,7 @@ class AddTag extends React.Component {
 
     // re-render
     this.setState({ tags: newTags });
+    this.props.changeTags(this.state.tags);
   }
 
   render() {

@@ -8,5 +8,11 @@ const newsApi = {
     const url = `/post/?page=${data}`;
     return axiosClientApp.get(url);
   },
+
+  addPost: (data) => {
+    const url = `/post/create-post/`;
+    console.log(data);
+    return axiosClientApp.post(url, data, { headers: headers });
+  },
 };
 export default newsApi;
