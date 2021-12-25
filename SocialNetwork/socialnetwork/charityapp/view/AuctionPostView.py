@@ -1,3 +1,5 @@
+import datetime
+
 from django.core.exceptions import ValidationError
 from rest_framework import generics, viewsets, permissions, status
 from rest_framework.decorators import action
@@ -9,7 +11,7 @@ from ..serializers import AuctionPostSerializer, AuctionPostCreateSerializer
 
 
 class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
-    queryset = AuctionPost.objects.all()
+    queryset = AuctionPost.objects.all().order_by('-id')
 
     def get_permissions(self):
         if self.action in ['get_auction_post']:
@@ -40,14 +42,18 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
         name = request.data.get('name')
         description = request.data.get('description')
         price_begin = request.data.get('price')
-        if not content or len(images) <= 0:
-            return Response('content and images can not be none')
-        if not name or price_begin <= 0 or not price_begin:
-            return Response('Product name and price can not be none')
+        end_date = request.data.get('end_date')
         try:
             price_begin = int(price_begin)
         except:
             return Response(data='Price must be a number', status=status.HTTP_400_BAD_REQUEST)
+        if not content or len(images) <= 0 or not end_date:
+            return Response('content and images and finish date can not be none')
+        if not name or int(price_begin) <= 0 or not price_begin:
+            return Response('Product name and price can not be none')
+        if datetime.datetime.strptime(end_date, '%Y-%m-%d').date() <= datetime.date.today():
+            return Response('Finish date can not be less than now')
+
         # create product
         post = self.create_post_base(content, tags, images, request.user)
         product = Product.objects.create(name=name, description=description, price_begin=price_begin,
@@ -67,6 +73,6 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
         #     return Response(data='This Product has been auctioned ', status=status.HTTP_400_BAD_REQUEST)
         # product = Product.objects.get(pk=product_id)
 
-        auction_post = AuctionPost.objects.create(post=post, product=product)
+        auction_post = AuctionPost.objects.create(post=post, product=product, end_date=end_date)
         serializer = AuctionPostSerializer(auction_post, many=False)
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)
