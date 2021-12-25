@@ -6,13 +6,13 @@ from ..serializers import Notification, NotificationViewSerializer
 
 
 class NotificationViewSet(viewsets.ViewSet, generics.ListAPIView, generics.DestroyAPIView):
-    queryset = Notification.objects.all()
+    queryset = Notification.objects.all().order_by('-id')
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = NotificationViewSerializer
 
     def get_queryset(self):
         if self.action.__eq__("list"):
-            return Notification.objects.filter(user_to=self.request.user,active=True)
+            return Notification.objects.filter(user_to=self.request.user,active=True).order_by('-id')
         return self.queryset
 
     @action(methods=["GET"], detail=True, url_path="seen")

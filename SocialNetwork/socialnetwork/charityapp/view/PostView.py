@@ -10,7 +10,7 @@ from ..serializers import PostSerializer, PostCreateSerializer, ImageSerializer,
 
 
 class PostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
-    queryset = Post.objects.filter(active=True)
+    queryset = Post.objects.filter(active=True).order_by('-id')
 
     def get_permissions(self):
         if self.action in ['get-post']:
