@@ -280,3 +280,11 @@ class TypeReportSerializer(ModelSerializer):
     class Meta:
         model = TypeReport
         fields = ['id', 'type']
+
+
+class AuctionSerializer(ModelSerializer):
+    user_join = UserSerializer(many=False)
+
+    class Meta:
+        model = Auction
+        fields = ['id', 'user_join', 'user_win', 'money_auctioned', 'active']

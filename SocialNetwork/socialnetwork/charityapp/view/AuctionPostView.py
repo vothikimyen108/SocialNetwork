@@ -6,8 +6,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from .BaseView import BaseView
-from ..models import AuctionPost, Post, Product
-from ..serializers import AuctionPostSerializer, AuctionPostCreateSerializer
+from ..models import AuctionPost, Post, Product, Auction
+from ..serializers import AuctionPostSerializer, AuctionPostCreateSerializer, AuctionSerializer
 
 
 class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
@@ -75,4 +75,37 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
 
         auction_post = AuctionPost.objects.create(post=post, product=product, end_date=end_date)
         serializer = AuctionPostSerializer(auction_post, many=False)
+        return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(methods=['put'], detail=False, url_path="update-auction/(?P<post_id>[0-9]+)/(?P<auction_id>[0-9]+)/(?P<user_win>[0-9]+)")
+    def update_auction(self, request, post_id, auction_id, user_win):
+        money_auction = request.data.get("money_auction")
+        try:
+            money_auction = int(money_auction)
+            user_win = int(user_win)
+            auction_id = int(auction_id)
+            post_id = int(post_id)
+            if money_auction < 0:
+                return Response(data='Price auction must be greater than 0', status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response(data='Price auction, user id, auction id and post id must be a number', status=status.HTTP_400_BAD_REQUEST)
+        try:
+            post = Post.objects.get(pk=post_id)
+            auction_post = AuctionPost.objects.get(post=post)
+        except:
+            return Response(data='Auction or auction post does not exist', status=status.HTTP_400_BAD_REQUEST)
+        auction, _ = Auction.objects.get_or_create(pk=auction_id, auction_post=auction_post,
+                                                   user_join=request.user)
+        if not _:
+            if money_auction < auction.money_auctioned:
+                return Response('Price auction can not be less than now')
+            auction.money_auctioned = money_auction
+            if user_win == 1:
+                auction.user_win = True
+                auction.active = False
+        else:
+            print("aa")
+            auction.money_auctioned = money_auction
+        auction.save()
+        serializer = AuctionSerializer(auction, many=False)
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)
