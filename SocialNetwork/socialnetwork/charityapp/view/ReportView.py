@@ -16,18 +16,19 @@ class ReportView(viewsets.ViewSet, generics.ListAPIView):
     #         return Report.objects.filter(user_report=self.request.user, active=True)
     #     return self.queryset
 
-    @action(methods=["GET"], detail=False, url_path="create-report")
-    def create_report(self, request):
-        report_id = request.data.get('report_id')
-        type_report_id = request.data.get('type_report_id')
+    @action(methods=["post"], detail=False, url_path="create-report/(?P<report_id>[0-9]+)/(?P<type_report_id>[0-9]+)/(?P<object_report>[0-9]+)")
+    def create_report(self, request, report_id, type_report_id, object_report):
 
-        if report_id is None or type_report_id is None:
-            return Response('report_id or type_report_id can not none', status=status.HTTP_400_BAD_REQUEST)
+        try:
+            report_id = int(report_id)
+            type_report_id = int(type_report_id)
+            object_report = int(object_report)
+        except:
+            return Response(data='Report id, type report id and object report must be a number', status=status.HTTP_400_BAD_REQUEST)
 
         try:
             type_report = TypeReport.objects.get(pk=type_report_id)
-            if type_report.type in 'user':
-                pass
+
             report = Report.objects.create(user_report=request.user, type=type_report,
                                            report_id=report_id)
         except TypeReport.DoesNotExist:
