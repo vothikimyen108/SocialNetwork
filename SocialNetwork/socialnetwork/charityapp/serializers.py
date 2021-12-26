@@ -107,11 +107,13 @@ class PostSerializer(ModelSerializer, serializers.Serializer):
     product = serializers.SerializerMethodField('get_product')
     auction = serializers.SerializerMethodField('get_auction')
     like = LikeSerializer(many=True)
+    end_date = serializers.SerializerMethodField('get_end_date')
+
 
     class Meta:
         model = Post
         fields = ['id', 'content', 'created_date', 'updated_date', 'tags', 'user',
-                  'active', 'total_like', 'total_comment', 'image', 'comment', 'product', 'auction',"like"]
+                  'active', 'total_like', 'total_comment', 'image', 'comment', 'product', 'auction',"like",'end_date']
 
     def get_total_comment(self, post):
         count = Post.objects.filter(comment__post=post).count()
@@ -132,6 +134,18 @@ class PostSerializer(ModelSerializer, serializers.Serializer):
             return dict_product
         else:
             return None
+
+    def get_end_date(self, post):
+        try:
+            auction_post = AuctionPost.objects.get(post=post)
+        except AuctionPost.DoesNotExist:
+            auction_post = None
+            return auction_post
+        dict_auction_post = model_to_dict(auction_post)
+        if dict_auction_post.get('end_date') is None:
+            return datetime.date.today()
+        else:
+            return auction_post.end_date
 
     def get_auction(self, post):
         try:
@@ -187,7 +201,7 @@ class AuctionPostSerializer(ModelSerializer):
 
     class Meta:
         model = AuctionPost
-        fields = ['id', 'product', 'post']
+        fields = ['id', 'product', 'post', 'end_date']
 
 
 class PostCreateSerializer(serializers.Serializer):
@@ -201,6 +215,7 @@ class AuctionPostCreateSerializer(serializers.Serializer):
     content = serializers.CharField(max_length=None, required=False, allow_blank=True)
     tags = serializers.CharField(max_length=50, required=False, allow_null=True, allow_blank=False)
     product = serializers.IntegerField(min_value=1)
+    end_date = serializers.DateField()
 
 
 
@@ -272,3 +287,11 @@ class TypeReportSerializer(ModelSerializer):
     class Meta:
         model = TypeReport
         fields = ['id', 'type']
+
+
+class AuctionSerializer(ModelSerializer):
+    user_join = UserSerializer(many=False)
+
+    class Meta:
+        model = Auction
+        fields = ['id', 'user_join', 'user_win', 'money_auctioned', 'active']

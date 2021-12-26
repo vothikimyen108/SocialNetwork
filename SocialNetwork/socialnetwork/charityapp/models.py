@@ -85,6 +85,9 @@ class Notification(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ['id']
+
     def clean(self):
         if self.user_to.id == self.user_from.id:
             raise ValidationError({"user_to": "User to have to difference User from"})
@@ -125,6 +128,10 @@ class Auction(models.Model):
 class AuctionPost(models.Model):
     post = models.OneToOneField(Post, related_name='auction_post', on_delete=models.CASCADE, null=False)
     product = models.OneToOneField("Product", related_name='auction_post', on_delete=models.SET_NULL, null=True)
+    end_date = models.DateField(default=None)
+
+    class Meta:
+        ordering = ['-id']
 
     def __str__(self):
         return self.product.name
