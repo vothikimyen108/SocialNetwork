@@ -26,6 +26,11 @@ const newsApi = {
   likePost:(data) => {
     const url = `/post/${data}/like-or-unlike/`;
     return axiosClientApp.post(url);
+  },
+
+  addComment:(id,data) => {
+    const url = `/post/${id}/add-comment/`;
+    return axiosClientApp.post(url,data);
   }
 };
 export default newsApi;
