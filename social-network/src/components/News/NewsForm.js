@@ -64,7 +64,7 @@ const NewsForm = (props) => {
           <TextField
             variant="outlined"
             margin="normal"
-            required
+            error={info.formData.name ? false : true}
             fullWidth
             label="Tên sản phẩm"
             type="Text"
@@ -78,6 +78,7 @@ const NewsForm = (props) => {
             margin="normal"
             required
             fullWidth
+            error={info.formData.price ? false : true}
             label="Giá bắt đầu"
             type="Number"
             id="password"
@@ -91,6 +92,7 @@ const NewsForm = (props) => {
             type="date"
             variant="outlined"
             margin="normal"
+            error={info.formData.end_date ? false : true}
             required
             fullWidth
             defaultValue="2021-11-6"
@@ -216,7 +218,7 @@ const NewsForm = (props) => {
         formData.append("content", info.formData.content);
         let response;
         if (isOpenAuction) {
-          formData.append("name", "banh");
+          formData.append("name", info.formData.name);
           formData.append("price", info.formData.price);
           formData.append("end_date", info.formData.end_date);
           response = await newsApi.addAuction(formData);
@@ -231,7 +233,6 @@ const NewsForm = (props) => {
         });
         return response;
       } catch (error) {
-        console.log(error);
         setAlert({
           nameAlert: "error",
           message: "Error!!!",

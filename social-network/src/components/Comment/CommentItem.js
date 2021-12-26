@@ -9,10 +9,12 @@ import IconButton from "@material-ui/core/IconButton";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import moment from "moment";
+
 //css
 import CommentItemStyles from "./CommentItemStyles";
 
-export default function CommentItem() {
+export default function CommentItem(props) {
   const classes = CommentItemStyles();
   //set menu hide
   const [menuHideMoreAnchorEl, setMenuHide] = useState(null);
@@ -22,7 +24,7 @@ export default function CommentItem() {
   const handleMenuHideClose = () => {
     setMenuHide(null);
   };
-
+  const { user, content, created_date } = props;
   const handleMenuHideOpen = (event) => {
     setMenuHide(event.currentTarget);
   };
@@ -56,14 +58,13 @@ export default function CommentItem() {
   return (
     <Grid container wrap="nowrap" spacing={2}>
       <Grid item>
-        <Avatar>
-          <Anh></Anh>
-        </Avatar>
+        <Avatar>{user.avatar}</Avatar>
       </Grid>
       <Grid item xs={12}>
         <div className={classes.contentComment}>
           <Typography className={classes.authorComment}>
-            Kim Yến <span>12h</span>
+            {user.first_name + user.last_name}{" "}
+            <span>{moment(created_date).startOf("minute").fromNow()}</span>
           </Typography>
           <TextField
             classes={{
@@ -71,9 +72,7 @@ export default function CommentItem() {
             }}
             multiline
             //   rows={Autorenew}
-            defaultValue="Truncation should be conditionally applicable on this long line oftext as this is a much longer line than what the container can 
-              
-            "
+            defaultValue={content}
             inputProps={{
               readOnly: true,
               style: { textAlign: "justify", textJustify: "inter-character" },

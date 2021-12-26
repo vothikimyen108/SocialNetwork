@@ -52,10 +52,10 @@ class UpdateUserSerializer(ModelSerializer):
 class CommentSerializer(ModelSerializer):
     user = UserSerializer(many=False)
     notification = serializers.SerializerMethodField('get_notification')
-
+    getTotalComment = serializers.SerializerMethodField('get_total_comment')
     class Meta:
         model = Comment
-        fields = ['id', 'content', 'created_date', 'updated_date', 'user', 'post', 'images', 'notification']
+        fields = ['id', 'content', 'created_date', 'updated_date', 'user', 'post', 'images', 'notification','getTotalComment']
 
     def get_notification(self, like):
         notify = Notification.objects.filter(type__type__icontains='comment', post=like.post,
@@ -78,6 +78,10 @@ class CommentSerializer(ModelSerializer):
         del dict_user_from['user_permissions']
         dict_notice['user_from'] = dict_user_from
         return dict_notice
+
+    def get_total_comment(self, comment):
+        count = Comment.objects.filter( post_id=comment.post).count()
+        return count
 
 
 class TagSerializer(ModelSerializer):
@@ -245,10 +249,10 @@ class NotificationViewSerializer(ModelSerializer):
 class LikeSerializer(ModelSerializer):
     user = UserSerializer(many=False)
     notification = serializers.SerializerMethodField('get_notification')
-
+    total_like = serializers.SerializerMethodField('get_total_like')
     class Meta:
         model = Like
-        fields = ['user', 'post', 'created_date', 'notification']
+        fields = ['user', 'post', 'created_date', 'notification','total_like']
 
     def get_notification(self, like):
         notify = Notification.objects.get(type__type__icontains='like', post=like.post,
@@ -270,6 +274,11 @@ class LikeSerializer(ModelSerializer):
         del dict_user_from['user_permissions']
         dict_notice['user_from'] = dict_user_from
         return dict_notice
+
+    def get_total_like(self, like):
+        count = Like.objects.filter(post=like.post).count()
+        return count
+
 
 
 class CommentCreateSerializer(serializers.Serializer):

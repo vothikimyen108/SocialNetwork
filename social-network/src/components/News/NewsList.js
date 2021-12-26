@@ -36,6 +36,7 @@ const NewsList = (props) => {
             image={item.image}
             product={item.product}
             like={item.like}
+            comment={item.comment}
             isPageDetail={false}
           ></NewsItem>
         </div>
