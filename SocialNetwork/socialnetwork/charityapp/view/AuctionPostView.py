@@ -104,7 +104,6 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
                 auction.user_win = True
                 auction.active = False
         else:
-            print("aa")
             auction.money_auctioned = money_auction
         auction.save()
         serializer = AuctionSerializer(auction, many=False)
