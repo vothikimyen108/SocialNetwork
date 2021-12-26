@@ -1,25 +1,13 @@
 import { Fragment, useEffect } from "react";
-import {
-  useParams,
-  Route,
-  Link,
-  useRouteMatch,
-  useHistory,
-} from "react-router-dom";
+import moment from "moment";
+import { useParams, useHistory } from "react-router-dom";
 import NewsItem from "../components/News/NewsItem";
 import Grid from "@material-ui/core/Grid";
 import LayoutListMember from "../components/Layout/LayoutListMember";
 import { makeStyles } from "@material-ui/core/styles";
-const item = {
-  id: 1,
-  avatar: "Y",
-  name: "Võ yến",
-  content:
-    "Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up. Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.Use this monospace tool to generate fixed-width text that can be copied into Facebook, Twitter, SMS, etc. Monospace fonts can mimic a typewriter or computer terminal. They are useful useful when displaying tabular data (like in a spreadsheet) and you want the columns to line up.",
-  totalLike: 30,
-  totalShare: 20,
-  totalComment: 10,
-};
+import newsApi from "../api/newsApi";
+import useHttp from "../hook/useHttp";
+import { CircularProgress } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -32,27 +20,60 @@ const useStyles = makeStyles((theme) => ({
 
 const NewsDetail = () => {
   //lấy giá trị tham số của url
-  const params = useParams();
+  const { id } = useParams();
   let history = useHistory();
   const handlerIsOpenPhoto = () => {
     history.push("/");
   };
   const classe = useStyles();
+  const {
+    sendRequest,
+    status,
+    data: item,
+    error,
+  } = useHttp(newsApi.getPost, true);
+
+  useEffect(() => {
+    sendRequest(id);
+  }, []);
+
+  if (status === "pending") {
+    return (
+      <div className={classe.root}>
+        <CircularProgress />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <p style={{ marginTop: 300, textAlign: "center" }}>404</p>;
+  }
+
+  if (!item) {
+    return <p style={{ marginTop: 300, textAlign: "center" }}>{item.id}</p>;
+  }
+
   return (
     <Fragment>
       <Grid item xs={12} sm={12} md={12} lg={9} className={classe.root}>
         <NewsItem
-          key={item.id}
           isGo={true}
+          // className={classes.border}
+          id={item.id}
           avatar={item.avatar}
-          name={item.name}
+          name={item.user.first_name + item.user.last_name}
           content={item.content}
-          totalLike={item.totalLike}
+          totalLike={item.total_like}
           totalShare={item.totalShare}
-          totalComment={item.totalComment}
+          totalComment={item.total_comment}
           isExpanded={true}
           isShowImg={true}
-          isPageDetail={true}
+          tags={item.tags}
+          date={moment(item.created_date).startOf("minute").fromNow()}
+          // open={props.open}
+          product={item.product}
+          image={item.image}
+          isPageDetail={false}
           open={handlerIsOpenPhoto}
         ></NewsItem>
       </Grid>

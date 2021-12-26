@@ -37,6 +37,10 @@ class UserSerializer(ModelSerializer):
             'password': {'write_only': 'true'}
         }
 
+class UserViewInlineSerializer(UserSerializer):
+    class Meta:
+        model = UserSerializer.Meta.model
+        fields = ["id", "first_name", "last_name", "avatar"]
 
 class UpdateUserSerializer(ModelSerializer):
     class Meta:
@@ -87,6 +91,11 @@ class ImageSerializer(ModelSerializer):
         model = ImagePost
         fields = ['image_url']
 
+class LikeSerializer(ModelSerializer):
+    user = UserViewInlineSerializer()
+    class Meta:
+        model = Like
+        fields = ['id',"user"]
 
 class PostSerializer(ModelSerializer, serializers.Serializer):
     user = UserSerializer(many=False)
@@ -97,11 +106,12 @@ class PostSerializer(ModelSerializer, serializers.Serializer):
     image = ImageSerializer(many=True)
     product = serializers.SerializerMethodField('get_product')
     auction = serializers.SerializerMethodField('get_auction')
+    like = LikeSerializer(many=True)
 
     class Meta:
         model = Post
         fields = ['id', 'content', 'created_date', 'updated_date', 'tags', 'user',
-                  'active', 'total_like', 'total_comment', 'image', 'comment', 'product', 'auction']
+                  'active', 'total_like', 'total_comment', 'image', 'comment', 'product', 'auction',"like"]
 
     def get_total_comment(self, post):
         count = Post.objects.filter(comment__post=post).count()
@@ -193,10 +203,6 @@ class AuctionPostCreateSerializer(serializers.Serializer):
     product = serializers.IntegerField(min_value=1)
 
 
-class UserViewInlineSerializer(UserSerializer):
-    class Meta:
-        model = UserSerializer.Meta.model
-        fields = ["id", "first_name", "last_name", "avatar"]
 
 
 class TypeNotificationSerializer(ModelSerializer):

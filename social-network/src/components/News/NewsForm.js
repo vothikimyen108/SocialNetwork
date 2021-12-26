@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import newsApi from "../../api/newsApi";
 import CustomizedSnackbars from "../UI/CustomizedSnackbars";
+import { useSelector } from "react-redux";
 //css
 import NewsFormStyles from "./NewsFormStyles";
 //overlay
@@ -32,6 +33,10 @@ const NewsForm = (props) => {
     setTags(tags);
     console.log(tags);
   };
+  //thong tin user
+  const currentUser = useSelector((state) => state.user.currentUser);
+  //xử lý ảnh
+  const [imagesFile, setImagesFile] = useState([]);
   const handlerAuction = () => {
     return (
       <Grid item xs={12} className={classes.auction}>
@@ -117,8 +122,6 @@ const NewsForm = (props) => {
     );
   };
 
-  //xử lý ảnh
-  const [imagesFile, setImagesFile] = useState([]);
   const addImage = (e) => {
     setIsOpenImg(true);
     if (e.target.files) {
@@ -190,7 +193,15 @@ const NewsForm = (props) => {
           });
         }
         formData.append("content", info.formData.content);
-        const response = await newsApi.addPost(formData);
+        let response;
+        if (isOpenAuction) {
+          formData.append("name", info.formData.name);
+          formData.append("price", info.formData.price);
+          response = await newsApi.addAuction(formData);
+        } else {
+          response = await newsApi.addPost(formData);
+        }
+
         setAlert({
           nameAlert: "success",
           message: "tạo bài viết thành công",
@@ -224,10 +235,8 @@ const NewsForm = (props) => {
             </Grid>
             <Grid item xs={12}>
               <div className={classes.item}>
-                <Avatar className={classes.green}>
-                  <Anh></Anh>
-                </Avatar>
-                <h2> Yến</h2>
+                <Avatar className={classes.green}>{currentUser.avatar}</Avatar>
+                <h2>{currentUser.first_name + " " + currentUser.last_name}</h2>
               </div>
             </Grid>{" "}
             <div className={classes.mainContent}>

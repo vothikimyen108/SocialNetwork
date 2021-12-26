@@ -5,6 +5,7 @@ import "aos/dist/aos.css";
 import { useEffect } from "react";
 import NewsListStyles from "./NewsListStyles";
 import moment from "moment";
+import newsApi from "../../api/newsApi";
 const NewsList = (props) => {
   //css
   const classes = NewsListStyles();
@@ -12,12 +13,14 @@ const NewsList = (props) => {
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
+
   return (
     <div>
       {props.data.map((item) => (
         <div data-aos="fade-right" className={classes.root} key={item.id}>
           <NewsItem
             isGo={true}
+            id={item.id}
             className={classes.border}
             avatar={item.avatar}
             name={item.user.first_name + item.user.last_name}
@@ -31,6 +34,8 @@ const NewsList = (props) => {
             date={moment(item.created_date).startOf("minute").fromNow()}
             open={props.open}
             image={item.image}
+            product={item.product}
+            like={item.like}
             isPageDetail={false}
           ></NewsItem>
         </div>
