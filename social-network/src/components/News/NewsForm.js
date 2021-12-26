@@ -211,7 +211,6 @@ const NewsForm = (props) => {
         if (tags.length > 0) {
           tags.forEach((item) => {
             formData.append("tags", item.text);
-            console.log(item.text);
           });
         }
         formData.append("content", info.formData.content);
@@ -224,7 +223,7 @@ const NewsForm = (props) => {
         } else {
           response = await newsApi.addPost(formData);
         }
-
+        console.log(response, formData);
         setAlert({
           nameAlert: "success",
           message: "tạo bài viết thành công",
@@ -232,6 +231,7 @@ const NewsForm = (props) => {
         });
         return response;
       } catch (error) {
+        console.log(error);
         setAlert({
           nameAlert: "error",
           message: "Error!!!",
