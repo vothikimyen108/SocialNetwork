@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -25,6 +25,7 @@ import NewsItemStyles from "./NewsItemStyles";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Product } from "../Products/Product";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 //react
 import { useState } from "react";
 
@@ -79,7 +80,7 @@ export default function NewsItem(props) {
   const [isLike, setIslike] = useState(false);
   const isPageDetail = props.isPageDetail;
   const [menuHideMoreAnchorEl, setMenuHide] = useState(null);
-
+  const currentUser = useSelector((state) => state.user.currentUser);
   const isMenuHideOpen = Boolean(menuHideMoreAnchorEl);
 
   //mở chỉnh sua báo cáo
@@ -204,14 +205,14 @@ export default function NewsItem(props) {
               ))}
             </p>
 
-            <NavLink to="/news/:1">Xem thêm</NavLink>
+            <NavLink to={`/news/${props.id}`}>Xem thêm</NavLink>
           </div>
         );
       } else {
         return (
           <span>
             {content.substring(0, 100)}{" "}
-            <NavLink to="/news/:1">Xem thêm</NavLink>
+            <NavLink to={`/news/${props.id}`}>Xem thêm</NavLink>
           </span>
         );
       }
@@ -221,6 +222,15 @@ export default function NewsItem(props) {
   const handlerLike = () => {
     setIslike(!isLike);
   };
+
+  useEffect(() => {
+    props.like.forEach((element) => {
+      if (element.user.id === currentUser.id) setIslike(true);
+      console.log(currentUser.id);
+    });
+  }, []);
+  // setIslike(true);
+
   return (
     <Card className={`${props.className} ${classes.root}`}>
       <CardHeader
@@ -237,8 +247,12 @@ export default function NewsItem(props) {
         title={props.name}
         subheader={props.date}
       />
+
       <CardContent>
-        <Product isAution={props.isAution} isGo={props.isGo}></Product>
+        {props.product && (
+          <Product isAution={props.isAution} isGo={props.isGo}></Product>
+        )}
+
         {showContent(props.content)}
       </CardContent>
       {isShowImg && listTem()}

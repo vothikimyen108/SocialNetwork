@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import newsApi from "../../api/newsApi";
 import CustomizedSnackbars from "../UI/CustomizedSnackbars";
+import { useSelector } from "react-redux";
 //css
 import NewsFormStyles from "./NewsFormStyles";
 //overlay
@@ -28,10 +29,31 @@ const NewsForm = (props) => {
   const [isOpenAuction, setIsOpenAuction] = useState(false);
   const [isOpenImg, setIsOpenImg] = useState(false);
   const [tags, setTags] = useState([]);
-  const changeTags = (tags) => {
-    setTags(tags);
-    console.log(tags);
+  const changeTags = (tagsOld) => {
+    setTags((tag) => [...tag, tagsOld]);
   };
+
+  const handleDelete = (i) => {
+    setTags(tags.filter((tag, index) => index !== i));
+  };
+
+  const handleDrag = (tag, currPos, newPos) => {
+    const tags1 = [...tags];
+    const newTags = tags1.slice();
+
+    newTags.splice(currPos, 1);
+    newTags.splice(newPos, 0, tag);
+
+    // re-render
+    setTags(newTags);
+  };
+  useEffect(() => {
+    console.log(tags);
+  }, [tags]);
+  //thong tin user
+  const currentUser = useSelector((state) => state.user.currentUser);
+  //xử lý ảnh
+  const [imagesFile, setImagesFile] = useState([]);
   const handlerAuction = () => {
     return (
       <Grid item xs={12} className={classes.auction}>
@@ -48,6 +70,8 @@ const NewsForm = (props) => {
             type="Text"
             id="password"
             autoComplete="current-password"
+            name="name"
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -58,6 +82,8 @@ const NewsForm = (props) => {
             type="Number"
             id="password"
             autoComplete="current-password"
+            name="price"
+            onChange={handleChange}
           />
           <TextField
             id="date"
@@ -69,6 +95,8 @@ const NewsForm = (props) => {
             fullWidth
             defaultValue="2021-11-6"
             className={classes.textField}
+            name="end_date"
+            onChange={handleChange}
             InputLabelProps={{
               shrink: true,
             }}
@@ -117,8 +145,6 @@ const NewsForm = (props) => {
     );
   };
 
-  //xử lý ảnh
-  const [imagesFile, setImagesFile] = useState([]);
   const addImage = (e) => {
     setIsOpenImg(true);
     if (e.target.files) {
@@ -139,7 +165,6 @@ const NewsForm = (props) => {
   }, [images]);
   // //xóa
   const handlerRemove = (id) => {
-    console.log(imagesFile[0]);
     setImagesFile((oldState) =>
       oldState.filter((item) => item !== oldState[id]),
     );
@@ -190,7 +215,16 @@ const NewsForm = (props) => {
           });
         }
         formData.append("content", info.formData.content);
-        const response = await newsApi.addPost(formData);
+        let response;
+        if (isOpenAuction) {
+          formData.append("name", "banh");
+          formData.append("price", info.formData.price);
+          formData.append("end_date", info.formData.end_date);
+          response = await newsApi.addAuction(formData);
+        } else {
+          response = await newsApi.addPost(formData);
+        }
+
         setAlert({
           nameAlert: "success",
           message: "tạo bài viết thành công",
@@ -224,10 +258,8 @@ const NewsForm = (props) => {
             </Grid>
             <Grid item xs={12}>
               <div className={classes.item}>
-                <Avatar className={classes.green}>
-                  <Anh></Anh>
-                </Avatar>
-                <h2> Yến</h2>
+                <Avatar className={classes.green}>{currentUser.avatar}</Avatar>
+                <h2>{currentUser.first_name + " " + currentUser.last_name}</h2>
               </div>
             </Grid>{" "}
             <div className={classes.mainContent}>
@@ -249,7 +281,11 @@ const NewsForm = (props) => {
                   variant="outlined"
                 />{" "}
               </div>
-              <AddTag changeTags={changeTags}></AddTag>
+              <AddTag
+                changeTags={changeTags}
+                handleDelete={handleDelete}
+                handleDrag={handleDrag}
+              ></AddTag>
               {isOpenAuction && handlerAuction()}
               {isOpenImg && handlerImg()}
             </div>

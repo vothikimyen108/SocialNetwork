@@ -95,7 +95,6 @@ const NewsFeed = () => {
   return (
     <div>
       <Grid item xs={12} sm={12} md={12} lg={9} className={classe.root}>
-        {console.log(item)}
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <CreateNews onOpen={handlerOpenNewsForm}></CreateNews>

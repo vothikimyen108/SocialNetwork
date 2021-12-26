@@ -74,7 +74,7 @@ function App() {
             component={NewsFeed}
           ></DashboardLayoutRoute>
           <DashboardLayoutRoute
-            path="/news/:newsId"
+            path="/news/:id"
             exact
             component={NewsDetail}
           ></DashboardLayoutRoute>
