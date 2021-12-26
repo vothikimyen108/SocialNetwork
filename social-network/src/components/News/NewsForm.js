@@ -29,10 +29,27 @@ const NewsForm = (props) => {
   const [isOpenAuction, setIsOpenAuction] = useState(false);
   const [isOpenImg, setIsOpenImg] = useState(false);
   const [tags, setTags] = useState([]);
-  const changeTags = (tags) => {
-    setTags(tags);
-    console.log(tags);
+  const changeTags = (tagsOld) => {
+    setTags((tag) => [...tag, tagsOld]);
   };
+
+  const handleDelete = (i) => {
+    setTags(tags.filter((tag, index) => index !== i));
+  };
+
+  const handleDrag = (tag, currPos, newPos) => {
+    const tags1 = [...tags];
+    const newTags = tags1.slice();
+
+    newTags.splice(currPos, 1);
+    newTags.splice(newPos, 0, tag);
+
+    // re-render
+    setTags(newTags);
+  };
+  useEffect(() => {
+    console.log(tags);
+  }, [tags]);
   //thong tin user
   const currentUser = useSelector((state) => state.user.currentUser);
   //xử lý ảnh
@@ -53,6 +70,8 @@ const NewsForm = (props) => {
             type="Text"
             id="password"
             autoComplete="current-password"
+            name="name"
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -63,6 +82,8 @@ const NewsForm = (props) => {
             type="Number"
             id="password"
             autoComplete="current-password"
+            name="price"
+            onChange={handleChange}
           />
           <TextField
             id="date"
@@ -74,6 +95,8 @@ const NewsForm = (props) => {
             fullWidth
             defaultValue="2021-11-6"
             className={classes.textField}
+            name="end_date"
+            onChange={handleChange}
             InputLabelProps={{
               shrink: true,
             }}
@@ -142,7 +165,6 @@ const NewsForm = (props) => {
   }, [images]);
   // //xóa
   const handlerRemove = (id) => {
-    console.log(imagesFile[0]);
     setImagesFile((oldState) =>
       oldState.filter((item) => item !== oldState[id]),
     );
@@ -195,8 +217,9 @@ const NewsForm = (props) => {
         formData.append("content", info.formData.content);
         let response;
         if (isOpenAuction) {
-          formData.append("name", info.formData.name);
+          formData.append("name", "banh");
           formData.append("price", info.formData.price);
+          formData.append("end_date", info.formData.end_date);
           response = await newsApi.addAuction(formData);
         } else {
           response = await newsApi.addPost(formData);
@@ -258,7 +281,11 @@ const NewsForm = (props) => {
                   variant="outlined"
                 />{" "}
               </div>
-              <AddTag changeTags={changeTags}></AddTag>
+              <AddTag
+                changeTags={changeTags}
+                handleDelete={handleDelete}
+                handleDrag={handleDrag}
+              ></AddTag>
               {isOpenAuction && handlerAuction()}
               {isOpenImg && handlerImg()}
             </div>

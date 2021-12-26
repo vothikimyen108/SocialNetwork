@@ -15,7 +15,7 @@ const newsApi = {
   },
 
   addAuction: (data) => {
-    const url = `/post/auction_post/create-auction-post/`;
+    const url = `/auction_post/create-auction-post/`;
     return axiosClientApp.post(url, data, { headers: headers });
   },
   getPost: (data) => {
