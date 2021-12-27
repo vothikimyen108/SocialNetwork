@@ -9,7 +9,7 @@ import ParallaxCarouselStyles from "./ParallaxCarouselStyles";
 
 const ParallaxCarousel = (props) => {
   const classes = ParallaxCarouselStyles();
-
+  console.log(props.data);
   // eslint-disable-next-line react/prop-types
   const renderElements = ({ index, onChangeIndex }) => (
     <>
@@ -30,10 +30,10 @@ const ParallaxCarousel = (props) => {
     </>
   );
   const renderChildren = ({ injectStyle, fineIndex }) =>
-    props.data.map(({ id, image }, i) => (
-      <div key={id} className={classes.slide}>
+    props.data.map((item) => (
+      <div key={item} className={classes.slide}>
         <div className={classes.imageContainer}>
-          <img className={classes.image} src={image} alt={"slide"} />
+          <img className={classes.image} src={item.image_url} alt={"slide"} />
         </div>
       </div>
     ));

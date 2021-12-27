@@ -9,20 +9,30 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 //css
 import NewCommentStyles from "./NewCommentStyles";
 import newsApi from "../../api/newsApi";
+import { useSelector } from "react-redux";
 export default function NewComment(prosp) {
   const classes = NewCommentStyles();
   const { totalCMT, idPost, onChangeToTal } = prosp;
-  const [comment, setComment] = useState({ content: "", total: "" });
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const [info, setInfo] = useState({
+    formData: {
+      content: "",
+    },
+  });
   //handler xử lý sự kiện onchange
   const handleChange = (event) => {
-    setComment((pre) => {
-      content: event.target.value;
-    });
+    const { formData } = info;
+    formData[event.target.name] = event.target.value;
+    setInfo({ formData });
   };
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    //gửi nguyên trang
+    e.preventDefault();
     const fetchAddPost = async () => {
       try {
-        const response = await newsApi.addComment(idPost, comment);
+        const response = await newsApi.addComment(idPost, {
+          content: info.formData.content,
+        });
 
         return response;
       } catch (error) {
@@ -34,9 +44,7 @@ export default function NewComment(prosp) {
   return (
     <Grid container wrap="nowrap" spacing={2}>
       <Grid item className={classes.avatar}>
-        <Avatar>
-          <Anh></Anh>
-        </Avatar>
+        <Avatar>{currentUser.avatar}</Avatar>
       </Grid>
       <Grid item xs={12}>
         {" "}

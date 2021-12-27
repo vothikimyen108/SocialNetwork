@@ -71,6 +71,7 @@ const NewsDetail = () => {
           tags={item.tags}
           date={moment(item.created_date).startOf("minute").fromNow()}
           // open={props.open}
+          end_date={item.end_date}
           product={item.product}
           image={item.image}
           isPageDetail={false}
