@@ -10,11 +10,11 @@ import CloseIcon from "@material-ui/icons/Close";
 //css
 import AutionStyles from "./AutionStyles";
 import AlertNoti from "../UI/AlertNoti";
-import NewsForm from "../News/NewsForm";
 
-export default function Auction() {
+export default function Auction(props) {
   const classes = AutionStyles();
-  const price = 3000;
+
+  const { price, end_date } = props;
   const [isError, setIsError] = useState(false);
   //open
   const [open, setOpen] = useState(false);
@@ -39,7 +39,6 @@ export default function Auction() {
   };
   //hàm hiện thông báo
   const renderAlert = () => {
-    console.log(isSuccess);
     if (isSuccess === "success") {
       return (
         <CustomizedSnackbars
@@ -104,7 +103,6 @@ export default function Auction() {
     //thông báo
     setIsSuccess("success");
     setOpen(true);
-    console.log("oke");
   };
 
   const handerClose = () => {

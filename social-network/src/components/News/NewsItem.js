@@ -96,6 +96,7 @@ export default function NewsItem(props) {
     totalShare,
     totalComment,
     comment,
+    end_date,
   } = props;
   const [totalLike1, setTotalLike1] = useState(totalLike);
   const classes = NewsItemStyles();
@@ -276,7 +277,12 @@ export default function NewsItem(props) {
 
       <CardContent>
         {product && (
-          <Product isAution={isAution} isGo={isGo} product={product}></Product>
+          <Product
+            isAution={isAution}
+            isGo={isGo}
+            product={product}
+            end_date={end_date}
+          ></Product>
         )}
 
         {showContent(content)}
@@ -319,7 +325,7 @@ export default function NewsItem(props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <CommentList dataComment={comment}></CommentList>
+          <CommentList dataComment={comment} idPost={id}></CommentList>
         </CardContent>
       </Collapse>
       {renderMenuHide}

@@ -37,6 +37,7 @@ const NewsList = (props) => {
             product={item.product}
             like={item.like}
             comment={item.comment}
+            end_date={item.end_date}
             isPageDetail={false}
           ></NewsItem>
         </div>

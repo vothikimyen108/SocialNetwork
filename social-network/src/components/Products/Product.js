@@ -19,7 +19,7 @@ export const Product = function TutorCard(props) {
     from: { x: 0 },
     to: { x: 20 },
   });
-  const { isAution, isGo, key, product } = props;
+  const { isAution, isGo, key, product, end_date } = props;
 
   return (
     <div>
@@ -46,7 +46,7 @@ export const Product = function TutorCard(props) {
               currency: "VND",
             })}
           </InfoTitle>
-          <InfoSubtitle>Kết thúc: {product.end_date}</InfoSubtitle>
+          <InfoSubtitle>Kết thúc: {end_date}</InfoSubtitle>
         </Info>
 
         {isGo && (

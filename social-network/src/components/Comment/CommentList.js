@@ -1,10 +1,10 @@
 import CommentItem from "./CommentItem";
 import NewComment from "./NewComment";
 const CommentList = (props) => {
-  const { dataComment } = props;
+  const { dataComment, idPost } = props;
   return (
     <div>
-      <NewComment></NewComment>
+      <NewComment idPost={idPost}></NewComment>
       {dataComment.map((item) => {
         return (
           <div key={item.id}>
@@ -16,7 +16,6 @@ const CommentList = (props) => {
           </div>
         );
       })}
-      ;
     </div>
   );
 };
