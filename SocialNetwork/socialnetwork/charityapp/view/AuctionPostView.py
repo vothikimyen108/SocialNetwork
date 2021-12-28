@@ -97,12 +97,16 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
             post = Post.objects.get(pk=post_id)
             auction_post = AuctionPost.objects.get(post=post)
         except:
-            return Response(data='Auction or auction post does not exist', status=status.HTTP_400_BAD_REQUEST)
-        auction, _ = Auction.objects.get_or_create(auction_post=auction_post,
+            return Response(data='Auction or auction post does not exist', status=status.HTTP_404_NOT_FOUND)
+        try:
+            auction, _ = Auction.objects.get_or_create(auction_post=auction_post,
                                                    user_join=request.user, active=True)
+        except:
+            return Response(data='Auction was out of time, please change the auction that has been ongoing'
+                            , status=status.HTTP_404_NOT_FOUND)
         if not _:
             if money_auction < auction.money_auctioned:
-                return Response('Price auction can not be less than now')
+                return Response('Price auction can not be less than %d' % (auction.money_auctioned), status=status.HTTP_400_BAD_REQUEST)
             auction.money_auctioned = money_auction
             if user_win == 1:
                 auction.user_win = True
