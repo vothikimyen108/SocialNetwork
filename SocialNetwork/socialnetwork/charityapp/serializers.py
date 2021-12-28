@@ -273,7 +273,7 @@ class CommentCreateSerializer(serializers.Serializer):
 class ReportSerializer(ModelSerializer):
     class Meta:
         model = Report
-        fields = ['id', 'user_report', 'type', 'reported_id', 'created_date']
+        fields = ['id', 'user_report', 'type', 'reported_id', 'created_date', 'object_report', 'active']
 
 
 class TypeReportSerializer(ModelSerializer):

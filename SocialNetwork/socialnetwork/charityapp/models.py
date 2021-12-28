@@ -177,3 +177,4 @@ class Report(models.Model):
         (COMMENT, 'COMMENT')
     )
     object_report = models.PositiveSmallIntegerField(choices=REPORT_CHOICES, default=USER)
+    active = models.BooleanField(default=True)
