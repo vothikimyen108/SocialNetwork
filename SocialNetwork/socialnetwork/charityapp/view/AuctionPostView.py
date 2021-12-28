@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from .BaseView import BaseView
 from ..models import AuctionPost, Post, Product, Auction
-from ..serializers import AuctionPostSerializer, AuctionPostCreateSerializer, AuctionSerializer
+from ..serializers import AuctionPostSerializer, AuctionPostCreateSerializer, AuctionSerializer, AuctionUpdateSerializer
 
 
 class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
@@ -21,6 +21,8 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
     def get_serializer_class(self):
         if self.action in ['create_auction_post']:
             return AuctionPostCreateSerializer
+        if self.action in ['update_auction']:
+            return AuctionUpdateSerializer
         else:
             return AuctionPostSerializer
 

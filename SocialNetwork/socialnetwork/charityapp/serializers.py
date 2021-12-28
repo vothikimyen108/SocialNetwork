@@ -222,6 +222,9 @@ class AuctionPostCreateSerializer(serializers.Serializer):
     end_date = serializers.DateField()
 
 
+class AuctionUpdateSerializer(serializers.Serializer):
+    money_auction = serializers.IntegerField(min_value=1)
+
 
 
 class TypeNotificationSerializer(ModelSerializer):

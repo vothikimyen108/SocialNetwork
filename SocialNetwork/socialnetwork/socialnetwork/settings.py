@@ -132,7 +132,7 @@ WSGI_APPLICATION = 'socialnetwork.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'socialnetworkv3',
+        'NAME': 'socialnetwork',
         'USER': 'root',
         'PASSWORD': '12345',
         'HOST': '',
