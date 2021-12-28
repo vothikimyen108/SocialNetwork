@@ -99,7 +99,7 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
         except:
             return Response(data='Auction or auction post does not exist', status=status.HTTP_400_BAD_REQUEST)
         auction, _ = Auction.objects.get_or_create(auction_post=auction_post,
-                                                   user_join=request.user)
+                                                   user_join=request.user, active=True)
         if not _:
             if money_auction < auction.money_auctioned:
                 return Response('Price auction can not be less than now')
