@@ -49,11 +49,11 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
         except:
             return Response(data='Price must be a number', status=status.HTTP_400_BAD_REQUEST)
         if not content or len(images) <= 0 or not end_date:
-            return Response('content and images and finish date can not be none',status=status.HTTP_400_BAD_REQUEST)
+            return Response('content and images and finish date can not be none', status=status.HTTP_400_BAD_REQUEST)
         if not name or int(price_begin) <= 0 or not price_begin:
-            return Response('Product name and price can not be none',status=status.HTTP_400_BAD_REQUEST)
+            return Response('Product name and price can not be none', status=status.HTTP_400_BAD_REQUEST)
         if datetime.datetime.strptime(end_date, '%Y-%m-%d').date() <= datetime.date.today():
-            return Response('Finish date can not be less than now',status=status.HTTP_400_BAD_REQUEST)
+            return Response('Finish date can not be less than now', status=status.HTTP_400_BAD_REQUEST)
 
         # create product
         post = self.create_post_base(content, tags, images, request.user)
