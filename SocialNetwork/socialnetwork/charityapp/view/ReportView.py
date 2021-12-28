@@ -9,6 +9,7 @@ from ..serializers import ReportSerializer, TypeReportSerializer
 class ReportView(viewsets.ViewSet, generics.ListAPIView):
     queryset = Report.objects.all()
     permission_classes = [permissions.IsAuthenticated, ]
+    pagination_class = None
 
     # serializer_class = ReportSerializer
 

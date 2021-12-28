@@ -163,7 +163,7 @@ class TypeReport(models.Model):
 
 
 class Report(models.Model):
-    user_report = models.ManyToManyField(User, related_name='report', blank=False)
+    user_report = models.ForeignKey(User, related_name='report', on_delete=models.SET_NULL, null=True)
     type = models.ForeignKey(TypeReport, related_name='report', on_delete=models.SET_NULL, null=True)
     reported_id = models.IntegerField(null=False, default=0)  # ID của user, comment, ...
     created_date = models.DateTimeField(auto_now_add=True)
