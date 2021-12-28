@@ -37,6 +37,10 @@ class UserSerializer(ModelSerializer):
             'password': {'write_only': 'true'}
         }
 
+class UserViewInlineSerializer(UserSerializer):
+    class Meta:
+        model = UserSerializer.Meta.model
+        fields = ["id", "first_name", "last_name", "avatar"]
 
 class UpdateUserSerializer(ModelSerializer):
     class Meta:
@@ -48,10 +52,10 @@ class UpdateUserSerializer(ModelSerializer):
 class CommentSerializer(ModelSerializer):
     user = UserSerializer(many=False)
     notification = serializers.SerializerMethodField('get_notification')
-
+    getTotalComment = serializers.SerializerMethodField('get_total_comment')
     class Meta:
         model = Comment
-        fields = ['id', 'content', 'created_date', 'updated_date', 'user', 'post', 'images', 'notification']
+        fields = ['id', 'content', 'created_date', 'updated_date', 'user', 'post', 'images', 'notification','getTotalComment']
 
     def get_notification(self, like):
         notify = Notification.objects.filter(type__type__icontains='comment', post=like.post,
@@ -75,6 +79,10 @@ class CommentSerializer(ModelSerializer):
         dict_notice['user_from'] = dict_user_from
         return dict_notice
 
+    def get_total_comment(self, comment):
+        count = Comment.objects.filter( post_id=comment.post).count()
+        return count
+
 
 class TagSerializer(ModelSerializer):
     class Meta:
@@ -87,6 +95,11 @@ class ImageSerializer(ModelSerializer):
         model = ImagePost
         fields = ['image_url']
 
+class LikeSerializer(ModelSerializer):
+    user = UserViewInlineSerializer()
+    class Meta:
+        model = Like
+        fields = ['id',"user"]
 
 class PostSerializer(ModelSerializer, serializers.Serializer):
     user = UserSerializer(many=False)
@@ -97,12 +110,14 @@ class PostSerializer(ModelSerializer, serializers.Serializer):
     image = ImageSerializer(many=True)
     product = serializers.SerializerMethodField('get_product')
     auction = serializers.SerializerMethodField('get_auction')
+    like = LikeSerializer(many=True)
     end_date = serializers.SerializerMethodField('get_end_date')
+
 
     class Meta:
         model = Post
         fields = ['id', 'content', 'created_date', 'updated_date', 'tags', 'user',
-                  'active', 'total_like', 'total_comment', 'image', 'comment', 'product', 'auction', 'end_date']
+                  'active', 'total_like', 'total_comment', 'image', 'comment', 'product', 'auction',"like",'end_date']
 
     def get_total_comment(self, post):
         count = Post.objects.filter(comment__post=post).count()
@@ -207,10 +222,6 @@ class AuctionPostCreateSerializer(serializers.Serializer):
     end_date = serializers.DateField()
 
 
-class UserViewInlineSerializer(UserSerializer):
-    class Meta:
-        model = UserSerializer.Meta.model
-        fields = ["id", "first_name", "last_name", "avatar"]
 
 
 class TypeNotificationSerializer(ModelSerializer):
@@ -238,10 +249,10 @@ class NotificationViewSerializer(ModelSerializer):
 class LikeSerializer(ModelSerializer):
     user = UserSerializer(many=False)
     notification = serializers.SerializerMethodField('get_notification')
-
+    total_like = serializers.SerializerMethodField('get_total_like')
     class Meta:
         model = Like
-        fields = ['user', 'post', 'created_date', 'notification']
+        fields = ['user', 'post', 'created_date', 'notification','total_like']
 
     def get_notification(self, like):
         notify = Notification.objects.get(type__type__icontains='like', post=like.post,
@@ -263,6 +274,11 @@ class LikeSerializer(ModelSerializer):
         del dict_user_from['user_permissions']
         dict_notice['user_from'] = dict_user_from
         return dict_notice
+
+    def get_total_like(self, like):
+        count = Like.objects.filter(post=like.post).count()
+        return count
+
 
 
 class CommentCreateSerializer(serializers.Serializer):

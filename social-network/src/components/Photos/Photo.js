@@ -10,6 +10,7 @@ import ModalFull from "../UI/ModalFull";
 import ParallaxCarousel from "../UI/ParallaxCarousel";
 //css
 import PhotoStyles from "./PhotoStyles";
+import moment from "moment";
 const Photo = (props) => {
   const classes = PhotoStyles();
   const data = [
@@ -17,6 +18,8 @@ const Photo = (props) => {
     { image: `${Anh2}`, id: 2 },
     { image: `${Anh3}`, id: 3 },
   ];
+  const { item } = props;
+
   return (
     <ModalFull>
       <Grid container component="main" className={classes.root}>
@@ -29,21 +32,31 @@ const Photo = (props) => {
           >
             <CloseIcon></CloseIcon>
           </IconButton>
-          <ParallaxCarousel data={data}></ParallaxCarousel>
+          <ParallaxCarousel data={item.image}></ParallaxCarousel>
         </Grid>
         <Grid item xs={12} sm={12} lg={4} className={classes.right}>
           <NewsItem
+            id={item.id}
+            className={classes.border}
+            avatar={item.avatar}
+            name={item.user.first_name + item.user.last_name}
+            content={item.content}
+            totalLike={item.total_like}
+            totalShare={item.totalShare}
+            totalComment={item.total_comment}
+            tags={item.tags}
+            date={moment(item.created_date).startOf("minute").fromNow()}
+            open={props.open}
+            image={item.image}
+            product={item.product}
+            like={item.like}
+            comment={item.comment}
+            end_date={item.end_date}
             isAution={true}
             isGo={false}
             isOpenCMT={true}
             isExpanded={false}
             isShowImg={false}
-            avatar={props.item.avatar}
-            name={props.item.name}
-            content={props.item.content}
-            totalLike={props.item.totalLike}
-            totalShare={props.item.totalShare}
-            totalComment={props.item.totalComment}
             isPageDetail={true}
           >
             {" "}

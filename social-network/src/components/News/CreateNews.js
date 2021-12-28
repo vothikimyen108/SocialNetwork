@@ -11,18 +11,16 @@ import IconButton from "@material-ui/core/IconButton";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 //css
 import CreateNewsStyles from "./CreateNewsStyles";
-
+import { useSelector } from "react-redux";
 
 export default function CreateNews(props) {
   const classes = CreateNewsStyles();
-
+  const currentUser = useSelector((state) => state.user.currentUser);
   return (
     <Grid container wrap="wrap" className={classes.root}>
       <Grid container wrap="nowrap" spacing={2}>
         <Grid item className={classes.avatar}>
-          <Avatar>
-            <Anh></Anh>
-          </Avatar>
+          <Avatar className={classes.green}>{currentUser.avatar}</Avatar>
         </Grid>
         <Grid item xs={12}>
           <div className={classes.contentComment}>
@@ -32,7 +30,6 @@ export default function CreateNews(props) {
               }}
               onClick={props.onOpen}
               multiline
-              //   rows={Autorenew}
               placeholder="Bạn đang nghĩ gì vậy?"
               inputProps={{
                 readOnly: true,

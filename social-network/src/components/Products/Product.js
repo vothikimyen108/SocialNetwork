@@ -12,16 +12,15 @@ import Auction from "./Auction";
 import ProductStyles from "./ProductStyles";
 export const Product = function TutorCard(props) {
   const styles = ProductStyles();
+
   //animate
   const stylesSpring = useSpring({
     loop: { reverse: true },
     from: { x: 0 },
     to: { x: 20 },
   });
-  //true hiện aution
-  const isAution = props.isAution;
-  //true hiện đi đấu giá
-  const isGo = props.isGo;
+  const { isAution, isGo, key, product, end_date } = props;
+
   return (
     <div>
       <Row
@@ -29,7 +28,7 @@ export const Product = function TutorCard(props) {
         gap={2}
         bgcolor={"#f5f5f5"}
         borderRadius={10}
-        key={props.key}
+        key={key}
         className={styles.root}
       >
         <Item className={styles.go}>
@@ -40,8 +39,14 @@ export const Product = function TutorCard(props) {
           useStyles={useTutorInfoStyles}
           className={styles.go}
         >
-          <InfoTitle>Chè khoai môn - khởi điểm: 10k</InfoTitle>
-          <InfoSubtitle>hạn chót: 2020-1-1</InfoSubtitle>
+          <InfoTitle>
+            {product.name} - khởi điểm:{" "}
+            {product.price_begin.toLocaleString("it-IT", {
+              style: "currency",
+              currency: "VND",
+            })}
+          </InfoTitle>
+          <InfoSubtitle>Kết thúc: {end_date}</InfoSubtitle>
         </Info>
 
         {isGo && (

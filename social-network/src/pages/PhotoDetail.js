@@ -2,6 +2,9 @@ import { Fragment, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import NewsItem from "../components/News/NewsItem";
 import Photo from "../components/Photos/Photo";
+import useHttp from "../hook/useHttp";
+import newsApi from "../api/newsApi";
+import { CircularProgress } from "@material-ui/core";
 const item = {
   id: 1,
   avatar: "Y",
@@ -15,11 +18,38 @@ const item = {
 
 const PhotoDetail = (props) => {
   const history = useHistory();
-
+  const { photoId } = useParams();
   //quay lai trag tuoc do
   const handerCloseIsopenPhoto = () => {
     history.goBack();
   };
+
+  const {
+    sendRequest,
+    status,
+    data: item,
+    error,
+  } = useHttp(newsApi.getPost, true);
+
+  useEffect(() => {
+    sendRequest(photoId);
+  }, []);
+
+  if (status === "pending") {
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <p style={{ marginTop: 300, textAlign: "center" }}>404</p>;
+  }
+
+  if (!item) {
+    return <p style={{ marginTop: 300, textAlign: "center" }}>{item.id}</p>;
+  }
 
   return <Photo item={item} onClose={handerCloseIsopenPhoto}></Photo>;
 };

@@ -77,7 +77,7 @@ EMAIL_PORT = 587
 
 # #chạy post man bỏ biến này ra
 OAUTH2_PROVIDER = {
-     # 'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
+     'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
 }
 
 
@@ -88,8 +88,8 @@ OAUTH2_PROVIDER = {
 
 #auth cua en
 OAUTH2_INFO = {
-    "client_id": "paqmI9h2jDRsXymvRUoaQDtSocolCk8HvEjukZGE",
-    "client_secret": "Gf26B3APWmjlP2wr53gFPtyJelKzicuvbaQh4Hfhkv0E6EUS7H7jmGV0yedJ5bJuZEzg5yWfBvcfyWNLCX5lf2FO0GGHwstOmBB85xQ98HstEwlAsvY4sKtHW1q2TQEl"
+    "client_id": "sGXgrI6QQMJ1Pz2Y2fEdwYVQTw8iBXLiVsD4h9nc",
+    "client_secret": "6GdPhXP3heZfzR0t39gI7dKVsTuPSaofYsccjRjlrkSCJvr1tg9GO5bCseDnPQ5by6GDtXjiO6nzhiPG9LwaUdztVpmjjCgrPMAUyUVbGPn18sZJ6s70agJZKqeCDJPs"
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -132,7 +132,7 @@ WSGI_APPLICATION = 'socialnetwork.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'socialnetwork',
+        'NAME': 'socialnetworkv3',
         'USER': 'root',
         'PASSWORD': '12345',
         'HOST': '',
