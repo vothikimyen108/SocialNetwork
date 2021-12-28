@@ -32,23 +32,23 @@ class ReportView(viewsets.ViewSet, generics.ListAPIView):
             type_report_id = int(type_report_id)
             object_report = int(object_report)
 
-            # if object_report == 1:
-            #     if request.user.pk == report_id:
-            #         return Response(data='You can not report yourself', status=status.HTTP_400_BAD_REQUEST)
-            # if object_report == 2:
-            #     try:
-            #         post_reported = Post.objects.get(pk=report_id)
-            #         if request.user == post_reported.user or request.user == post_reported.comment.user:
-            #             return Response(data='You can not report your post', status=status.HTTP_400_BAD_REQUEST)
-            #     except Post.DoesNotExist:
-            #         return Response(status=status.HTTP_404_NOT_FOUND)
-            # if object_report == 3:
-            #     try:
-            #         comment_reported = Comment.objects.get(pk=report_id)
-            #         if request.user == comment_reported.user:
-            #             return Response(data='You can not report your comment', status=status.HTTP_400_BAD_REQUEST)
-            #     except Comment.DoesNotExist:
-            #         return Response(status=status.HTTP_404_NOT_FOUND)
+            if object_report == 1:
+                if request.user.pk == report_id:
+                    return Response(data='You can not report yourself', status=status.HTTP_400_BAD_REQUEST)
+            if object_report == 2:
+                try:
+                    post_reported = Post.objects.get(pk=report_id)
+                    if request.user == post_reported.user or request.user == post_reported.comment.user:
+                        return Response(data='You can not report your post', status=status.HTTP_400_BAD_REQUEST)
+                except Post.DoesNotExist:
+                    return Response(status=status.HTTP_404_NOT_FOUND)
+            if object_report == 3:
+                try:
+                    comment_reported = Comment.objects.get(pk=report_id)
+                    if request.user == comment_reported.user:
+                        return Response(data='You can not report your comment', status=status.HTTP_400_BAD_REQUEST)
+                except Comment.DoesNotExist:
+                    return Response(status=status.HTTP_404_NOT_FOUND)
         except:
             return Response(data='Report id, type report id and object report must be a number'
                             , status=status.HTTP_400_BAD_REQUEST)
