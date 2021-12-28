@@ -80,13 +80,14 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
         serializer = AuctionPostSerializer(auction_post, many=False)
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)
 
-    @action(methods=['put'], detail=False, url_path="update-auction/(?P<post_id>[0-9]+)/(?P<auction_id>[0-9]+)/(?P<user_win>[0-9]+)")
-    def update_auction(self, request, post_id, auction_id, user_win):
+    # @action(methods=['put'], detail=False, url_path="update-auction/(?P<post_id>[0-9]+)/(?P<auction_id>[0-9]+)/(?P<user_win>[0-9]+)")
+    @action(methods=['put'], detail=False, url_path="update-auction/(?P<post_id>[0-9]+)/(?P<user_win>[0-9]+)")
+    def update_auction(self, request, post_id, user_win):
         money_auction = request.data.get("money_auction")
         try:
             money_auction = int(money_auction)
             user_win = int(user_win)
-            auction_id = int(auction_id)
+            # auction_id = int(auction_id)
             post_id = int(post_id)
             if money_auction < 0:
                 return Response(data='Price auction must be greater than 0', status=status.HTTP_400_BAD_REQUEST)
@@ -97,7 +98,7 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
             auction_post = AuctionPost.objects.get(post=post)
         except:
             return Response(data='Auction or auction post does not exist', status=status.HTTP_400_BAD_REQUEST)
-        auction, _ = Auction.objects.get_or_create(pk=auction_id, auction_post=auction_post,
+        auction, _ = Auction.objects.get_or_create(auction_post=auction_post,
                                                    user_join=request.user)
         if not _:
             if money_auction < auction.money_auctioned:
