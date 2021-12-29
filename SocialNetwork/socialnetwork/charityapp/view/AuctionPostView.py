@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from .BaseView import BaseView
 from ..models import AuctionPost, Post, Product, Auction
-from ..serializers import AuctionPostSerializer, AuctionPostCreateSerializer, AuctionSerializer
+from ..serializers import AuctionPostSerializer, AuctionPostCreateSerializer, AuctionSerializer, AuctionUpdateSerializer
 
 
 class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
@@ -21,6 +21,8 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
     def get_serializer_class(self):
         if self.action in ['create_auction_post']:
             return AuctionPostCreateSerializer
+        if self.action in ['update_auction']:
+            return AuctionUpdateSerializer
         else:
             return AuctionPostSerializer
 
@@ -49,11 +51,11 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
         except:
             return Response(data='Price must be a number', status=status.HTTP_400_BAD_REQUEST)
         if not content or len(images) <= 0 or not end_date:
-            return Response('content and images and finish date can not be none',status=status.HTTP_400_BAD_REQUEST)
+            return Response('content and images and finish date can not be none', status=status.HTTP_400_BAD_REQUEST)
         if not name or int(price_begin) <= 0 or not price_begin:
-            return Response('Product name and price can not be none',status=status.HTTP_400_BAD_REQUEST)
+            return Response('Product name and price can not be none', status=status.HTTP_400_BAD_REQUEST)
         if datetime.datetime.strptime(end_date, '%Y-%m-%d').date() <= datetime.date.today():
-            return Response('Finish date can not be less than now',status=status.HTTP_400_BAD_REQUEST)
+            return Response('Finish date can not be less than now', status=status.HTTP_400_BAD_REQUEST)
 
         # create product
         post = self.create_post_base(content, tags, images, request.user)
@@ -78,13 +80,14 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
         serializer = AuctionPostSerializer(auction_post, many=False)
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)
 
-    @action(methods=['put'], detail=False, url_path="update-auction/(?P<post_id>[0-9]+)/(?P<auction_id>[0-9]+)/(?P<user_win>[0-9]+)")
-    def update_auction(self, request, post_id, auction_id, user_win):
+    # @action(methods=['put'], detail=False, url_path="update-auction/(?P<post_id>[0-9]+)/(?P<auction_id>[0-9]+)/(?P<user_win>[0-9]+)")
+    @action(methods=['put'], detail=False, url_path="update-auction/(?P<post_id>[0-9]+)/(?P<user_win>[0-9]+)")
+    def update_auction(self, request, post_id, user_win):
         money_auction = request.data.get("money_auction")
         try:
             money_auction = int(money_auction)
             user_win = int(user_win)
-            auction_id = int(auction_id)
+            # auction_id = int(auction_id)
             post_id = int(post_id)
             if money_auction < 0:
                 return Response(data='Price auction must be greater than 0', status=status.HTTP_400_BAD_REQUEST)
@@ -94,12 +97,16 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
             post = Post.objects.get(pk=post_id)
             auction_post = AuctionPost.objects.get(post=post)
         except:
-            return Response(data='Auction or auction post does not exist', status=status.HTTP_400_BAD_REQUEST)
-        auction, _ = Auction.objects.get_or_create(pk=auction_id, auction_post=auction_post,
-                                                   user_join=request.user)
+            return Response(data='Auction or auction post does not exist', status=status.HTTP_404_NOT_FOUND)
+        try:
+            auction, _ = Auction.objects.get_or_create(auction_post=auction_post,
+                                                   user_join=request.user, active=True)
+        except:
+            return Response(data='Auction was out of time, please change the auction that has been ongoing'
+                            , status=status.HTTP_404_NOT_FOUND)
         if not _:
             if money_auction < auction.money_auctioned:
-                return Response('Price auction can not be less than now')
+                return Response('Price auction can not be less than %d' % (auction.money_auctioned), status=status.HTTP_400_BAD_REQUEST)
             auction.money_auctioned = money_auction
             if user_win == 1:
                 auction.user_win = True

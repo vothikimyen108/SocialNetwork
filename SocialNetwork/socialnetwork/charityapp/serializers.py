@@ -223,6 +223,10 @@ class AuctionPostCreateSerializer(serializers.Serializer):
 
 
 
+class AuctionUpdateSerializer(serializers.Serializer):
+    money_auction = serializers.IntegerField(min_value=1)
+
+
 
 class TypeNotificationSerializer(ModelSerializer):
     class Meta:
@@ -286,10 +290,12 @@ class CommentCreateSerializer(serializers.Serializer):
     image = serializers.ImageField(max_length=None, allow_empty_file=True, allow_null=True)
 
 
+
 class ReportSerializer(ModelSerializer):
     class Meta:
         model = Report
         fields = ['id', 'user_report', 'type', 'reported_id', 'created_date']
+
 
 
 class TypeReportSerializer(ModelSerializer):
@@ -297,6 +303,29 @@ class TypeReportSerializer(ModelSerializer):
         model = TypeReport
         fields = ['id', 'type']
 
+
+
+
+class ReportSerializer(ModelSerializer):
+    user_report = UserSerializer(many=False)
+    type = TypeReportSerializer(many=False)
+    object_report = serializers.CharField(source='get_object_report_display')
+    reported_id = serializers.SerializerMethodField('get_object_reported')
+
+    class Meta:
+        model = Report
+        fields = ['id', 'user_report', 'type', 'reported_id', 'created_date', 'object_report', 'active']
+
+    def get_object_reported(self, report):
+        if report.object_report == 1:
+            object = User.objects.get(pk=report.reported_id)
+            return UserSerializer(object, many=False).data
+        if report.object_report == 2:
+            object = Post.objects.get(pk=report.reported_id)
+            return PostSerializer(object, many=False).data
+        if report.object_report == 3:
+            object = Comment.objects.get(pk=report.reported_id)
+            return CommentSerializer(object, many=False).data
 
 class AuctionSerializer(ModelSerializer):
     user_join = UserSerializer(many=False)

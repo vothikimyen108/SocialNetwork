@@ -6,16 +6,16 @@ from django.urls import path, include
 
 
 router = routers.DefaultRouter()
-router.register("users", views.UserViewSet, 'user')
-router.register('sendpass', views.SendPass, basename='MyModel')
-router.register("post", views.PostView)
-router.register("auction_post", views.AuctionPostView)
-router.register("image", views.ImageView)
-router.register("product", views.ProductView)
-router.register("tag", views.TagView)
-router.register("notification", views.NotificationViewSet)
-router.register("report", views.ReportView)
-router.register("type_report", views.TypeReportView)
+router.register(r"users", views.UserViewSet, 'user')
+router.register(r'sendpass', views.SendPass, basename='MyModel')
+router.register(r"post", views.PostView)
+router.register(r"auction_post", views.AuctionPostView)
+router.register(r"image", views.ImageView)
+router.register(r"product", views.ProductView)
+router.register(r"tag", views.TagView)
+router.register(r"notification", views.NotificationViewSet)
+router.register(r"report", views.ReportView)
+router.register(r"type_report", views.TypeReportView)
 
 
 
