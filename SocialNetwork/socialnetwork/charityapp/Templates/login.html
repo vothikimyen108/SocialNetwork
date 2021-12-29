@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+    </head>
+    <body>
+        <form method="POST" action="/accounts/login/" >
+                                {% csrf_token %}
+        <!--                        <input type="hidden" name="client_id" value="40RjONc907stXioBn5Ml077AvfplLYVxxbYyHB3p">-->
+        <!--                        <input type="hidden" name="client_secret" value="IMXTWbMpjrMc4GU0RMBIeneFz3Nl8PnWbiZ0mSry4Q3YeQBqf9tTHpuGHiBG886yDkJEaJaUOvm09rd83gA07ue0PDMKopXH0QyYNdQWI8rcJQ5wsJCegVsqi9L9i4js">-->
+        <!--                        <input type="hidden" name="grant_type" value="password">-->
+            <div class="mb-4 d-flex">
+                <div class="login-label">
+                    <i class="fas fa-user"></i>
+                </div>
+                <input type="text" id="user" name = "username" class="form-control " placeholder="Username or Email" required maxlength="50" />
+            </div>
+
+            <div class="mb-2 d-flex">
+                <div class="login-label">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <input name="password" type="password" id="password" class="form-control " placeholder="Password" required/>
+            </div>
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="remember" checked />
+                    <label for="remember" class="custom-control-label">Remember</label>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </div>
+        </form>
+    </body>
+</html>
