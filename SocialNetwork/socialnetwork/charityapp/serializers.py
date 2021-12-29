@@ -222,6 +222,7 @@ class AuctionPostCreateSerializer(serializers.Serializer):
     end_date = serializers.DateField()
 
 
+
 class AuctionUpdateSerializer(serializers.Serializer):
     money_auction = serializers.IntegerField(min_value=1)
 
@@ -289,10 +290,20 @@ class CommentCreateSerializer(serializers.Serializer):
     image = serializers.ImageField(max_length=None, allow_empty_file=True, allow_null=True)
 
 
+
+class ReportSerializer(ModelSerializer):
+    class Meta:
+        model = Report
+        fields = ['id', 'user_report', 'type', 'reported_id', 'created_date']
+
+
+
 class TypeReportSerializer(ModelSerializer):
     class Meta:
         model = TypeReport
         fields = ['id', 'type']
+
+
 
 
 class ReportSerializer(ModelSerializer):

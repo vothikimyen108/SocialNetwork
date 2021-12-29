@@ -77,7 +77,7 @@ EMAIL_PORT = 587
 
 # #chạy post man bỏ biến này ra
 OAUTH2_PROVIDER = {
-     # 'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
+     'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
 }
 
 
@@ -132,9 +132,9 @@ WSGI_APPLICATION = 'socialnetwork.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'socialnetwork',
+        'NAME': 'socialnetworkv3',
         'USER': 'root',
-        'PASSWORD': '12345',
+        'PASSWORD': '123456789',
         'HOST': '',
     }
 }
