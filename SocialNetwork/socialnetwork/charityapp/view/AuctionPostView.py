@@ -38,7 +38,7 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
 
     @action(methods=['post'], detail=False, url_path="create-auction-post")
     def create_auction_post(self, request):
-        print(request.data,request.FILES)
+        print(request.data, request.FILES)
         content = request.data.get('content')
         tags = request.data.getlist("tags")
         images = request.FILES.getlist('images')
@@ -85,33 +85,39 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
     def update_auction(self, request, post_id, user_win):
         money_auction = request.data.get("money_auction",None)
         try:
-            money_auction = int(money_auction)
-            user_win = int(user_win)
-            # auction_id = int(auction_id)
-            post_id = int(post_id)
-            if money_auction < 0:
-                return Response(data='Price auction must be greater than 0', status=status.HTTP_400_BAD_REQUEST)
+            if money_auction is not None:
+                money_auction = int(money_auction)
+                user_win = int(user_win)
+                # auction_id = int(auction_id)
+                post_id = int(post_id)
+                if money_auction < 0:
+                    return Response(data='Price auction must be greater than 0', status=status.HTTP_400_BAD_REQUEST)
         except:
-            return Response(data='Price auction, user id, auction id and post id must be a number', status=status.HTTP_400_BAD_REQUEST)
+            return Response(data='Price auction, user id, auction id and post id must be a number',
+                            status=status.HTTP_400_BAD_REQUEST)
         try:
             post = Post.objects.get(pk=post_id)
             auction_post = AuctionPost.objects.get(post=post)
         except:
             return Response(data='Auction or auction post does not exist', status=status.HTTP_404_NOT_FOUND)
+        auction, _ = Auction.objects.get_or_create(auction_post=auction_post,
+                                                   user_join=request.user, active=True)
         try:
             auction, _ = Auction.objects.get_or_create(auction_post=auction_post,
-                                                   user_join=request.user, active=True)
+                                                       user_join=request.user, active=True)
         except:
             return Response(data='Auction was out of time, please change the auction that has been ongoing'
                             , status=status.HTTP_404_NOT_FOUND)
+
         if not _:
-            if money_auction < auction.money_auctioned:
-                return Response('Price auction can not be less than %d' % (auction.money_auctioned), status=status.HTTP_400_BAD_REQUEST)
-            auction.money_auctioned = money_auction
+            if money_auction is not None:
+                if money_auction < auction.money_auctioned:
+                    return Response('Price auction can not be less than %d' % (auction.money_auctioned),
+                                    status=status.HTTP_400_BAD_REQUEST)
             if user_win == 1:
                 auction.user_win = True
                 auction.active = False
-        else:
+        if money_auction is not None:
             auction.money_auctioned = money_auction
         auction.save()
         serializer = AuctionSerializer(auction, many=False)
