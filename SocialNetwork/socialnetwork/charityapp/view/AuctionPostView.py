@@ -83,7 +83,7 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
     # @action(methods=['put'], detail=False, url_path="update-auction/(?P<post_id>[0-9]+)/(?P<auction_id>[0-9]+)/(?P<user_win>[0-9]+)")
     @action(methods=['put'], detail=False, url_path="update-auction/(?P<post_id>[0-9]+)/(?P<user_win>[0-9]+)")
     def update_auction(self, request, post_id, user_win):
-        money_auction = request.data.get("money_auction")
+        money_auction = request.data.get("money_auction",None)
         try:
             money_auction = int(money_auction)
             user_win = int(user_win)

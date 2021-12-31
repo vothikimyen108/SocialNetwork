@@ -282,6 +282,7 @@ export default function NewsItem(props) {
             isGo={isGo}
             product={product}
             end_date={end_date}
+            idpost={id}
           ></Product>
         )}
 

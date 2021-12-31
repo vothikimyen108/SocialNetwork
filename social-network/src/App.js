@@ -19,6 +19,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import anh from "./assets/ImgProfile/196900128_337098007802082_959440697203316550_n (1).jpg";
 import Profile from "./pages/Profile";
 import { getMe } from "./store/userSlice";
+import { getNoti } from "./store/notificationSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 function App() {
@@ -29,6 +30,10 @@ function App() {
         const action = getMe();
         const actionResult = await dispatch(action);
         unwrapResult(actionResult);
+
+        const actionNoTi = getNoti();
+        const actionResultNoti = await dispatch(actionNoTi);
+        unwrapResult(actionResultNoti);
       } catch (error) {
         console.log(error);
       }
@@ -36,35 +41,6 @@ function App() {
     fetchLogin();
   }, []);
   return (
-    // <Layout>
-    //   <Switch>
-    //     <Route path="/" exact>
-    //       <Redirect to="/newsfeed" />
-    //     </Route>
-    //     <Route path="/newsfeed">
-    //       <Grid item xs={12} sm={12} md={9} className={classe.root}>
-    //         <NewsFeed></NewsFeed>
-    //       </Grid>
-    //       <Grid item xs={12} sm={12} md={3}>
-    //         <LayoutListMember data={dataMember}></LayoutListMember>
-    //       </Grid>
-    //     </Route>
-    //     <Route path="/news/:newsId">
-    //       <Grid item xs={12} sm={12} md={9} className={classe.root}>
-    //         <NewsDetail></NewsDetail>
-    //       </Grid>
-    //       <Grid item xs={12} sm={12} md={3}>
-    //         <LayoutListMember data={dataMember}></LayoutListMember>
-    //       </Grid>
-    //     </Route>
-    //     <Route path="/photo/:photoId">
-    //       <Grid item xs={12} sm={12} md={9} className={classe.root}>
-    //         <PhotoDetail></PhotoDetail>
-    //       </Grid>
-    //     </Route>
-    //   </Switch>
-    // </Layout>
-    // <Auction></Auction>
     <>
       <Router>
         <Switch>

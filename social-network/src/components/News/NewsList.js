@@ -5,7 +5,6 @@ import "aos/dist/aos.css";
 import { useEffect } from "react";
 import NewsListStyles from "./NewsListStyles";
 import moment from "moment";
-import newsApi from "../../api/newsApi";
 const NewsList = (props) => {
   //css
   const classes = NewsListStyles();

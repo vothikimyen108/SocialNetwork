@@ -10,15 +10,18 @@ import CloseIcon from "@material-ui/icons/Close";
 //css
 import AutionStyles from "./AutionStyles";
 import AlertNoti from "../UI/AlertNoti";
+import moment from "moment";
+import auctionApi from "../../api/auctionApi";
 
 export default function Auction(props) {
   const classes = AutionStyles();
 
-  const { price, end_date } = props;
+  const { price, end_date, idpost } = props;
   const [isError, setIsError] = useState(false);
   //open
   const [open, setOpen] = useState(false);
-
+  var x = new Date(moment().format("MM/DD/YYYY"));
+  var y = new Date(end_date);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -90,7 +93,6 @@ export default function Auction(props) {
     }
     if (refPrice.current.value >= price) {
       setIsError(false);
-      console.log(isError);
       setOpen(false);
     }
   };
@@ -99,10 +101,21 @@ export default function Auction(props) {
     //để k chuyển trang
     event.preventDefault();
     //code
-    handerClose();
-    //thông báo
-    setIsSuccess("success");
-    setOpen(true);
+    const fetchAddAuction = async () => {
+      try {
+        //gửi data
+        const response = await auctionApi.addAuction(
+          { postid: idpost, userid: 0 },
+          { money_auction: price },
+        );
+        handerClose();
+        //thông báo
+        setIsSuccess("success");
+        setOpen(true);
+        return response;
+      } catch (error) {}
+    };
+    fetchAddAuction();
   };
 
   const handerClose = () => {
@@ -148,57 +161,62 @@ export default function Auction(props) {
     );
   };
   const [openNewsForm, setNewsForm] = useState(false);
+
   return (
     <div className={classes.root}>
-      <Grid container>
-        <Grid item xs={12} md={8} className={classes.paper}>
-          <IconButton
-            aria-label="delete"
-            className={classes.btIcon}
-            onClick={handleAdd}
-          >
-            <AddIcon></AddIcon>
-          </IconButton>
-          <TextField
-            id="outlined-basic"
-            error={isError}
-            variant="outlined"
-            defaultValue={price}
-            type="number"
-            className={classes.textField}
-            inputRef={refPrice}
-            onChange={handlePrice}
-            inputProps={{
-              style: {
-                textAlign: "center",
-                padding: 13,
-                textJustify: "center",
-                color: "#000",
-              },
-            }}
-          />
-          <IconButton
-            aria-label="delete"
-            className={classes.btIcon}
-            onClick={handleRemove}
-          >
-            <RemoveIcon></RemoveIcon>
-          </IconButton>
+      {x < y ? (
+        <Grid container>
+          <Grid item xs={12} md={8} className={classes.paper}>
+            <IconButton
+              aria-label="delete"
+              className={classes.btIcon}
+              onClick={handleAdd}
+            >
+              <AddIcon></AddIcon>
+            </IconButton>
+            <TextField
+              id="outlined-basic"
+              error={isError}
+              variant="outlined"
+              defaultValue={price}
+              type="number"
+              className={classes.textField}
+              inputRef={refPrice}
+              onChange={handlePrice}
+              inputProps={{
+                style: {
+                  textAlign: "center",
+                  padding: 13,
+                  textJustify: "center",
+                  color: "#000",
+                },
+              }}
+            />
+            <IconButton
+              aria-label="delete"
+              className={classes.btIcon}
+              onClick={handleRemove}
+            >
+              <RemoveIcon></RemoveIcon>
+            </IconButton>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Button
+              classes={{
+                root: classes.submit, // class name, e.g. `classes-nesting-root-x`
+                label: classes.label, // class name, e.g. `classes-nesting-label-x`
+              }}
+              onClick={() => {
+                setNewsForm(true);
+              }}
+            >
+              Đặt giá thầu
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <Button
-            classes={{
-              root: classes.submit, // class name, e.g. `classes-nesting-root-x`
-              label: classes.label, // class name, e.g. `classes-nesting-label-x`
-            }}
-            onClick={() => {
-              setNewsForm(true);
-            }}
-          >
-            Đặt giá thầu
-          </Button>
-        </Grid>
-      </Grid>
+      ) : (
+        <p>Đã hết hạn đấu giá</p>
+      )}
       {renderAlert()}
       {openNewsForm && (
         <AlertNoti onClose={handerClose} open={true}>

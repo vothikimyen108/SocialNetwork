@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import { Row, Item } from "@mui-treasury/components/flex";
 import { Info, InfoTitle, InfoSubtitle } from "@mui-treasury/components/info";
@@ -19,7 +19,7 @@ export const Product = function TutorCard(props) {
     from: { x: 0 },
     to: { x: 20 },
   });
-  const { isAution, isGo, key, product, end_date } = props;
+  const { isAution, isGo, key, product, end_date, idpost } = props;
 
   return (
     <div>
@@ -66,7 +66,13 @@ export const Product = function TutorCard(props) {
         )}
       </Row>
 
-      {isAution && <Auction></Auction>}
+      {isAution && (
+        <Auction
+          price={product.price_begin}
+          end_date={end_date}
+          idpost={idpost}
+        ></Auction>
+      )}
     </div>
   );
 };
