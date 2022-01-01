@@ -26,53 +26,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { Product } from "../Products/Product";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import ListAuction from "../Products/ListAuction";
+
 //react
 import { useState } from "react";
 import newsApi from "../../api/newsApi";
 import { set } from "date-fns";
-
-const itemData = [
-  {
-    id: 1,
-    img: `${Anh}`,
-    title: "Breakfast",
-    author: "jill111",
-    featured: true,
-  },
-  {
-    id: 2,
-    img: `${Anh1}`,
-    title: "Tasty burger",
-    author: "director90",
-  },
-  {
-    id: 3,
-    img: `${Anh2}`,
-    title: "Camera",
-    author: "Danson67",
-  },
-  {
-    id: 4,
-    img: `${Anh3}`,
-    title: "Morning",
-    author: "fancycrave1",
-    featured: true,
-  },
-  {
-    id: 5,
-    img: `${Anh}`,
-    title: "Breakfast",
-    author: "jill111",
-    featured: true,
-  },
-  {
-    id: 6,
-    img: `${Anh1}`,
-    title: "Tasty burger",
-    author: "director90",
-  },
-];
-//css
 
 export default function NewsItem(props) {
   const {
@@ -97,6 +56,8 @@ export default function NewsItem(props) {
     totalComment,
     comment,
     end_date,
+    user,
+    auction,
   } = props;
   const [totalLike1, setTotalLike1] = useState(totalLike);
   const classes = NewsItemStyles();
@@ -284,6 +245,10 @@ export default function NewsItem(props) {
             end_date={end_date}
             idpost={id}
           ></Product>
+        )}
+
+        {product && (
+          <ListAuction data={auction} id={id} user={user}></ListAuction>
         )}
 
         {showContent(content)}

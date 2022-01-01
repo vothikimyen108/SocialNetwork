@@ -15,7 +15,7 @@ import auctionApi from "../../api/auctionApi";
 
 export default function Auction(props) {
   const classes = AutionStyles();
-
+  const [openNewsForm, setNewsForm] = useState(false);
   const { price, end_date, idpost } = props;
   const [isError, setIsError] = useState(false);
   //open
@@ -130,7 +130,6 @@ export default function Auction(props) {
           <Grid item xs={12}>
             <div className={classes.center}>
               <h3>Xác nhận đấu giá</h3>
-
               <IconButton className={classes.close} onClick={handerClose}>
                 <CloseIcon />
               </IconButton>
@@ -160,7 +159,7 @@ export default function Auction(props) {
       </form>
     );
   };
-  const [openNewsForm, setNewsForm] = useState(false);
+
 
   return (
     <div className={classes.root}>

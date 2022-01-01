@@ -38,6 +38,8 @@ const NewsList = (props) => {
             comment={item.comment}
             end_date={item.end_date}
             isPageDetail={false}
+            user={item.user}
+            auction={item.auction}
           ></NewsItem>
         </div>
       ))}
