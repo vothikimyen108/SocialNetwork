@@ -52,7 +52,7 @@ export const Product = function TutorCard(props) {
         {isGo && (
           <Item position={"middle"} className={styles.goLast}>
             {" "}
-            <NavLink to="/photo/1" className={styles.link}>
+            <NavLink to={`/photo/${idpost}`} className={styles.link}>
               <animated.div
                 style={{
                   ...stylesSpring,

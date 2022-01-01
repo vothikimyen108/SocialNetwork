@@ -52,10 +52,6 @@ const NewsFeed = () => {
   };
   //dong formnews
   const classe = useStyles();
-  // dùng redux uiSlice
-  const registerIsVisible = useSelector(
-    (state) => state.user.currentUser.address,
-  );
 
   //khai báo form ban đầu rỗng
   const [pages, setPages] = useState(1);
@@ -114,11 +110,6 @@ const NewsFeed = () => {
         <LayoutListMember></LayoutListMember>
       </Grid>
       {openNewsForm && <NewsForm onClose={handerClose}></NewsForm>}
-      {/* {!registerIsVisible && (
-        <AlertNoti open={!registerIsVisible} onClose={() => !registerIsVisible}>
-          <SignUpForm></SignUpForm>
-        </AlertNoti>
-      )} */}
     </div>
   );
 };

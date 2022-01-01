@@ -10,11 +10,9 @@ export const getMe = createAsyncThunk(
     return currentUser;
   },
 );
-const token = () => {
-  const token = cookies.load("access-token");
-  console.log(token);
-  return token;
-};
+
+const token = cookies.load("access-token");
+
 //tạo ra uiSlice
 const userSlice = createSlice({
   name: "user",
@@ -22,7 +20,7 @@ const userSlice = createSlice({
     currentUser: {},
     error: false,
     loading: true,
-    isLoggedIn: token === "" ? false : true,
+    isLoggedIn: token ? true : false,
   },
   reducers: {
     logout(state) {
@@ -32,8 +30,8 @@ const userSlice = createSlice({
       state.currentUser = {};
       state.loading = true;
       state.error = false;
-      const token = cookies.load("access-token");
-      token === "" ? (state.isLoggedIn = false) : (state.isLoggedIn = true);
+      let token = cookies.load("access-token");
+      token ? (state.isLoggedIn = true) : (state.isLoggedIn = false);
     },
   },
   extraReducers: {
@@ -49,8 +47,7 @@ const userSlice = createSlice({
     [getMe.fulfilled]: (state, action) => {
       state.loading = false;
       state.currentUser = action.payload;
-      const token = cookies.load("access-token");
-      token === "" ? (state.isLoggedIn = false) : (state.isLoggedIn = true);
+      state.isLoggedIn = true;
     },
   },
 });

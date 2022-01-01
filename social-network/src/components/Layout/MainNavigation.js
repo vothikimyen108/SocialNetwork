@@ -22,10 +22,13 @@ import MainNavigationStyles from "./MainNavigationStyles";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import NotificationList from "../Notifications/NotificationList";
+import uiActions from "../../store/userSlice";
+import { useHistory } from "react-router";
 
 export default function MainNavigation() {
   const classes = MainNavigationStyles();
-
+  const history = useHistory();
+  const dispatch = useDispatch();
   //set menu hide
   const [menuHideMoreAnchorEl, setMenuHide] = useState(null);
 
@@ -37,6 +40,11 @@ export default function MainNavigation() {
 
   const handleMenuHideOpen = (event) => {
     setMenuHide(event.currentTarget);
+  };
+
+  const onLogout = () => {
+    dispatch(uiActions.actions.logout());
+    history.replace("/login");
   };
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMenuHide = (
@@ -90,7 +98,7 @@ export default function MainNavigation() {
         </IconButton>
         <p>cài đặt</p>
       </MenuItem>
-      <MenuItem>
+      <MenuItem onClick={onLogout}>
         <IconButton
           className={classes.subButton}
           aria-label="account of current user"

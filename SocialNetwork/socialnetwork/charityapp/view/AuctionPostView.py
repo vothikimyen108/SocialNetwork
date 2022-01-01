@@ -114,7 +114,7 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
                 if money_auction < auction.money_auctioned:
                     return Response('Price auction can not be less than %d' % (auction.money_auctioned),
                                     status=status.HTTP_400_BAD_REQUEST)
-            if user_win == 1:
+            if user_win>0:
                 auction.user_win = True
                 auction.active = False
         if money_auction is not None:

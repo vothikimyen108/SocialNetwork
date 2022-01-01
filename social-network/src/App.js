@@ -10,11 +10,10 @@ import PhotoDetail from "./pages/PhotoDetail";
 import DashboardLayoutRoute from "./components/Layout/DashboardLayoutRoute";
 import MembersPage from "./pages/MembersPage";
 import ForgotPass from "./pages/ForgotPass";
+import NotFound from "./pages/NotFound";
 //impor
 import { BrowserRouter as Router } from "react-router-dom";
-import SignUpForm from "./components/Auth/Register/SignUpForm";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
+
 //c
 import anh from "./assets/ImgProfile/196900128_337098007802082_959440697203316550_n (1).jpg";
 import Profile from "./pages/Profile";
@@ -24,6 +23,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 function App() {
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   useEffect(() => {
     const fetchLogin = async () => {
       try {
@@ -44,35 +44,58 @@ function App() {
     <>
       <Router>
         <Switch>
-          <DashboardLayoutRoute
-            path="/"
-            exact
-            component={NewsFeed}
-          ></DashboardLayoutRoute>
-          <DashboardLayoutRoute
-            path="/news/:id"
-            exact
-            component={NewsDetail}
-          ></DashboardLayoutRoute>
-          <DashboardLayoutRoute
-            path="/profile/:idUser"
-            exact
-            component={Profile}
-          ></DashboardLayoutRoute>
-          <DashboardLayoutRoute
-            path="/members"
-            exact
-            component={MembersPage}
-          ></DashboardLayoutRoute>
-          <LoginLayoutRoute
-            path="/forgotpass"
-            exact
-            component={ForgotPass}
-          ></LoginLayoutRoute>
-          <Route path="/photo/:photoId" exact>
-            <PhotoDetail></PhotoDetail>
-          </Route>
-          <LoginLayoutRoute path="/login" component={Login} />
+          {!isLoggedIn ? (
+            <LoginLayoutRoute path="/" component={Login} />
+          ) : (
+            <DashboardLayoutRoute
+              path="/"
+              exact
+              component={NewsFeed}
+            ></DashboardLayoutRoute>
+          )}
+
+          {isLoggedIn && (
+            <DashboardLayoutRoute
+              path="/news/:id"
+              exact
+              component={NewsDetail}
+            ></DashboardLayoutRoute>
+          )}
+
+          {isLoggedIn && (
+            <DashboardLayoutRoute
+              path="/profile/:idUser"
+              exact
+              component={Profile}
+            ></DashboardLayoutRoute>
+          )}
+
+          {isLoggedIn && (
+            <DashboardLayoutRoute
+              path="/members"
+              exact
+              component={MembersPage}
+            ></DashboardLayoutRoute>
+          )}
+
+          {isLoggedIn && (
+            <LoginLayoutRoute
+              path="/forgotpass"
+              exact
+              component={ForgotPass}
+            ></LoginLayoutRoute>
+          )}
+
+          {isLoggedIn && (
+            <Route path="/photo/:photoId" exact>
+              <PhotoDetail></PhotoDetail>
+            </Route>
+          )}
+          {isLoggedIn && (
+            <Route path="*">
+              <NotFound />
+            </Route>
+          )}
         </Switch>
       </Router>
       {/* <img src={anh} alt="ahh"></img> */}

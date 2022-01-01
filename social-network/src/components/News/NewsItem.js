@@ -15,10 +15,6 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
-import Anh from "../../assets/ImgPost/anh1.jpg";
-import Anh1 from "../../assets/ImgPost/anh2.jpg";
-import Anh2 from "../../assets/ImgPost/anh3.jpg";
-import Anh3 from "../../assets/ImgPost/anh4.jpg";
 import Menu from "@material-ui/core/Menu";
 import CommentList from "../Comment/CommentList";
 import NewsItemStyles from "./NewsItemStyles";
@@ -27,13 +23,21 @@ import { Product } from "../Products/Product";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ListAuction from "../Products/ListAuction";
-
+import Report from "../Report/Report";
+import CustomizedDialogs from "../UI/CustomizedDialogs";
 //react
 import { useState } from "react";
 import newsApi from "../../api/newsApi";
 import { set } from "date-fns";
 
 export default function NewsItem(props) {
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   const {
     isExpanded,
     isShowImg,
@@ -74,6 +78,12 @@ export default function NewsItem(props) {
   const handleMenuHideOpen = (event) => {
     setMenuHide(event.currentTarget);
   };
+  const [report, setReport] = useState(false);
+  const handleReport = () => {
+    setReport(true);
+    handleClickOpen();
+  };
+
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMenuHide = (
     <Menu
@@ -96,7 +106,7 @@ export default function NewsItem(props) {
       <MenuItem>
         <p>Xóa bài</p>
       </MenuItem>
-      <MenuItem>
+      <MenuItem onClick={handleReport}>
         <p>Báo cáo</p>
       </MenuItem>
     </Menu>
@@ -121,7 +131,7 @@ export default function NewsItem(props) {
             <ImageListItem key={image[i].id} className={classes.imgItem}>
               {" "}
               <img src={image[i].image_url} alt={image[i].title} />{" "}
-              <NavLink to="/photo/1">
+              <NavLink to={`/photo/${id}`}>
                 <div className={classes.middle}>
                   <div>{totalItemNotShow}+</div>
                 </div>
@@ -133,7 +143,7 @@ export default function NewsItem(props) {
             <ImageListItem key={image[i].id} className={classes.imgItem}>
               {" "}
               <img src={image[i].image_url} alt={image[i].title} />{" "}
-              <NavLink to="/photo/1">
+              <NavLink to={`/photo/${id}`}>
                 <div className={classes.middle2}></div>
               </NavLink>
             </ImageListItem>,
@@ -145,7 +155,7 @@ export default function NewsItem(props) {
         rows.push(
           <ImageListItem key={image[j].id}>
             <img src={image[j].image_url} alt={image[j].title} />{" "}
-            <NavLink to="/photo/1">
+            <NavLink to={`/photo/${id}`}>
               <div className={classes.middle2}></div>
             </NavLink>
           </ImageListItem>,
@@ -295,6 +305,13 @@ export default function NewsItem(props) {
         </CardContent>
       </Collapse>
       {renderMenuHide}
+      {report && (
+        <CustomizedDialogs
+          open={open}
+          handleClose={handleClose}
+          children={<Report report_id={id} object_report={2}></Report>} //post là số 2 coment số 1
+        ></CustomizedDialogs>
+      )}
     </Card>
   );
 }
