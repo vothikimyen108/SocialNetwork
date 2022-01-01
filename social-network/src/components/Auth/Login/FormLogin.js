@@ -71,7 +71,6 @@ const FormLogin = function FormLogin() {
           grant_type: "password",
           ...authInfo,
         };
-        console.log(data);
         const response = await userApi.login(data);
         //lưu vô cookie
         cookies.save("access-token", response.access_token);

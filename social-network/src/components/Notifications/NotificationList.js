@@ -6,6 +6,7 @@ import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import NotificationItem from "./NotificationItem";
+import { useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   root: {
     // width: "100%",
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NotificationList() {
   const classes = useStyles();
-
+  const notilist = useSelector((state) => state.noti.noti);
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main">
@@ -33,22 +34,18 @@ export default function NotificationList() {
       </List>
       <Divider />
       <List component="nav" aria-label="folders">
-        <NotificationItem></NotificationItem>
-        <NotificationItem></NotificationItem>
-        <NotificationItem></NotificationItem>
-        <NotificationItem></NotificationItem>
-        <NotificationItem></NotificationItem>
-        <NotificationItem></NotificationItem>
-        <NotificationItem></NotificationItem>
-        <NotificationItem></NotificationItem>
-        <NotificationItem></NotificationItem>
-        <NotificationItem></NotificationItem>
-        <NotificationItem></NotificationItem>
-        <NotificationItem></NotificationItem>
-        <NotificationItem></NotificationItem>
-        <NotificationItem></NotificationItem>
-        <NotificationItem></NotificationItem>
-        <NotificationItem></NotificationItem>
+        {notilist.results &&
+          notilist.results.map((item) => (
+            <div key={item.id}>
+              <NotificationItem
+                avatar={item.user_to.avtatar}
+                content={item.content}
+                is_seen={item.is_seen}
+                created_date={item.created_date}
+                id={item.id}
+              ></NotificationItem>
+            </div>
+          ))}
       </List>
     </div>
   );

@@ -83,7 +83,7 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
     # @action(methods=['put'], detail=False, url_path="update-auction/(?P<post_id>[0-9]+)/(?P<auction_id>[0-9]+)/(?P<user_win>[0-9]+)")
     @action(methods=['put'], detail=False, url_path="update-auction/(?P<post_id>[0-9]+)/(?P<user_win>[0-9]+)")
     def update_auction(self, request, post_id, user_win):
-        money_auction = request.data.get("money_auction")
+        money_auction = request.data.get("money_auction",None)
         try:
             if money_auction is not None:
                 money_auction = int(money_auction)
@@ -114,7 +114,7 @@ class AuctionPostView(viewsets.ViewSet, generics.ListAPIView, BaseView):
                 if money_auction < auction.money_auctioned:
                     return Response('Price auction can not be less than %d' % (auction.money_auctioned),
                                     status=status.HTTP_400_BAD_REQUEST)
-            if user_win == 1:
+            if user_win>0:
                 auction.user_win = True
                 auction.active = False
         if money_auction is not None:

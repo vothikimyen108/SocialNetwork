@@ -10,6 +10,7 @@ import ModalFull from "../UI/ModalFull";
 import ParallaxCarousel from "../UI/ParallaxCarousel";
 //css
 import PhotoStyles from "./PhotoStyles";
+import ListAuction from "../Products/ListAuction";
 import moment from "moment";
 const Photo = (props) => {
   const classes = PhotoStyles();
@@ -58,9 +59,9 @@ const Photo = (props) => {
             isExpanded={false}
             isShowImg={false}
             isPageDetail={true}
-          >
-            {" "}
-          </NewsItem>
+            user={item.user}
+            auction={item.auction}
+          ></NewsItem>
         </Grid>
       </Grid>
     </ModalFull>

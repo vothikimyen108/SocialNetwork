@@ -5,7 +5,6 @@ import "aos/dist/aos.css";
 import { useEffect } from "react";
 import NewsListStyles from "./NewsListStyles";
 import moment from "moment";
-import newsApi from "../../api/newsApi";
 const NewsList = (props) => {
   //css
   const classes = NewsListStyles();
@@ -39,6 +38,8 @@ const NewsList = (props) => {
             comment={item.comment}
             end_date={item.end_date}
             isPageDetail={false}
+            user={item.user}
+            auction={item.auction}
           ></NewsItem>
         </div>
       ))}

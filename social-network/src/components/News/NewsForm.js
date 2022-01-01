@@ -200,7 +200,7 @@ const NewsForm = (props) => {
   // submit create post
   const onCreatePost = (e) => {
     e.preventDefault();
-    //đăng nhập
+
     const fetchAddPost = async () => {
       try {
         //gửi data

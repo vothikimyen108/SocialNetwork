@@ -4,12 +4,18 @@ import Grid from "@material-ui/core/Grid";
 import MainNavigation from "./MainNavigation";
 import SecondNavigation from "./SecondNavigation";
 import LayoutMenber from "./LayoutMenber";
-
+import { useSelector } from "react-redux";
+import AlertNoti from "../UI/AlertNoti";
+import SignUpForm from "../Auth/Register/SignUpForm";
 // export default Layout;
-import React, { Component } from "react";
+import React from "react";
 import { Route } from "react-router-dom";
+// dùng redux uiSlice
 
 const DashboardLayout = ({ children, ...rest }) => {
+  const registerIsVisible = useSelector(
+    (state) => state.user.currentUser.address,
+  );
   return (
     <Grid container>
       <Grid item xs={12} md={12}>
@@ -22,6 +28,11 @@ const DashboardLayout = ({ children, ...rest }) => {
       <Grid item xs={12} sm={12} md={12} lg={8}>
         {children}
       </Grid>
+      {!registerIsVisible && (
+        <AlertNoti open={!registerIsVisible} onClose={() => !registerIsVisible}>
+          <SignUpForm></SignUpForm>
+        </AlertNoti>
+      )}
     </Grid>
   );
 };
